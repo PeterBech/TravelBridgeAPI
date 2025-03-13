@@ -1,0 +1,12 @@
+{
+  "Version": 1,
+  "Hash": "ZR3joeFFQAZTNdtnh+KlzsCW6MTzJxW44R1yf/r6GWU=",
+  "Source": "TravelBridgAPI",
+  "BasePath": "_content/TravelBridgAPI",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": [],
+  "Endpoints": []
+}

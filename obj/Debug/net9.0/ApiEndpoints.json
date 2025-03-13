@@ -1,0 +1,18 @@
+[
+  {
+    "ContainingType": "TravelBridgAPI.Controllers.FlightController",
+    "Method": "SearchLocation",
+    "RelativePath": "api/Flight/SearchLocations",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "location",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  }
+]

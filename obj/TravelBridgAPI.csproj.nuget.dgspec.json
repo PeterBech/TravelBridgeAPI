@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\pibm9\\Desktop\\TravelBridgeAPI\\TravelBridgAPI\\TravelBridgAPI.csproj": {}
+    "C:\\Users\\pibm9\\Documents\\Datamatiker\\Programmering\\3. semester\\TravelBridgeAPI\\TravelBridgAPI.csproj": {}
   },
   "projects": {
-    "C:\\Users\\pibm9\\Desktop\\TravelBridgeAPI\\TravelBridgAPI\\TravelBridgAPI.csproj": {
+    "C:\\Users\\pibm9\\Documents\\Datamatiker\\Programmering\\3. semester\\TravelBridgeAPI\\TravelBridgAPI.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\pibm9\\Desktop\\TravelBridgeAPI\\TravelBridgAPI\\TravelBridgAPI.csproj",
+        "projectUniqueName": "C:\\Users\\pibm9\\Documents\\Datamatiker\\Programmering\\3. semester\\TravelBridgeAPI\\TravelBridgAPI.csproj",
         "projectName": "TravelBridgAPI",
-        "projectPath": "C:\\Users\\pibm9\\Desktop\\TravelBridgeAPI\\TravelBridgAPI\\TravelBridgAPI.csproj",
+        "projectPath": "C:\\Users\\pibm9\\Documents\\Datamatiker\\Programmering\\3. semester\\TravelBridgeAPI\\TravelBridgAPI.csproj",
         "packagesPath": "C:\\Users\\pibm9\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\pibm9\\Desktop\\TravelBridgeAPI\\TravelBridgAPI\\obj\\",
+        "outputPath": "C:\\Users\\pibm9\\Documents\\Datamatiker\\Programmering\\3. semester\\TravelBridgeAPI\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
