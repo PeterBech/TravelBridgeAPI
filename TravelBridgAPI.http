@@ -1,0 +1,6 @@
+@TravelBridgAPI_HostAddress = http://localhost:5153
+
+GET {{TravelBridgAPI_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
