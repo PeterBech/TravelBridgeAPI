@@ -1,0 +1,51 @@
+[
+  {
+    "ContainingType": "TravelBridgAPI.Controllers.FlightController",
+    "Method": "SearchLocation",
+    "RelativePath": "api/Flight/SearchLocations",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "location",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "TravelBridgAPI.DataHandler.RootobjectEndpoints\u002B\u003C\u003Ec",
+    "Method": "\u003CMapRootobjectEndpoints\u003Eb__0_0",
+    "RelativePath": "api/Rootobject/{city}",
+    "HttpMethod": "GET",
+    "IsController": false,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "city",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "TravelBridgAPI.Models.FlightLocations.Rootobject",
+        "MediaTypes": [
+          "application/json"
+        ],
+        "StatusCode": 200
+      },
+      {
+        "Type": "System.Void",
+        "MediaTypes": [],
+        "StatusCode": 404
+      }
+    ],
+    "Tags": [
+      "Rootobject"
+    ],
+    "EndpointName": "GetLocation"
+  }
+]

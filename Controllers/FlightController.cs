@@ -1,20 +1,29 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using TravelBridgAPI.DataHandler;
+using TravelBridgAPI.Models;
 
 namespace TravelBridgAPI.Controllers
 {
-    public class FlightController : Controller
+    [Route("api/[controller]")]
+    [ApiController]
+    public class FlightController : ControllerBase
     {
-        [HttpGet:($"/SearchFlights/{start}&{stop}")]
-        public async Task<IActionResult> SearchFlights(string start, string stop)
+        private readonly HandleLocations _handleLocations;
+
+        public FlightController(HandleLocations handleLocations)
         {
-            return null;
+            _handleLocations = handleLocations;
         }
-        [HttpGet:($"/SearchLocations/{location}")]
+
+        [HttpGet("SearchLocations/")]
         public async Task<IActionResult> SearchLocation(string location)
         {
-            HandleLocations locations = new HandleLocations();
-            return locations.GetLocation(location);
+            var result = await _handleLocations.GetLocationAsync(location);
+            if (result == null)
+            {
+                return NotFound("No flight locations found.");
+            }
+            return Ok(result);
         }
     }
 }

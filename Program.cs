@@ -1,10 +1,24 @@
+﻿using TravelBridgAPI.DataHandler;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using TravelBridgAPI.Data;
+
 var builder = WebApplication.CreateBuilder(args);
+
 
 // Add services to the container.
 
 builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
+
+// Tilf�j HttpClient til DI-containeren
+builder.Services.AddHttpClient<HandleLocations>();
+builder.Services.AddScoped<HandleLocations>();
+
+builder.Services.AddEndpointsApiExplorer();
+
+builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
@@ -14,10 +28,18 @@ if (app.Environment.IsDevelopment())
     app.MapOpenApi();
 }
 
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+};
+
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.MapRootobjectEndpoints();
 
 app.Run();
