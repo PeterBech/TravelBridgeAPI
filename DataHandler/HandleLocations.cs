@@ -1,4 +1,5 @@
 ﻿using System.Text.Json;
+using TravelBridgAPI.Models;
 using TravelBridgAPI.Models.FlightLocations;
 
 namespace TravelBridgAPI.DataHandler

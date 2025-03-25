@@ -1,6 +1,6 @@
-﻿using TravelBridgAPI.DataHandler;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Configuration;
+using TravelBridgAPI.DataHandler;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,6 +17,9 @@ builder.Configuration.AddJsonFile("appsettings.json", optional: false, reloadOnC
 // Tilf�j HttpClient til DI-containeren
 builder.Services.AddHttpClient<HandleLocations>();
 builder.Services.AddScoped<HandleLocations>();
+
+builder.Services.AddHttpClient<HandleFlightDetails>();
+builder.Services.AddScoped<HandleFlightDetails>();
 
 builder.Services.AddEndpointsApiExplorer();
 

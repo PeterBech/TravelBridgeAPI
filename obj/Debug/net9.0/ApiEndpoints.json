@@ -1,6 +1,27 @@
 [
   {
     "ContainingType": "TravelBridgAPI.Controllers.FlightController",
+    "Method": "SearchFlightDetails",
+    "RelativePath": "api/Flight/SearchFlightDetails",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "token",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "cc",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "TravelBridgAPI.Controllers.FlightController",
     "Method": "SearchLocation",
     "RelativePath": "api/Flight/SearchLocations",
     "HttpMethod": "GET",

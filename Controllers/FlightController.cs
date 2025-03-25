@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using TravelBridgAPI.DataHandler;
-using TravelBridgAPI.Models;
 
 namespace TravelBridgAPI.Controllers
 {
@@ -9,10 +8,12 @@ namespace TravelBridgAPI.Controllers
     public class FlightController : ControllerBase
     {
         private readonly HandleLocations _handleLocations;
+        private readonly HandleFlightDetails _handleFlightDetails;
 
-        public FlightController(HandleLocations handleLocations)
+        public FlightController(HandleLocations handleLocations, HandleFlightDetails handleFlightDetails)
         {
             _handleLocations = handleLocations;
+            _handleFlightDetails = handleFlightDetails;
         }
 
         [HttpGet("SearchLocations/")]
@@ -22,6 +23,17 @@ namespace TravelBridgAPI.Controllers
             if (result == null)
             {
                 return NotFound("No flight locations found.");
+            }
+            return Ok(result);
+        }
+
+        [HttpGet("SearchFlightDetails/")]
+        public async Task<IActionResult> SearchFlightDetails(string token, string cc)
+        {
+            var result = await _handleFlightDetails.GetFlightDetailsAsync(token, cc);
+            if (result == null)
+            {
+                return NotFound("No flight details found.");
             }
             return Ok(result);
         }
