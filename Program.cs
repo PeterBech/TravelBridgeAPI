@@ -21,6 +21,9 @@ builder.Services.AddScoped<HandleLocations>();
 builder.Services.AddHttpClient<HandleFlightDetails>();
 builder.Services.AddScoped<HandleFlightDetails>();
 
+builder.Services.AddHttpClient<FlightMinPriceHandler>();
+builder.Services.AddScoped<FlightMinPriceHandler>();
+
 builder.Services.AddEndpointsApiExplorer();
 
 var app = builder.Build();

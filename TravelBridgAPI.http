@@ -11,3 +11,13 @@ GET {{TravelBridgAPI_HostAddress}}/api/flight/SearchLocations?location={{locatio
 GET {{TravelBridgAPI_HostAddress}}/api/flight/SearchFlightDetails?token={{token}}&cc={{cc}}
 
 ###
+
+@from=BOM.AIRPORT
+@to=DEL.AIRPORT
+@departure=2025-05-29
+@returnFlight=2025-05-30
+@cabinClass=ECONOMY
+@curencyCode=EUR
+GET {{TravelBridgAPI_HostAddress}}/api/flight/FlightMinPrice?from={{from}}&to={{to}}&departure={{departure}}&returnFlight={{returnFlight}}&cabinClass={{cabinClass}}&curencyCode={{curencyCode}}
+
+###

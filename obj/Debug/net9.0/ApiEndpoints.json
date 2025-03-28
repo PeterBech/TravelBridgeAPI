@@ -1,6 +1,47 @@
 [
   {
     "ContainingType": "TravelBridgAPI.Controllers.FlightController",
+    "Method": "SearchMinFlightPrice",
+    "RelativePath": "api/Flight/FlightMinPrice",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "from",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "to",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "departure",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "returnFlight",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "cabinClass",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "curencyCode",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "TravelBridgAPI.Controllers.FlightController",
     "Method": "SearchFlightDetails",
     "RelativePath": "api/Flight/SearchFlightDetails",
     "HttpMethod": "GET",

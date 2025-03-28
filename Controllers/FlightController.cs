@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System.Globalization;
 using TravelBridgAPI.DataHandler;
 
 namespace TravelBridgAPI.Controllers
@@ -9,11 +10,13 @@ namespace TravelBridgAPI.Controllers
     {
         private readonly HandleLocations _handleLocations;
         private readonly HandleFlightDetails _handleFlightDetails;
+        private readonly FlightMinPriceHandler _flightMinPriceHandler;
 
-        public FlightController(HandleLocations handleLocations, HandleFlightDetails handleFlightDetails)
+        public FlightController(HandleLocations handleLocations, HandleFlightDetails handleFlightDetails, FlightMinPriceHandler handleFlightMinPrice)
         {
             _handleLocations = handleLocations;
             _handleFlightDetails = handleFlightDetails;
+            _flightMinPriceHandler = handleFlightMinPrice;
         }
 
         [HttpGet("SearchLocations/")]
@@ -28,14 +31,42 @@ namespace TravelBridgAPI.Controllers
         }
 
         [HttpGet("SearchFlightDetails/")]
-        public async Task<IActionResult> SearchFlightDetails(string token, string cc)
+        public async Task<IActionResult> SearchFlightDetails(string token, string curencyCode)
         {
-            var result = await _handleFlightDetails.GetFlightDetailsAsync(token, cc);
+            var result = await _handleFlightDetails.GetFlightDetailsAsync(token, curencyCode);
             if (result == null)
             {
                 return NotFound("No flight details found.");
             }
             return Ok(result);
+        }
+
+        [HttpGet("FlightMinPrice/")]
+        public async Task<IActionResult> SearchMinFlightPrice(
+            string from, 
+            string to, 
+            string departure, 
+            string returnFlight, 
+            string cabinClass, 
+            string curencyCode)
+        {
+            if(!IsValidDate(departure) || !IsValidDate(returnFlight))
+            {
+                return BadRequest("Invalid date format. Please use yyyy-MM-dd.");
+            }
+
+            var result = await _flightMinPriceHandler.GetMinFlightPrice(from, to, departure, returnFlight, cabinClass, curencyCode);
+
+            if (result == null)
+            {
+                return NotFound("No flight details found.");
+            }
+            return Ok(result);
+        }
+
+        private bool IsValidDate(string date)
+        {
+            return DateOnly.TryParseExact(date, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out _);
         }
     }
 }
