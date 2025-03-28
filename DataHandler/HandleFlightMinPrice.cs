@@ -4,12 +4,12 @@ using TravelBridgAPI.Models.FlightMinPrice;
 
 namespace TravelBridgAPI.DataHandler
 {
-    public class FlightMinPriceHandler
+    public class HandleFlightMinPrice
     {
         private readonly HttpClient _httpClient;
         private readonly IConfiguration _configuration;
 
-        public FlightMinPriceHandler(HttpClient httpClient, IConfiguration configuration)
+        public HandleFlightMinPrice(HttpClient httpClient, IConfiguration configuration)
         {
             _httpClient = httpClient;
             _configuration = configuration;
@@ -23,7 +23,7 @@ namespace TravelBridgAPI.DataHandler
                 return rootObject;
             }
 
-            rootObject = await SearchMinFlightPrice(from, to, departure, returnFlight, cabinClass, curencyCode);
+            rootObject = await GetMinFlightPriceFromAPI(from, to, departure, returnFlight, cabinClass, curencyCode);
             if (rootObject != null)
             {
                 SaveMinFlightPriceFromDb(rootObject);
@@ -38,11 +38,11 @@ namespace TravelBridgAPI.DataHandler
             return null;
         }
 
-        private async Task SaveMinFlightPriceFromDb(Rootobject flightDetails)
+        private async Task SaveMinFlightPriceFromDb(Rootobject flightMinPrice)
         {
         }
 
-        private async Task<Rootobject?> SearchMinFlightPrice(string from, string to, string departure, string returnFlight, string cabinClass, string curencyCode)
+        private async Task<Rootobject?> GetMinFlightPriceFromAPI(string from, string to, string departure, string returnFlight, string cabinClass, string curencyCode)
         {
             string apiKey = _configuration["RapidApi:ApiKey"];
             string apiHost = _configuration["RapidApi:BaseUrl"];

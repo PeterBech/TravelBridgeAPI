@@ -10,9 +10,9 @@ namespace TravelBridgAPI.Controllers
     {
         private readonly HandleLocations _handleLocations;
         private readonly HandleFlightDetails _handleFlightDetails;
-        private readonly FlightMinPriceHandler _flightMinPriceHandler;
+        private readonly HandleFlightMinPrice _flightMinPriceHandler;
 
-        public FlightController(HandleLocations handleLocations, HandleFlightDetails handleFlightDetails, FlightMinPriceHandler handleFlightMinPrice)
+        public FlightController(HandleLocations handleLocations, HandleFlightDetails handleFlightDetails, HandleFlightMinPrice handleFlightMinPrice)
         {
             _handleLocations = handleLocations;
             _handleFlightDetails = handleFlightDetails;
