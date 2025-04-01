@@ -1,11 +1,11 @@
 # Bruger Windows-baseret container som base
-FROM mcr.microsoft.com/dotnet/aspnet:9.0-windowsservercore-ltsc2022 AS base
+FROM mcr.microsoft.com/dotnet/aspnet:8.0-windowsservercore-ltsc2022 AS base
 WORKDIR /app
 EXPOSE 80
 EXPOSE 443
 
 # Byggefasen
-FROM mcr.microsoft.com/dotnet/sdk:9.0-windowsservercore-ltsc2022 AS build
+FROM mcr.microsoft.com/dotnet/sdk:8.0-windowsservercore-ltsc2022 AS build
 WORKDIR /src
 COPY ["TravelBridgeAPI/TravelBridgAPI.csproj", "TravelBridgeAPI/"]
 RUN dotnet restore "TravelBridgeAPI/TravelBridgAPI.csproj"
