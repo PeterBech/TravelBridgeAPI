@@ -7,7 +7,7 @@ EXPOSE 443
 # Byggefasen
 FROM mcr.microsoft.com/dotnet/sdk:8.0-windowsservercore-ltsc2022 AS build
 WORKDIR /src
-COPY ["TravelBridgeAPI/TravelBridgeAPI.csproj", "TravelBridgeAPI/"]
+COPY TravelBridgeAPI.csproj TravelBridgeAPI/
 RUN dotnet restore "TravelBridgeAPI/TravelBridgeAPI.csproj"
 
 COPY . .
