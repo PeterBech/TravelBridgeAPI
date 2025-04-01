@@ -9,7 +9,7 @@ FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src
 
 # Kopier projektfil og gendan afhængigheder
-COPY ["TravelBridgeAPI/TravelBridgeAPI.csproj", "TravelBridgeAPI/"]
+COPY ["TravelBridgeAPI.csproj", "./"]
 RUN dotnet restore "TravelBridgeAPI/TravelBridgeAPI.csproj"
 
 # Kopier resten af koden og byg applikationen
