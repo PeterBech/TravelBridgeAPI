@@ -1,0 +1,12 @@
+﻿.vs/
+
+appsettings*.json
+
+*.user
+*.suo
+
+bin/
+obj/
+
+*.log
+*.tmp

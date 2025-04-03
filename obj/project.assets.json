@@ -447,23 +447,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\pibm9\\.nuget\\packages\\": {},
+    "C:\\Users\\Lozze\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\pibm9\\Documents\\Datamatiker\\Programmering\\3. semester\\TravelBridgeAPI\\TravelBridgeAPI.csproj",
+      "projectUniqueName": "C:\\Users\\Lozze\\Source\\Repos\\TravelBridgeAPI\\TravelBridgeAPI.csproj",
       "projectName": "TravelBridgeAPI",
-      "projectPath": "C:\\Users\\pibm9\\Documents\\Datamatiker\\Programmering\\3. semester\\TravelBridgeAPI\\TravelBridgeAPI.csproj",
-      "packagesPath": "C:\\Users\\pibm9\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\pibm9\\Documents\\Datamatiker\\Programmering\\3. semester\\TravelBridgeAPI\\obj\\",
+      "projectPath": "C:\\Users\\Lozze\\Source\\Repos\\TravelBridgeAPI\\TravelBridgeAPI.csproj",
+      "packagesPath": "C:\\Users\\Lozze\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Lozze\\Source\\Repos\\TravelBridgeAPI\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\pibm9\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Lozze\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],

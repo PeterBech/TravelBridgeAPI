@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Globalization;
+using TravelBridgAPI.DataHandler;
 using TravelBridgeAPI.DataHandlers;
 
 namespace TravelBridgeAPI.Controllers
@@ -11,12 +12,15 @@ namespace TravelBridgeAPI.Controllers
         private readonly HandleLocations _handleLocations;
         private readonly HandleFlightDetails _handleFlightDetails;
         private readonly HandleFlightMinPrice _flightMinPriceHandler;
+        private readonly HandleSearch _handleSearch;
 
-        public FlightController(HandleLocations handleLocations, HandleFlightDetails handleFlightDetails, HandleFlightMinPrice handleFlightMinPrice)
+        public FlightController(HandleLocations handleLocations, HandleFlightDetails handleFlightDetails, HandleFlightMinPrice handleFlightMinPrice, HandleSearch handleSearch)
         {
             _handleLocations = handleLocations;
             _handleFlightDetails = handleFlightDetails;
             _flightMinPriceHandler = handleFlightMinPrice;
+            _handleSearch = handleSearch;
+
         }
 
         [HttpGet("SearchLocations/")]
@@ -61,6 +65,25 @@ namespace TravelBridgeAPI.Controllers
             {
                 return NotFound("No flight details found.");
             }
+            return Ok(result);
+        }
+
+        [HttpGet("SearchDirectFlights/")]
+        public async Task<IActionResult> SearchDirectFlights(
+            string departure, 
+            string arrival, 
+            string date, 
+            string? sort = null, 
+            string? cabinClass = null, 
+            string? currency = null)
+        {
+            var result = await _handleSearch.GetDirectFlightAsync(departure, arrival, date, sort, cabinClass, currency);
+
+            if (result == null || result.data?.flightOffers == null || result.data.flightOffers.Length == 0)
+            {
+                return NotFound("No direct flights found.");
+            }
+
             return Ok(result);
         }
 

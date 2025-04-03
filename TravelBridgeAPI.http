@@ -22,3 +22,12 @@ GET {{TravelBridgeAPI_HostAddress}}/api/flight/SearchFlightDetails?token={{token
 GET {{TravelBridgeAPI_HostAddress}}/api/flight/SearchLocations?location={{location}}
 
 ###
+
+@departure=LHR.AIRPORT
+@arrival=JFK.AIRPORT
+@date=2025-04-15
+@sort=CHEAPEST
+@cabinClass=ECONOMY
+@currency_code=USD
+
+GET {{TravelBridgAPI_HostAddress}}/api/flight/SearchDirectFlights?departure={{departure}}&arrival={{arrival}}&date={{date}}&sort={{sort}}&cabinClass={{cabinClass}}&currency={{currency_code}}
