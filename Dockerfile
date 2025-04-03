@@ -10,16 +10,16 @@ WORKDIR /src
 
 # Kopier projektfil og gendan afhængigheder
 COPY ["TravelBridgeAPI.csproj", "./"]
-RUN dotnet restore "TravelBridgeAPI/TravelBridgeAPI.csproj"
+RUN dotnet restore "TravelBridgeAPI.csproj"
 
 # Kopier resten af koden og byg applikationen
 COPY . .
-WORKDIR "/src/TravelBridgeAPI"
-RUN dotnet build --no-restore -c Release -o /app/build
+WORKDIR "/src"
+RUN dotnet build -c Release -o /app/build
 
 # Publiceringsfasen
 FROM build AS publish
-RUN dotnet publish --no-build -c Release -o /app/publish
+RUN dotnet publish -c Release -o /app/publish
 
 # Endelig container baseret på Ubuntu
 FROM base AS final
