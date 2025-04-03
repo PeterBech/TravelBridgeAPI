@@ -19,11 +19,11 @@ builder.Configuration
 // Hent API-nøgler fra miljøvariabler eller secrets
 var apiKeys = new List<string>
 {
-    builder.Configuration["RAPIDAPI_API_KEY"],
-    builder.Configuration["RAPIDAPI_API_KEY_2"],
+    builder.Configuration["RapidApi:ApiKey"],
+    builder.Configuration["RapidApi:ApiKey2"],
 };
 
-var baseUrl = builder.Configuration["RAPIDAPI_BASE_URL"] ?? Environment.GetEnvironmentVariable("RAPIDAPI_BASE_URL");
+var baseUrl = builder.Configuration["RapidApi:BaseUrl"] ?? Environment.GetEnvironmentVariable("RapidApi:BaseUrl");
 
 Console.WriteLine($"BaseURL Loaded: {baseUrl}"); // Debugging log
 

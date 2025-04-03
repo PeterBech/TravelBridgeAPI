@@ -31,7 +31,7 @@ namespace TravelBridgeAPI.DataHandlers
         private async Task<Rootobject?> GetFlightDetailsFromAPI(string token, string currencyCode)
         {
             string apiKey = _apiKeyManager.GetNextApiKey();
-            string apiHost = _configuration["RAPIDAPI_BASE_URL"];
+            string apiHost = _configuration["RapidApi:BaseUrl"];
             string url = $"https://{apiHost}/api/v1/flights/getFlightDetails?token={token}&currency_code={currencyCode}";
 
             var request = new HttpRequestMessage

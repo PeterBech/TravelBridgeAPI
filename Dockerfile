@@ -1,10 +1,9 @@
 # Brug en Ubuntu-baseret container med .NET 8.0 Runtime
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
 WORKDIR /app
-EXPOSE 80
-EXPOSE 443
+EXPOSE 7144
 
-# Byggefasen - Brug .NET SDK til at bygge applikationen
+# 🔹 Byggefasen - Brug .NET SDK til at bygge applikationen
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src
 
@@ -14,17 +13,19 @@ RUN dotnet restore "TravelBridgeAPI.csproj"
 
 # Kopier resten af koden og byg applikationen
 COPY . .
-WORKDIR "/src"
 RUN dotnet build -c Release -o /app/build
 
-# Publiceringsfasen
+# 🔹 Publiceringsfasen
 FROM build AS publish
 RUN dotnet publish -c Release -o /app/publish
 
-# Endelig container baseret på Ubuntu
-FROM base AS final
+# 🔹 Endelig runtime container baseret på .NET Runtime
+FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
 
-# Start applikationen
-ENTRYPOINT ["dotnet", "TravelBridgeAPI.dll"]
+# 🔹 Exponer den port, som API'en skal køre på
+EXPOSE 7144
+
+# 🔹 Start applikationen og bind den til den ønskede port
+ENTRYPOINT ["dotnet", "TravelBridgeAPI.dll", "--urls", "http://0.0.0.0:7144"]

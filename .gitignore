@@ -1,0 +1,40 @@
+# .NET Core
+bin/
+obj/
+
+# User-specific files
+.idea/
+.vscode/
+
+# Windows Installer files
+*.cab
+*.msi
+*.msm
+*.msp
+
+# macOS files
+.DS_Store
+
+# Windows image file caches
+Thumbs.db
+ehthumbs.db
+
+# ASP.NET Files
+appsettings.json
+appsettings.Development.json
+appsettings.Production.json
+
+# Logs
+logs/
+
+# Other IDEs and Editor folders
+.vs/
+.vscode/
+.idea/
+
+# Npm packages (if using npm for front-end)
+node_modules/
+
+# Build results
+build/
+publish/

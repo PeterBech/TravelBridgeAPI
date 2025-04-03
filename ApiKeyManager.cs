@@ -15,6 +15,9 @@
         {
             lock (_lock)
             {
+                if (_apiKeys.Count == 0)
+                    throw new Exception("No API keys available.");
+
                 _currentIndex = (_currentIndex + 1) % _apiKeys.Count;
                 return _apiKeys[_currentIndex];
             }

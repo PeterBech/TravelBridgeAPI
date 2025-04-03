@@ -1,4 +1,4 @@
-@TravelBridgeAPI_HostAddress = https://localhost:7144
+@TravelBridgeAPI_HostAddress = http://skolesql.duckdns.org:7144
 
 @from=BOM.AIRPORT
 @to=DEL.AIRPORT

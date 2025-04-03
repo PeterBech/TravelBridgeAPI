@@ -46,7 +46,7 @@ namespace TravelBridgeAPI.DataHandlers
         private async Task<Rootobject?> GetMinFlightPriceFromAPI(string from, string to, string departure, string returnFlight, string cabinClass, string curencyCode)
         {
             string apiKey = _apiKeyManager.GetNextApiKey();
-            string apiHost = _configuration["RAPIDAPI_BASE_URL"];
+            string apiHost = _configuration["RapidApi:BaseUrl"];
             string url = $"https://{apiHost}/api/v1/flights/getMinPrice?fromId={from}&toId={to}&departDate={departure}&returnDate={returnFlight}&cabinClass={cabinClass}&currency_code={curencyCode}";
 
 

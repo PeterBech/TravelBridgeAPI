@@ -9,6 +9,7 @@ namespace TravelBridgeAPI.DataHandlers
         private readonly IConfiguration _configuration;
         private readonly ApiKeyManager _apiKeyManager;
 
+
         public HandleLocations(HttpClient httpClient, IConfiguration configuration, ApiKeyManager apiKey)
         {
             _httpClient = httpClient ?? throw new ArgumentNullException(nameof(httpClient));
@@ -46,7 +47,7 @@ namespace TravelBridgeAPI.DataHandlers
         private async Task<Rootobject?> SearchLocationAsync(string query)
         {
             string apiKey = _apiKeyManager.GetNextApiKey();
-            string apiHost = _configuration["RAPIDAPI_BASE_URL"];
+            string apiHost = _configuration["RapidApi:BaseUrl"];
             string url = $"https://{apiHost}/api/v1/flights/searchDestination?query={query}";
 
             Console.WriteLine($"SearchLocationAPI Key: {apiKey}");
@@ -75,7 +76,8 @@ namespace TravelBridgeAPI.DataHandlers
             }
             catch (HttpRequestException ex)
             {
-                throw new Exception($"Error fetching flight destination: {ex.Message}");
+                Console.WriteLine($"[ERROR] Fetching flight destination failed: {ex.Message}");
+                return null;
             }
         }
     }
