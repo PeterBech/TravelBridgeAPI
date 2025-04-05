@@ -52,6 +52,9 @@ builder.Services.AddScoped<HandleFlightDetails>();
 builder.Services.AddHttpClient<HandleFlightMinPrice>();
 builder.Services.AddScoped<HandleFlightMinPrice>();
 
+builder.Services.AddHttpClient<HandleSearch>();
+builder.Services.AddScoped<HandleSearch>();
+
 builder.Services.AddEndpointsApiExplorer();
 
 var app = builder.Build();

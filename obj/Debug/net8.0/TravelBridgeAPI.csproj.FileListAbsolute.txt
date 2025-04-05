@@ -34,3 +34,4 @@ C:\Users\pibm9\Documents\Datamatiker\Programmering\3. semester\TravelBridgeAPI\o
 C:\Users\pibm9\Documents\Datamatiker\Programmering\3. semester\TravelBridgeAPI\obj\Debug\net8.0\TravelBridgeAPI.pdb
 C:\Users\pibm9\Documents\Datamatiker\Programmering\3. semester\TravelBridgeAPI\obj\Debug\net8.0\TravelBridgeAPI.genruntimeconfig.cache
 C:\Users\pibm9\Documents\Datamatiker\Programmering\3. semester\TravelBridgeAPI\obj\Debug\net8.0\ref\TravelBridgeAPI.dll
+C:\Users\pibm9\Documents\Datamatiker\Programmering\3. semester\TravelBridgeAPI\obj\Debug\net8.0\TravelBridgeAPI.sourcelink.json

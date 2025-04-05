@@ -1,16 +1,9 @@
-@TravelBridgeAPI_HostAddress = http://skolesql.duckdns.org:7144
+@TravelBridgeAPI_HostAddress = http://localhost:7144
 
-@from=BOM.AIRPORT
-@to=DEL.AIRPORT
-@departure=2025-05-29
-@returnFlight=2025-05-30
-@cabinClass=ECONOMY
-@curencyCode=EUR
-GET {{TravelBridgeAPI_HostAddress}}/api/flight/FlightMinPrice?from={{from}}&to={{to}}&departure={{departure}}&returnFlight={{returnFlight}}&cabinClass={{cabinClass}}&curencyCode={{curencyCode}}
+@location=Copenhagen
+GET {{TravelBridgeAPI_HostAddress}}/api/flight/SearchLocations?location={{location}}
 
 ###
-
-
 
 @token=d6a1f_H4sIAAAAAAAA_y2QbW-yMBSGf437NAotL5UlzROnhKGALyAb-9LUCsjmxNAuCL9-VZ709NzXfZJz2pyTlFfxouvlua5OUmi_AlSNbComC8CbH71sVTo0zXd9qXRWt_rrOlp4oWlEsxxNl_tYh88QPxu6pg5_yf8V7FqDFpTE-0i9XTwLaboLNnSzC-ZB7D8VN6mJlpOn-lAARjTXdUcUnEBv5f83LXGAPXUw8lP8KPFGEgvYWfBpxNi38rHYEn_zhpfjiCOJ5t1tPcxElAq0TTq0TUUf910fD0Luz4EIs2WyHrL3JGu69Isb-32Oo_S4SpPuFhvyLVx4ZmJwca9lg-jCuWEmfTeoK6PtxFyoeDxVcPVbACzswodvmCB4ikbmkqDpiEdJkjR2A2e0kpgmcsaWG4Gmg1ygslqBKM4Fl3VzWRU9cTyEsa2pHbMe2VpOHc-GrqbW_Xu5-wmaQ-vCv11D0cScqaioAQylJ6VQKaPIvI9WeKDWXTi1PpUcqQ2nBVdUUM1mTEFJLZVrCgF89H7R4F3JQFn507bXPyOPZSUiAgAA
 @cc=EUR
@@ -18,7 +11,22 @@ GET {{TravelBridgeAPI_HostAddress}}/api/flight/SearchFlightDetails?token={{token
 
 ###
 
-@location=Copenhagen
-GET {{TravelBridgeAPI_HostAddress}}/api/flight/SearchLocations?location={{location}}
+@from=BOM.AIRPORT
+@to=DEL.AIRPORT
+@departure=2025-05-20
+@returnFlight=2025-05-25
+@cabinClass=ECONOMY
+@curencyCode=EUR
+GET {{TravelBridgeAPI_HostAddress}}/api/flight/FlightMinPrice?from={{from}}&to={{to}}&departure={{departure}}&returnFlight={{returnFlight}}&cabinClass={{cabinClass}}&curencyCode={{curencyCode}}
+
+###
+
+@departure=LHR.AIRPORT
+@arrival=JFK.AIRPORT
+@date=2025-04-15
+@sort=CHEAPEST
+@cabinClass=ECONOMY
+@currency_code=USD
+GET {{TravelBridgeAPI_HostAddress}}/api/flight/SearchDirectFlights?departure={{departure}}&arrival={{arrival}}&date={{date}}
 
 ###
