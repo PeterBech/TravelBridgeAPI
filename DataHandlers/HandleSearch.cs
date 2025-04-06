@@ -33,8 +33,8 @@ namespace TravelBridgeAPI.DataHandlers
             string apiKey = _apiKeyManager.GetNextApiKey();
             string apiHost = _configuration["RapidApi:BaseUrl"];
 
-            var departureLocation = await _handleLocations.GetLocationAsync(departureIata);
-            var arrivalLocation = await _handleLocations.GetLocationAsync(arrivalIata);
+            var departureLocation = await _handleLocations.GetLocationAsync(departureIata, null);
+            var arrivalLocation = await _handleLocations.GetLocationAsync(arrivalIata, null);
 
             if (departureLocation?.data == null || arrivalLocation?.data == null)
             {

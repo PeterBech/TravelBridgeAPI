@@ -3,20 +3,32 @@
   "WorkspaceRootPath": "C:\\Users\\pibm9\\Documents\\Datamatiker\\Programmering\\3. semester\\TravelBridgeAPI\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{11BD75B7-CCB3-4563-9225-14CF58DC936A}|TravelBridgeAPI.csproj|c:\\users\\pibm9\\documents\\datamatiker\\programmering\\3. semester\\travelbridgeapi\\travelbridgeapi.http||{5703B403-55E7-4C63-8C88-A8F52C7A45C5}",
-      "RelativeMoniker": "D:0:0:{11BD75B7-CCB3-4563-9225-14CF58DC936A}|TravelBridgeAPI.csproj|solutionrelative:travelbridgeapi.http||{5703B403-55E7-4C63-8C88-A8F52C7A45C5}"
+      "AbsoluteMoniker": "D:0:0:{11BD75B7-CCB3-4563-9225-14CF58DC936A}|TravelBridgeAPI.csproj|c:\\users\\pibm9\\documents\\datamatiker\\programmering\\3. semester\\travelbridgeapi\\datahandlers\\handleflightminprice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{11BD75B7-CCB3-4563-9225-14CF58DC936A}|TravelBridgeAPI.csproj|solutionrelative:datahandlers\\handleflightminprice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{11BD75B7-CCB3-4563-9225-14CF58DC936A}|TravelBridgeAPI.csproj|c:\\users\\pibm9\\documents\\datamatiker\\programmering\\3. semester\\travelbridgeapi\\datahandlers\\handleflightdetails.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{11BD75B7-CCB3-4563-9225-14CF58DC936A}|TravelBridgeAPI.csproj|solutionrelative:datahandlers\\handleflightdetails.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{11BD75B7-CCB3-4563-9225-14CF58DC936A}|TravelBridgeAPI.csproj|c:\\users\\pibm9\\documents\\datamatiker\\programmering\\3. semester\\travelbridgeapi\\controllers\\flightcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{11BD75B7-CCB3-4563-9225-14CF58DC936A}|TravelBridgeAPI.csproj|solutionrelative:controllers\\flightcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{11BD75B7-CCB3-4563-9225-14CF58DC936A}|TravelBridgeAPI.csproj|c:\\users\\pibm9\\documents\\datamatiker\\programmering\\3. semester\\travelbridgeapi\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{11BD75B7-CCB3-4563-9225-14CF58DC936A}|TravelBridgeAPI.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{11BD75B7-CCB3-4563-9225-14CF58DC936A}|TravelBridgeAPI.csproj|c:\\users\\pibm9\\documents\\datamatiker\\programmering\\3. semester\\travelbridgeapi\\datahandlers\\handlelocations.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{11BD75B7-CCB3-4563-9225-14CF58DC936A}|TravelBridgeAPI.csproj|solutionrelative:datahandlers\\handlelocations.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{11BD75B7-CCB3-4563-9225-14CF58DC936A}|TravelBridgeAPI.csproj|c:\\users\\pibm9\\documents\\datamatiker\\programmering\\3. semester\\travelbridgeapi\\datahandlers\\handlesearch.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{11BD75B7-CCB3-4563-9225-14CF58DC936A}|TravelBridgeAPI.csproj|solutionrelative:datahandlers\\handlesearch.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{11BD75B7-CCB3-4563-9225-14CF58DC936A}|TravelBridgeAPI.csproj|c:\\users\\pibm9\\documents\\datamatiker\\programmering\\3. semester\\travelbridgeapi\\travelbridgeapi.http||{5703B403-55E7-4C63-8C88-A8F52C7A45C5}",
+      "RelativeMoniker": "D:0:0:{11BD75B7-CCB3-4563-9225-14CF58DC936A}|TravelBridgeAPI.csproj|solutionrelative:travelbridgeapi.http||{5703B403-55E7-4C63-8C88-A8F52C7A45C5}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{11BD75B7-CCB3-4563-9225-14CF58DC936A}|TravelBridgeAPI.csproj|c:\\users\\pibm9\\documents\\datamatiker\\programmering\\3. semester\\travelbridgeapi\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{11BD75B7-CCB3-4563-9225-14CF58DC936A}|TravelBridgeAPI.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{11BD75B7-CCB3-4563-9225-14CF58DC936A}|TravelBridgeAPI.csproj|c:\\users\\pibm9\\documents\\datamatiker\\programmering\\3. semester\\travelbridgeapi\\models\\flightsearches.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -35,18 +47,6 @@
       "RelativeMoniker": "D:0:0:{11BD75B7-CCB3-4563-9225-14CF58DC936A}|TravelBridgeAPI.csproj|solutionrelative:models\\flightminprice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{11BD75B7-CCB3-4563-9225-14CF58DC936A}|TravelBridgeAPI.csproj|c:\\users\\pibm9\\documents\\datamatiker\\programmering\\3. semester\\travelbridgeapi\\datahandlers\\handleflightdetails.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{11BD75B7-CCB3-4563-9225-14CF58DC936A}|TravelBridgeAPI.csproj|solutionrelative:datahandlers\\handleflightdetails.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{11BD75B7-CCB3-4563-9225-14CF58DC936A}|TravelBridgeAPI.csproj|c:\\users\\pibm9\\documents\\datamatiker\\programmering\\3. semester\\travelbridgeapi\\datahandlers\\handleflightminprice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{11BD75B7-CCB3-4563-9225-14CF58DC936A}|TravelBridgeAPI.csproj|solutionrelative:datahandlers\\handleflightminprice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{11BD75B7-CCB3-4563-9225-14CF58DC936A}|TravelBridgeAPI.csproj|c:\\users\\pibm9\\documents\\datamatiker\\programmering\\3. semester\\travelbridgeapi\\datahandlers\\handlelocations.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{11BD75B7-CCB3-4563-9225-14CF58DC936A}|TravelBridgeAPI.csproj|solutionrelative:datahandlers\\handlelocations.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{11BD75B7-CCB3-4563-9225-14CF58DC936A}|TravelBridgeAPI.csproj|c:\\users\\pibm9\\documents\\datamatiker\\programmering\\3. semester\\travelbridgeapi\\apikeymanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{11BD75B7-CCB3-4563-9225-14CF58DC936A}|TravelBridgeAPI.csproj|solutionrelative:apikeymanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -62,36 +62,89 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 4,
+          "SelectedChildIndex": 3,
           "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "HandleSearch.cs",
+              "DocumentMoniker": "C:\\Users\\pibm9\\Documents\\Datamatiker\\Programmering\\3. semester\\TravelBridgeAPI\\DataHandlers\\HandleSearch.cs",
+              "RelativeDocumentMoniker": "DataHandlers\\HandleSearch.cs",
+              "ToolTip": "C:\\Users\\pibm9\\Documents\\Datamatiker\\Programmering\\3. semester\\TravelBridgeAPI\\DataHandlers\\HandleSearch.cs",
+              "RelativeToolTip": "DataHandlers\\HandleSearch.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACQAAABbAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-05T11:53:58.323Z",
+              "IsPinned": true,
+              "EditorCaption": ""
+            },
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{66f449b5-c823-40bc-9016-02b4d06a1a8e}"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "FlightSearches.cs",
-              "DocumentMoniker": "C:\\Users\\pibm9\\Documents\\Datamatiker\\Programmering\\3. semester\\TravelBridgeAPI\\Models\\FlightSearches.cs",
-              "RelativeDocumentMoniker": "Models\\FlightSearches.cs",
-              "ToolTip": "C:\\Users\\pibm9\\Documents\\Datamatiker\\Programmering\\3. semester\\TravelBridgeAPI\\Models\\FlightSearches.cs",
-              "RelativeToolTip": "Models\\FlightSearches.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAvAAAAAAAAAA==",
+              "DocumentIndex": 1,
+              "Title": "HandleFlightDetails.cs",
+              "DocumentMoniker": "C:\\Users\\pibm9\\Documents\\Datamatiker\\Programmering\\3. semester\\TravelBridgeAPI\\DataHandlers\\HandleFlightDetails.cs",
+              "RelativeDocumentMoniker": "DataHandlers\\HandleFlightDetails.cs",
+              "ToolTip": "C:\\Users\\pibm9\\Documents\\Datamatiker\\Programmering\\3. semester\\TravelBridgeAPI\\DataHandlers\\HandleFlightDetails.cs",
+              "RelativeToolTip": "DataHandlers\\HandleFlightDetails.cs",
+              "ViewState": "AgIAAAsAAAAAAAAAAAAAwBsAAAAYAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-05T11:55:00.338Z",
+              "WhenOpened": "2025-04-01T10:20:47.531Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "HandleFlightMinPrice.cs",
+              "DocumentMoniker": "C:\\Users\\pibm9\\Documents\\Datamatiker\\Programmering\\3. semester\\TravelBridgeAPI\\DataHandlers\\HandleFlightMinPrice.cs",
+              "RelativeDocumentMoniker": "DataHandlers\\HandleFlightMinPrice.cs",
+              "ToolTip": "C:\\Users\\pibm9\\Documents\\Datamatiker\\Programmering\\3. semester\\TravelBridgeAPI\\DataHandlers\\HandleFlightMinPrice.cs",
+              "RelativeToolTip": "DataHandlers\\HandleFlightMinPrice.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAD0AAABBAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-01T10:22:34.947Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "FlightController.cs",
+              "DocumentMoniker": "C:\\Users\\pibm9\\Documents\\Datamatiker\\Programmering\\3. semester\\TravelBridgeAPI\\Controllers\\FlightController.cs",
+              "RelativeDocumentMoniker": "Controllers\\FlightController.cs",
+              "ToolTip": "C:\\Users\\pibm9\\Documents\\Datamatiker\\Programmering\\3. semester\\TravelBridgeAPI\\Controllers\\FlightController.cs",
+              "RelativeToolTip": "Controllers\\FlightController.cs",
+              "ViewState": "AgIAACIAAAAAAAAAAAAQwEIAAACCAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-01T10:24:22.46Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 3,
-              "Title": "HandleSearch.cs",
-              "DocumentMoniker": "C:\\Users\\pibm9\\Documents\\Datamatiker\\Programmering\\3. semester\\TravelBridgeAPI\\DataHandlers\\HandleSearch.cs",
-              "RelativeDocumentMoniker": "DataHandlers\\HandleSearch.cs",
-              "ToolTip": "C:\\Users\\pibm9\\Documents\\Datamatiker\\Programmering\\3. semester\\TravelBridgeAPI\\DataHandlers\\HandleSearch.cs",
-              "RelativeToolTip": "DataHandlers\\HandleSearch.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAAiAAAAAAAAAA==",
+              "Title": "HandleLocations.cs",
+              "DocumentMoniker": "C:\\Users\\pibm9\\Documents\\Datamatiker\\Programmering\\3. semester\\TravelBridgeAPI\\DataHandlers\\HandleLocations.cs",
+              "RelativeDocumentMoniker": "DataHandlers\\HandleLocations.cs",
+              "ToolTip": "C:\\Users\\pibm9\\Documents\\Datamatiker\\Programmering\\3. semester\\TravelBridgeAPI\\DataHandlers\\HandleLocations.cs",
+              "RelativeToolTip": "DataHandlers\\HandleLocations.cs",
+              "ViewState": "AgIAAA4AAAAAAAAAAAAuwB4AAABQAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-05T11:53:58.323Z",
+              "WhenOpened": "2025-04-01T10:23:21.208Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "TravelBridgeAPI.http",
+              "DocumentMoniker": "C:\\Users\\pibm9\\Documents\\Datamatiker\\Programmering\\3. semester\\TravelBridgeAPI\\TravelBridgeAPI.http",
+              "RelativeDocumentMoniker": "TravelBridgeAPI.http",
+              "ToolTip": "C:\\Users\\pibm9\\Documents\\Datamatiker\\Programmering\\3. semester\\TravelBridgeAPI\\TravelBridgeAPI.http",
+              "RelativeToolTip": "TravelBridgeAPI.http",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003502|",
+              "WhenOpened": "2025-04-01T10:27:40.703Z",
               "EditorCaption": ""
             },
             {
@@ -108,20 +161,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "TravelBridgeAPI.http",
-              "DocumentMoniker": "C:\\Users\\pibm9\\Documents\\Datamatiker\\Programmering\\3. semester\\TravelBridgeAPI\\TravelBridgeAPI.http",
-              "RelativeDocumentMoniker": "TravelBridgeAPI.http",
-              "ToolTip": "C:\\Users\\pibm9\\Documents\\Datamatiker\\Programmering\\3. semester\\TravelBridgeAPI\\TravelBridgeAPI.http",
-              "RelativeToolTip": "TravelBridgeAPI.http",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABgAAAAUAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003502|",
-              "WhenOpened": "2025-04-01T10:27:40.703Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 6,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Users\\pibm9\\Documents\\Datamatiker\\Programmering\\3. semester\\TravelBridgeAPI\\Program.cs",
               "RelativeDocumentMoniker": "Program.cs",
@@ -129,46 +169,19 @@
               "RelativeToolTip": "Program.cs",
               "ViewState": "AgIAABgAAAAAAAAAAAAAADcAAAArAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-01T10:25:26.108Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-01T10:25:26.108Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "FlightController.cs",
-              "DocumentMoniker": "C:\\Users\\pibm9\\Documents\\Datamatiker\\Programmering\\3. semester\\TravelBridgeAPI\\Controllers\\FlightController.cs",
-              "RelativeDocumentMoniker": "Controllers\\FlightController.cs",
-              "ToolTip": "C:\\Users\\pibm9\\Documents\\Datamatiker\\Programmering\\3. semester\\TravelBridgeAPI\\Controllers\\FlightController.cs",
-              "RelativeToolTip": "Controllers\\FlightController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAAApAAAAAAAAAA==",
+              "DocumentIndex": 7,
+              "Title": "FlightSearches.cs",
+              "DocumentMoniker": "C:\\Users\\pibm9\\Documents\\Datamatiker\\Programmering\\3. semester\\TravelBridgeAPI\\Models\\FlightSearches.cs",
+              "RelativeDocumentMoniker": "Models\\FlightSearches.cs",
+              "ToolTip": "C:\\Users\\pibm9\\Documents\\Datamatiker\\Programmering\\3. semester\\TravelBridgeAPI\\Models\\FlightSearches.cs",
+              "RelativeToolTip": "Models\\FlightSearches.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAvAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-01T10:24:22.46Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 10,
-              "Title": "HandleLocations.cs",
-              "DocumentMoniker": "C:\\Users\\pibm9\\Documents\\Datamatiker\\Programmering\\3. semester\\TravelBridgeAPI\\DataHandlers\\HandleLocations.cs",
-              "RelativeDocumentMoniker": "DataHandlers\\HandleLocations.cs",
-              "ToolTip": "C:\\Users\\pibm9\\Documents\\Datamatiker\\Programmering\\3. semester\\TravelBridgeAPI\\DataHandlers\\HandleLocations.cs",
-              "RelativeToolTip": "DataHandlers\\HandleLocations.cs",
-              "ViewState": "AgIAACAAAAAAAAAAAAAAAAoAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-01T10:23:21.208Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 9,
-              "Title": "HandleFlightMinPrice.cs",
-              "DocumentMoniker": "C:\\Users\\pibm9\\Documents\\Datamatiker\\Programmering\\3. semester\\TravelBridgeAPI\\DataHandlers\\HandleFlightMinPrice.cs",
-              "RelativeDocumentMoniker": "DataHandlers\\HandleFlightMinPrice.cs",
-              "ToolTip": "C:\\Users\\pibm9\\Documents\\Datamatiker\\Programmering\\3. semester\\TravelBridgeAPI\\DataHandlers\\HandleFlightMinPrice.cs",
-              "RelativeToolTip": "DataHandlers\\HandleFlightMinPrice.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAADAAAAA9AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-01T10:22:34.947Z"
+              "WhenOpened": "2025-04-05T11:55:00.338Z"
             },
             {
               "$type": "Document",
@@ -184,19 +197,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "HandleFlightDetails.cs",
-              "DocumentMoniker": "C:\\Users\\pibm9\\Documents\\Datamatiker\\Programmering\\3. semester\\TravelBridgeAPI\\DataHandlers\\HandleFlightDetails.cs",
-              "RelativeDocumentMoniker": "DataHandlers\\HandleFlightDetails.cs",
-              "ToolTip": "C:\\Users\\pibm9\\Documents\\Datamatiker\\Programmering\\3. semester\\TravelBridgeAPI\\DataHandlers\\HandleFlightDetails.cs",
-              "RelativeToolTip": "DataHandlers\\HandleFlightDetails.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAACEAAAA9AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-01T10:20:47.531Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 10,
               "Title": "FlightMinPrice.cs",
               "DocumentMoniker": "C:\\Users\\pibm9\\Documents\\Datamatiker\\Programmering\\3. semester\\TravelBridgeAPI\\Models\\FlightMinPrice.cs",
               "RelativeDocumentMoniker": "Models\\FlightMinPrice.cs",
@@ -208,7 +209,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 9,
               "Title": "FlightLocations.cs",
               "DocumentMoniker": "C:\\Users\\pibm9\\Documents\\Datamatiker\\Programmering\\3. semester\\TravelBridgeAPI\\Models\\FlightLocations.cs",
               "RelativeDocumentMoniker": "Models\\FlightLocations.cs",
@@ -220,7 +221,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 8,
               "Title": "FlightDetails.cs",
               "DocumentMoniker": "C:\\Users\\pibm9\\Documents\\Datamatiker\\Programmering\\3. semester\\TravelBridgeAPI\\Models\\FlightDetails.cs",
               "RelativeDocumentMoniker": "Models\\FlightDetails.cs",

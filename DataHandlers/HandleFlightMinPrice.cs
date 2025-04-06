@@ -16,39 +16,52 @@ namespace TravelBridgeAPI.DataHandlers
             _apiKeyManager = apiKey ?? throw new ArgumentNullException(nameof(apiKey));
         }
 
-        public async Task<Rootobject?> GetMinFlightPrice(string from, string to, string departure, string returnFlight, string cabinClass, string curencyCode)
+        public async Task<Rootobject?> GetMinFlightPrice(
+            string from, 
+            string to, 
+            string departure, 
+            string? returnFlight, 
+            string? cabinClass, 
+            string? curencyCode)
         {
-            var rootObject = await GetMinFlightPriceFromDb(from, to);
-            if (rootObject != null)
-            {
-                return rootObject;
-            }
 
-            rootObject = await GetMinFlightPriceFromAPI(from, to, departure, returnFlight, cabinClass, curencyCode);
+            var rootObject = await GetMinFlightPriceFromAPI(from, to, departure, returnFlight, cabinClass, curencyCode);
             if (rootObject != null)
             {
-                SaveMinFlightPriceToDb(rootObject);
                 return rootObject;
             }
 
             return null;
         }
 
-        private async Task<Rootobject?> GetMinFlightPriceFromDb(string from, string to)
-        {
-            return null;
-        }
-
-        private async Task SaveMinFlightPriceToDb(Rootobject flightMinPrice)
-        {
-        }
-
-        private async Task<Rootobject?> GetMinFlightPriceFromAPI(string from, string to, string departure, string returnFlight, string cabinClass, string curencyCode)
+        private async Task<Rootobject?> GetMinFlightPriceFromAPI(
+            string from,
+            string to,
+            string departure,
+            string? returnFlight,
+            string? cabinClass,
+            string? currencyCode)
         {
             string apiKey = _apiKeyManager.GetNextApiKey();
             string apiHost = _configuration["RapidApi:BaseUrl"];
-            string url = $"https://{apiHost}/api/v1/flights/getMinPrice?fromId={from}&toId={to}&departDate={departure}&returnDate={returnFlight}&cabinClass={cabinClass}&currency_code={curencyCode}";
 
+            var queryParams = new List<string>
+            {
+                $"fromId={from}",
+                $"toId={to}",
+                $"departDate={departure}"
+            };
+
+            if (!string.IsNullOrWhiteSpace(returnFlight))
+                queryParams.Add($"returnDate={returnFlight}");
+
+            if (!string.IsNullOrWhiteSpace(cabinClass))
+                queryParams.Add($"cabinClass={cabinClass}");
+
+            if (!string.IsNullOrWhiteSpace(currencyCode))
+                queryParams.Add($"currency_code={currencyCode}");
+
+            string url = $"https://{apiHost}/api/v1/flights/getMinPrice?" + string.Join("&", queryParams);
 
             var request = new HttpRequestMessage
             {
@@ -74,7 +87,6 @@ namespace TravelBridgeAPI.DataHandlers
             {
                 throw new Exception($"Error fetching flight details: {ex.Message}");
             }
-
         }
     }
 }

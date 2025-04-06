@@ -32,7 +32,10 @@ namespace TravelBridgeAPI.DataHandlers
         {
             string apiKey = _apiKeyManager.GetNextApiKey();
             string apiHost = _configuration["RapidApi:BaseUrl"];
-            string url = $"https://{apiHost}/api/v1/flights/getFlightDetails?token={token}&currency_code={currencyCode}";
+
+            string currency = string.IsNullOrWhiteSpace(currencyCode) ? "EUR" : currencyCode;
+            string url = $"https://{apiHost}/api/v1/flights/getFlightDetails?token={token}&currency_code={currency}";
+            
 
             var request = new HttpRequestMessage
             {

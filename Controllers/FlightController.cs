@@ -22,9 +22,9 @@ namespace TravelBridgeAPI.Controllers
         }
 
         [HttpGet("SearchLocations/")]
-        public async Task<IActionResult> SearchLocation(string location)
+        public async Task<IActionResult> SearchLocation(string location, string? language)
         {
-            var result = await _handleLocations.GetLocationAsync(location);
+            var result = await _handleLocations.GetLocationAsync(location, language);
             if (result == null)
             {
                 return NotFound("No flight locations found.");
@@ -33,7 +33,7 @@ namespace TravelBridgeAPI.Controllers
         }
 
         [HttpGet("SearchFlightDetails/")]
-        public async Task<IActionResult> SearchFlightDetails(string token, string curencyCode)
+        public async Task<IActionResult> SearchFlightDetails(string token, string? curencyCode)
         {
             var result = await _handleFlightDetails.GetFlightDetails(token, curencyCode);
             if (result == null)
@@ -48,11 +48,18 @@ namespace TravelBridgeAPI.Controllers
             string from,
             string to,
             string departure,
-            string returnFlight,
-            string cabinClass,
-            string curencyCode)
+            string? returnFlight,
+            string? cabinClass,
+            string? curencyCode)
         {
-            if (!IsValidDate(departure) || !IsValidDate(returnFlight))
+            // Tjek for manglende obligatoriske felter
+            if (string.IsNullOrWhiteSpace(from) || string.IsNullOrWhiteSpace(to) || string.IsNullOrWhiteSpace(departure))
+            {
+                return BadRequest("Missing required parameters: from, to, and departure are required.");
+            }
+
+            // Valider datoformat for obligatorisk felt og valgfrit felt
+            if (!IsValidDate(departure) || (!string.IsNullOrWhiteSpace(returnFlight) && !IsValidDate(returnFlight)))
             {
                 return BadRequest("Invalid date format. Please use yyyy-MM-dd.");
             }
@@ -63,6 +70,7 @@ namespace TravelBridgeAPI.Controllers
             {
                 return NotFound("No flight details found.");
             }
+
             return Ok(result);
         }
 
