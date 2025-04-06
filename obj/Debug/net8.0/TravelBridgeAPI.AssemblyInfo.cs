@@ -15,7 +15,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("TravelBridgeAPI")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+20aebd97663836b7ed187f2e336d8e8aa3dc5ade")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+a213f5a294a1b01b271bce9e8b8edd4f9e73b656")]
 [assembly: System.Reflection.AssemblyProductAttribute("TravelBridgeAPI")]
 [assembly: System.Reflection.AssemblyTitleAttribute("TravelBridgeAPI")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

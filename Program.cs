@@ -1,5 +1,6 @@
 using TravelBridgeAPI;
 using TravelBridgeAPI.DataHandlers;
+using TravelBridgeAPI.DataHandlers.HotelHandlers;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -54,6 +55,15 @@ builder.Services.AddScoped<HandleFlightMinPrice>();
 
 builder.Services.AddHttpClient<HandleSearch>();
 builder.Services.AddScoped<HandleSearch>();
+
+builder.Services.AddHttpClient<HandleSearchDestination>();
+builder.Services.AddScoped<HandleSearchDestination>();
+
+builder.Services.AddHttpClient<HandleSearchHotels>();
+builder.Services.AddScoped<HandleSearchHotels>();
+
+builder.Services.AddHttpClient<HandleHotelDetails>();
+builder.Services.AddScoped<HandleHotelDetails>();
 
 builder.Services.AddEndpointsApiExplorer();
 
