@@ -12,10 +12,12 @@ namespace TravelBridgeAPI.Controllers
     {
         private readonly HandleSearchHotels _handleSearchHotels;
         private readonly HandleSearchDestination _handleSearchDestination;
-        public HotelController(HandleSearchHotels handleSearchHotels, HandleSearchDestination handleSearchDestination)
+        private readonly HandleReviewScores _handleReviewScores;
+        public HotelController(HandleSearchHotels handleSearchHotels, HandleSearchDestination handleSearchDestination, HandleReviewScores handleReviewScores)
         {
             _handleSearchHotels = handleSearchHotels;
             _handleSearchDestination = handleSearchDestination;
+            _handleReviewScores = handleReviewScores;
         }
 
         [HttpGet("SearchHotelDestination/")]
@@ -93,6 +95,29 @@ namespace TravelBridgeAPI.Controllers
                     return NotFound("No hotels found.");
                 }
 
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                // Log fejl (kan tilføjes med Serilog eller anden logger)
+                return StatusCode(500, $"An error occurred while processing the request: {ex.Message}");
+            }
+        }
+
+        [HttpGet("SearchReviewScore/")]
+        public async Task<IActionResult> SearchReviewScore(int hotel_id, string? language)
+        {
+            if (hotel_id <= 0)
+            {
+                return BadRequest("Invalid hotel ID.");
+            }
+            try
+            {
+                var result = await _handleReviewScores.GetHotelReviewScores(hotel_id, language);
+                if (result == null)
+                {
+                    return NotFound("No review scores found for the specified hotel.");
+                }
                 return Ok(result);
             }
             catch (Exception ex)
