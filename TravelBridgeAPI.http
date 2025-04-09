@@ -50,3 +50,9 @@ GET {{TravelBridgeAPI_HostAddress}}/api/hotel/SearchHotelDestination?location={{
 GET {{TravelBridgeAPI_HostAddress}}/api/hotel/SearchHotels?dest_id={{dest_id}}&search_type={{search_type}}&arrival={{arrival}}&departure={{departure}}&adults={{adults}}&children={{children}}&units={{units}}&tempUnit={{tempUnit}}&language={{language}}&currencyCode={{currencyCode}}&location={{location}}
 
 ###
+
+@hotel_id=5955189
+@language=en-us
+GET {{TravelBridgeAPI_HostAddress}}/api/hotel/SearchReviewScore?hotel_id={{hotel_id}}&language={{language}}
+
+###

@@ -65,6 +65,9 @@ builder.Services.AddScoped<HandleSearchHotels>();
 builder.Services.AddHttpClient<HandleHotelDetails>();
 builder.Services.AddScoped<HandleHotelDetails>();
 
+builder.Services.AddHttpClient<HandleReviewScores>();
+builder.Services.AddScoped<HandleReviewScores>();
+
 builder.Services.AddEndpointsApiExplorer();
 
 var app = builder.Build();
