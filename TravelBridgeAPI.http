@@ -56,3 +56,14 @@ GET {{TravelBridgeAPI_HostAddress}}/api/hotel/SearchHotels?dest_id={{dest_id}}&s
 GET {{TravelBridgeAPI_HostAddress}}/api/hotel/SearchReviewScore?hotel_id={{hotel_id}}&language={{language}}
 
 ###
+
+@hotel_id=5218600
+@min_date=2025-05-20
+@max_date=2025-05-25
+@rooms=1
+@adults=2
+@currencyCode=EUR
+
+GET {{TravelBridgeAPI_HostAddress}}/api/hotel/SearchRoomAvailability?hotel_id={{hotel_id}}&min_date={{min_date}}&max_date={{max_date}}&currencyCode={{currencyCode}}
+
+###
