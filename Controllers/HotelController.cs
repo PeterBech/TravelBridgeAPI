@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Primitives;
 using System.Globalization;
 using TravelBridgeAPI.DataHandlers.HotelHandlers;
+using TravelBridgeAPI.Models.FlightDetails;
 
 namespace TravelBridgeAPI.Controllers
 {
@@ -13,11 +14,17 @@ namespace TravelBridgeAPI.Controllers
         private readonly HandleSearchHotels _handleSearchHotels;
         private readonly HandleSearchDestination _handleSearchDestination;
         private readonly HandleReviewScores _handleReviewScores;
-        public HotelController(HandleSearchHotels handleSearchHotels, HandleSearchDestination handleSearchDestination, HandleReviewScores handleReviewScores)
+        private readonly HandleRoomAvailability _handleRoomAvailability;
+        public HotelController(
+            HandleSearchHotels handleSearchHotels, 
+            HandleSearchDestination handleSearchDestination, 
+            HandleReviewScores handleReviewScores, 
+            HandleRoomAvailability handleRoomAvailability)
         {
             _handleSearchHotels = handleSearchHotels;
             _handleSearchDestination = handleSearchDestination;
             _handleReviewScores = handleReviewScores;
+            _handleRoomAvailability = handleRoomAvailability;
         }
 
         [HttpGet("SearchHotelDestination/")]
@@ -117,6 +124,53 @@ namespace TravelBridgeAPI.Controllers
                 if (result == null)
                 {
                     return NotFound("No review scores found for the specified hotel.");
+                }
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                // Log fejl (kan tilføjes med Serilog eller anden logger)
+                return StatusCode(500, $"An error occurred while processing the request: {ex.Message}");
+            }
+        }
+
+        [HttpGet("SearchRoomAvailability/")]
+        public async Task<IActionResult> SearchRoomAvailability(
+            int hotel_id, 
+            string? min_date,
+            string? max_date,
+            int? rooms,
+            int? adults,
+            string? currencyCode,
+            string? location)
+        {
+            if (hotel_id <= 0)
+            {
+                return BadRequest("Invalid hotel ID.");
+            }
+            // Valider datoformat
+            if (!string.IsNullOrEmpty(min_date) && !IsValidDate(min_date))
+            {
+                return BadRequest("Invalid min_date format. Please use yyyy-MM-dd.");
+            }
+            if (!string.IsNullOrEmpty(max_date) && !IsValidDate(max_date))
+            {
+                return BadRequest("Invalid max_date format. Please use yyyy-MM-dd.");
+            }
+            try
+            {
+                var result = await _handleRoomAvailability.GetRoomAvailability(
+                    hotel_id,
+                    min_date,
+                    max_date,
+                    rooms,
+                    adults,
+                    currencyCode,
+                    location
+                );
+                if (result == null)
+                {
+                    return NotFound("No room availability found for the specified hotel.");
                 }
                 return Ok(result);
             }
