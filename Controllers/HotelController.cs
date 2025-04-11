@@ -2,32 +2,38 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Primitives;
 using System.Globalization;
+using TravelBridgeAPI.CustomAttributes;
 using TravelBridgeAPI.DataHandlers.HotelHandlers;
 using TravelBridgeAPI.Models.FlightDetails;
+using TravelBridgeAPI.Security;
 
 namespace TravelBridgeAPI.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
+    [Route("api/[controller]")]    
     public class HotelController : ControllerBase
     {
         private readonly HandleSearchHotels _handleSearchHotels;
         private readonly HandleSearchDestination _handleSearchDestination;
         private readonly HandleReviewScores _handleReviewScores;
         private readonly HandleRoomAvailability _handleRoomAvailability;
+        private readonly IApiKeyValidation _apiKeyValidation;
         public HotelController(
             HandleSearchHotels handleSearchHotels, 
             HandleSearchDestination handleSearchDestination, 
             HandleReviewScores handleReviewScores, 
-            HandleRoomAvailability handleRoomAvailability)
+            HandleRoomAvailability handleRoomAvailability,
+            IApiKeyValidation apiKeyValidation)
         {
             _handleSearchHotels = handleSearchHotels;
             _handleSearchDestination = handleSearchDestination;
             _handleReviewScores = handleReviewScores;
             _handleRoomAvailability = handleRoomAvailability;
+            _apiKeyValidation = apiKeyValidation;
         }
 
         [HttpGet("SearchHotelDestination/")]
+        [ApiKey]
         public async Task<IActionResult> SearchHotelDestination(string location)
         {
             var result = await _handleSearchDestination.GetHotelDestination(location);
@@ -40,6 +46,7 @@ namespace TravelBridgeAPI.Controllers
 
 
         [HttpGet("SearchHotels/")]
+        [ApiKey]
         public async Task<IActionResult> SearchHotels(
             string dest_id,
             string search_type,
@@ -112,6 +119,7 @@ namespace TravelBridgeAPI.Controllers
         }
 
         [HttpGet("SearchReviewScore/")]
+        [ApiKey]
         public async Task<IActionResult> SearchReviewScore(int hotel_id, string? language)
         {
             if (hotel_id <= 0)
@@ -135,6 +143,7 @@ namespace TravelBridgeAPI.Controllers
         }
 
         [HttpGet("SearchRoomAvailability/")]
+        [ApiKey]
         public async Task<IActionResult> SearchRoomAvailability(
             int hotel_id, 
             string? min_date,

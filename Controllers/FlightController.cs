@@ -1,11 +1,13 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Globalization;
+using TravelBridgeAPI.CustomAttributes;
 using TravelBridgeAPI.DataHandlers;
 
 namespace TravelBridgeAPI.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
+    [Route("api/[controller]")]
+    
     public class FlightController : ControllerBase
     {
         private readonly HandleLocations _handleLocations;
@@ -22,6 +24,7 @@ namespace TravelBridgeAPI.Controllers
         }
 
         [HttpGet("SearchLocations/")]
+        [ApiKey]
         public async Task<IActionResult> SearchLocation(string location, string? language)
         {
             var result = await _handleLocations.GetLocationAsync(location, language);
@@ -33,6 +36,7 @@ namespace TravelBridgeAPI.Controllers
         }
 
         [HttpGet("SearchFlightDetails/")]
+        [ApiKey]
         public async Task<IActionResult> SearchFlightDetails(string token, string? curencyCode)
         {
             var result = await _handleFlightDetails.GetFlightDetails(token, curencyCode);
@@ -44,6 +48,7 @@ namespace TravelBridgeAPI.Controllers
         }
 
         [HttpGet("FlightMinPrice/")]
+        [ApiKey]
         public async Task<IActionResult> SearchMinFlightPrice(
             string from,
             string to,
@@ -75,6 +80,7 @@ namespace TravelBridgeAPI.Controllers
         }
 
         [HttpGet("SearchDirectFlights/")]
+        [ApiKey]
         public async Task<IActionResult> SearchDirectFlights(
             string departure,
             string arrival,
