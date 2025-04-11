@@ -1,6 +1,7 @@
 @TravelBridgeAPI_HostAddress = https://localhost:7144
 
 @location=Copenhagen
+
 GET {{TravelBridgeAPI_HostAddress}}/api/flight/SearchLocations?location={{location}}
 
 ###
@@ -67,3 +68,4 @@ GET {{TravelBridgeAPI_HostAddress}}/api/hotel/SearchReviewScore?hotel_id={{hotel
 GET {{TravelBridgeAPI_HostAddress}}/api/hotel/SearchRoomAvailability?hotel_id={{hotel_id}}&min_date={{min_date}}&max_date={{max_date}}&currencyCode={{currencyCode}}
 
 ###
+
