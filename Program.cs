@@ -1,6 +1,8 @@
 using TravelBridgeAPI;
+using TravelBridgeAPI.CustomAttributes;
 using TravelBridgeAPI.DataHandlers;
 using TravelBridgeAPI.DataHandlers.HotelHandlers;
+using TravelBridgeAPI.Security;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,7 +11,33 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(options =>
+{
+    options.AddSecurityDefinition("ApiKey", new Microsoft.OpenApi.Models.OpenApiSecurityScheme
+    {
+        Description = "API Key skal angives i headeren. Format: \"x-api-key: {din-nøgle}\"",
+        Type = Microsoft.OpenApi.Models.SecuritySchemeType.ApiKey,
+        Name = "x-api-key",
+        In = Microsoft.OpenApi.Models.ParameterLocation.Header,
+        Scheme = "ApiKeyScheme"
+    });
+
+    options.AddSecurityRequirement(new Microsoft.OpenApi.Models.OpenApiSecurityRequirement
+    {
+        {
+            new Microsoft.OpenApi.Models.OpenApiSecurityScheme
+            {
+                Reference = new Microsoft.OpenApi.Models.OpenApiReference
+                {
+                    Type = Microsoft.OpenApi.Models.ReferenceType.SecurityScheme,
+                    Id = "ApiKey"
+                },
+                In = Microsoft.OpenApi.Models.ParameterLocation.Header,
+            },
+            new List<string>()
+        }
+    });
+});
 
 // Tilføj konfiguration fra appsettings.json
 builder.Configuration
@@ -70,6 +98,11 @@ builder.Services.AddScoped<HandleReviewScores>();
 
 builder.Services.AddHttpClient<HandleRoomAvailability>();
 builder.Services.AddScoped<HandleRoomAvailability>();
+
+builder.Services.AddTransient<IApiKeyValidation, ApiKeyValidation>();
+builder.Services.AddScoped<ApiKeyAuthFilter>();
+
+builder.Services.AddHttpContextAccessor();
 
 builder.Services.AddEndpointsApiExplorer();
 

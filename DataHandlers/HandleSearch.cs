@@ -3,6 +3,7 @@ using System.Text.Json;
 using TravelBridgeAPI;
 using TravelBridgeAPI.DataHandlers;
 using TravelBridgeAPI.Models.FlightSearches;
+using TravelBridgeAPI.Security;
 
 namespace TravelBridgeAPI.DataHandlers
 {
@@ -11,7 +12,7 @@ namespace TravelBridgeAPI.DataHandlers
         private readonly HttpClient _httpClient;
         private readonly IConfiguration _configuration;
         private readonly HandleLocations _handleLocations;
-
+        private readonly IApiKeyValidation _apiKeyValidation;
         private readonly ApiKeyManager _apiKeyManager;
 
         public HandleSearch(HttpClient httpClient, IConfiguration configuration, HandleLocations handleLocations, ApiKeyManager apiKey)
