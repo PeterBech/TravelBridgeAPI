@@ -62,14 +62,17 @@ builder.Services.AddScoped<HandleSearchDestination>();
 builder.Services.AddHttpClient<HandleSearchHotels>();
 builder.Services.AddScoped<HandleSearchHotels>();
 
-builder.Services.AddHttpClient<HandleHotelDetails>();
-builder.Services.AddScoped<HandleHotelDetails>();
-
 builder.Services.AddHttpClient<HandleReviewScores>();
 builder.Services.AddScoped<HandleReviewScores>();
 
 builder.Services.AddHttpClient<HandleRoomAvailability>();
 builder.Services.AddScoped<HandleRoomAvailability>();
+
+builder.Services.AddHttpClient<HandleHotelDetails>();
+builder.Services.AddScoped<HandleHotelDetails>();
+
+builder.Services.AddHttpClient<HandleHotelPhotos>();
+builder.Services.AddScoped<HandleHotelPhotos>();
 
 builder.Services.AddEndpointsApiExplorer();
 

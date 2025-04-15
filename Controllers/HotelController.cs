@@ -1,10 +1,7 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Primitives;
+﻿using Microsoft.AspNetCore.Mvc;
 using System.Globalization;
 using TravelBridgeAPI.DataHandlers.HotelHandlers;
-using TravelBridgeAPI.Models.FlightDetails;
-
+using TravelBridgeAPI.Models.HotelDetails;
 namespace TravelBridgeAPI.Controllers
 {
     [Route("api/[controller]")]
@@ -15,16 +12,23 @@ namespace TravelBridgeAPI.Controllers
         private readonly HandleSearchDestination _handleSearchDestination;
         private readonly HandleReviewScores _handleReviewScores;
         private readonly HandleRoomAvailability _handleRoomAvailability;
+        private readonly HandleHotelDetails _handleHotelDetails;
+        private readonly HandleHotelPhotos _handleHotelPhotos;
+
         public HotelController(
-            HandleSearchHotels handleSearchHotels, 
-            HandleSearchDestination handleSearchDestination, 
-            HandleReviewScores handleReviewScores, 
-            HandleRoomAvailability handleRoomAvailability)
+            HandleSearchHotels handleSearchHotels,
+            HandleSearchDestination handleSearchDestination,
+            HandleReviewScores handleReviewScores,
+            HandleRoomAvailability handleRoomAvailability,
+            HandleHotelDetails handleHotelDetails,
+            HandleHotelPhotos handleHotelPhotos)
         {
             _handleSearchHotels = handleSearchHotels;
             _handleSearchDestination = handleSearchDestination;
             _handleReviewScores = handleReviewScores;
             _handleRoomAvailability = handleRoomAvailability;
+            _handleHotelDetails = handleHotelDetails;
+            _handleHotelPhotos = handleHotelPhotos;
         }
 
         [HttpGet("SearchHotelDestination/")]
@@ -136,7 +140,7 @@ namespace TravelBridgeAPI.Controllers
 
         [HttpGet("SearchRoomAvailability/")]
         public async Task<IActionResult> SearchRoomAvailability(
-            int hotel_id, 
+            int hotel_id,
             string? min_date,
             string? max_date,
             int? rooms,
@@ -180,6 +184,50 @@ namespace TravelBridgeAPI.Controllers
                 return StatusCode(500, $"An error occurred while processing the request: {ex.Message}");
             }
         }
+
+        [HttpGet("SearchHotelPhotos/")]
+        public async Task<IActionResult> GetHotelPhotos(int hotelId)
+        {
+            var result = await _handleHotelPhotos.GetHotelPhotos(hotelId);
+            if (result == null)
+                return NotFound("No photos found for this hotel.");
+
+            return Ok(result);
+        }
+
+        [HttpGet("SearchHotelDetails/")]
+        public async Task<IActionResult> GetHotelDetails(
+            int hotelId,
+            string arrivalDate,
+            string departureDate,
+            int adults,
+            string? childrenAge,
+            int roomQty,
+            string units,
+            string temperatureUnit,
+            string languageCode,
+            string currencyCode)
+        {
+            var result = await _handleHotelDetails.GetHotelDetails(
+                hotelId,
+                arrivalDate,
+                departureDate,
+                adults,
+                childrenAge,
+                roomQty,
+                units,
+                temperatureUnit,
+                languageCode,
+                currencyCode
+            );
+
+            if (result == null)
+                return NotFound("Hotel details not found.");
+
+            return Ok(result);
+        }
+
+
         private bool IsValidDate(string date)
         {
             return DateTime.TryParseExact(date, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out _);
