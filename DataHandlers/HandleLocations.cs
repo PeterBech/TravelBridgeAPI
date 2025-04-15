@@ -19,7 +19,7 @@ namespace TravelBridgeAPI.DataHandlers
 
         public async Task<Rootobject?> GetLocationAsync(string city, string language)
         {
-            var flightLocation = await SearchLocationAsync(city, language);
+            var flightLocation = await searchLocationAsync(city, language);
             if (flightLocation != null)
             {
                 return flightLocation;
@@ -28,7 +28,7 @@ namespace TravelBridgeAPI.DataHandlers
             return null;
         }
 
-        private async Task<Rootobject?> SearchLocationAsync(string query, string language)
+        private async Task<Rootobject?> searchLocationAsync(string query, string language)
         {
             string apiKey = _apiKeyManager.GetNextApiKey();
             string apiHost = _configuration["RapidApi:BaseUrl"];

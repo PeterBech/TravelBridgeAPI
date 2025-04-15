@@ -17,7 +17,7 @@ namespace TravelBridgeAPI.DataHandlers
             _apiKeyManager = apiKey ?? throw new ArgumentNullException(nameof(apiKey));
         }
 
-        public async Task<Rootobject?> GetFlightDetails(string token, string currencyCode)
+        public async Task<Rootobject?> GetFlightDetailsAsync(string token, string currencyCode)
         {
             var flightDetails = await GetFlightDetailsFromAPI(token, currencyCode);
             if (flightDetails != null)
@@ -33,8 +33,8 @@ namespace TravelBridgeAPI.DataHandlers
             string apiKey = _apiKeyManager.GetNextApiKey();
             string apiHost = _configuration["RapidApi:BaseUrl"];
 
-            string currency = string.IsNullOrWhiteSpace(currencyCode) ? "EUR" : currencyCode;
-            string url = $"https://{apiHost}/api/v1/flights/getFlightDetails?token={token}&currency_code={currency}";
+            string curency = string.IsNullOrWhiteSpace(currencyCode) ? "EUR" : currencyCode;
+            string url = $"https://{apiHost}/api/v1/flights/getFlightDetails?token={token}&currency_code={curency}";
             
 
             var request = new HttpRequestMessage

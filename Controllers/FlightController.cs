@@ -37,9 +37,9 @@ namespace TravelBridgeAPI.Controllers
 
         [HttpGet("SearchFlightDetails/")]
         [ApiKey]
-        public async Task<IActionResult> SearchFlightDetails(string token, string? curencyCode)
+        public async Task<IActionResult> SearchFlightDetails(string token, string? currencyCode)
         {
-            var result = await _handleFlightDetails.GetFlightDetails(token, curencyCode);
+            var result = await _handleFlightDetails.GetFlightDetailsAsync(token, currencyCode);
             if (result == null)
             {
                 return NotFound("No flight details found.");
@@ -55,7 +55,7 @@ namespace TravelBridgeAPI.Controllers
             string departure,
             string? returnFlight,
             string? cabinClass,
-            string? curencyCode)
+            string? currencyCode)
         {
             // Tjek for manglende obligatoriske felter
             if (string.IsNullOrWhiteSpace(from) || string.IsNullOrWhiteSpace(to) || string.IsNullOrWhiteSpace(departure))
@@ -64,12 +64,12 @@ namespace TravelBridgeAPI.Controllers
             }
 
             // Valider datoformat for obligatorisk felt og valgfrit felt
-            if (!IsValidDate(departure) || (!string.IsNullOrWhiteSpace(returnFlight) && !IsValidDate(returnFlight)))
+            if (!isValidDate(departure) || (!string.IsNullOrWhiteSpace(returnFlight) && !isValidDate(returnFlight)))
             {
                 return BadRequest("Invalid date format. Please use yyyy-MM-dd.");
             }
 
-            var result = await _flightMinPriceHandler.GetMinFlightPrice(from, to, departure, returnFlight, cabinClass, curencyCode);
+            var result = await _flightMinPriceHandler.GetMinFlightPriceAsync(from, to, departure, returnFlight, cabinClass, currencyCode);
 
             if (result == null)
             {
@@ -99,7 +99,7 @@ namespace TravelBridgeAPI.Controllers
             return Ok(result);
         }
 
-        private bool IsValidDate(string date)
+        private bool isValidDate(string date)
         {
             return DateOnly.TryParseExact(date, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out _);
         }

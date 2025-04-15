@@ -16,16 +16,16 @@ namespace TravelBridgeAPI.DataHandlers
             _apiKeyManager = apiKey ?? throw new ArgumentNullException(nameof(apiKey));
         }
 
-        public async Task<Rootobject?> GetMinFlightPrice(
+        public async Task<Rootobject?> GetMinFlightPriceAsync(
             string from, 
             string to, 
             string departure, 
             string? returnFlight, 
             string? cabinClass, 
-            string? curencyCode)
+            string? currencyCode)
         {
 
-            var rootObject = await GetMinFlightPriceFromAPI(from, to, departure, returnFlight, cabinClass, curencyCode);
+            var rootObject = await GetMinFlightPriceFromAPI(from, to, departure, returnFlight, cabinClass, currencyCode);
             if (rootObject != null)
             {
                 return rootObject;
