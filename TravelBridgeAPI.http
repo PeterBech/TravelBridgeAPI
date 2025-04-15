@@ -69,3 +69,7 @@ GET {{TravelBridgeAPI_HostAddress}}/api/hotel/SearchRoomAvailability?hotel_id={{
 
 ###
 
+
+GET {{TravelBridgeAPI_HostAddress}}/api/flight/SearchLocations?location={{location}}&language={{language}}
+
+###
