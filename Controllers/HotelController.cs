@@ -1,12 +1,8 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Primitives;
+﻿using Microsoft.AspNetCore.Mvc;
 using System.Globalization;
 using TravelBridgeAPI.CustomAttributes;
 using TravelBridgeAPI.DataHandlers.HotelHandlers;
-using TravelBridgeAPI.Models.FlightDetails;
 using TravelBridgeAPI.Security;
-
 namespace TravelBridgeAPI.Controllers
 {
     [ApiController]
@@ -17,19 +13,26 @@ namespace TravelBridgeAPI.Controllers
         private readonly HandleSearchDestination _handleSearchDestination;
         private readonly HandleReviewScores _handleReviewScores;
         private readonly HandleRoomAvailability _handleRoomAvailability;
+        private readonly HandleHotelDetails _handleHotelDetails;
+        private readonly HandleHotelPhotos _handleHotelPhotos;
         private readonly IApiKeyValidation _apiKeyValidation;
+
         public HotelController(
-            HandleSearchHotels handleSearchHotels, 
-            HandleSearchDestination handleSearchDestination, 
-            HandleReviewScores handleReviewScores, 
+            HandleSearchHotels handleSearchHotels,
+            HandleSearchDestination handleSearchDestination,
+            HandleReviewScores handleReviewScores,
             HandleRoomAvailability handleRoomAvailability,
+            HandleHotelDetails handleHotelDetails,
+            HandleHotelPhotos handleHotelPhotos,
             IApiKeyValidation apiKeyValidation)
         {
-            _handleSearchHotels = handleSearchHotels;
-            _handleSearchDestination = handleSearchDestination;
-            _handleReviewScores = handleReviewScores;
-            _handleRoomAvailability = handleRoomAvailability;
-            _apiKeyValidation = apiKeyValidation;
+            _handleSearchHotels = handleSearchHotels ?? throw new ArgumentNullException(nameof(handleSearchHotels));
+            _handleSearchDestination = handleSearchDestination ?? throw new ArgumentNullException(nameof(handleSearchDestination));
+            _handleReviewScores = handleReviewScores ?? throw new ArgumentNullException(nameof(handleReviewScores));
+            _handleRoomAvailability = handleRoomAvailability ?? throw new ArgumentNullException(nameof(handleRoomAvailability));
+            _handleHotelDetails = handleHotelDetails ?? throw new ArgumentNullException(nameof(handleHotelDetails));
+            _handleHotelPhotos = handleHotelPhotos ?? throw new ArgumentNullException(nameof(handleHotelPhotos));
+            _apiKeyValidation = apiKeyValidation ?? throw new ArgumentNullException(nameof(apiKeyValidation));
         }
 
         [HttpGet("SearchHotelDestination/")]
@@ -145,7 +148,7 @@ namespace TravelBridgeAPI.Controllers
         [HttpGet("SearchRoomAvailability/")]
         [ApiKey]
         public async Task<IActionResult> SearchRoomAvailability(
-            int hotel_id, 
+            int hotel_id,
             string? min_date,
             string? max_date,
             int? rooms,
@@ -189,6 +192,50 @@ namespace TravelBridgeAPI.Controllers
                 return StatusCode(500, $"An error occurred while processing the request: {ex.Message}");
             }
         }
+
+        [HttpGet("SearchHotelPhotos/")]
+        public async Task<IActionResult> GetHotelPhotos(int hotelId)
+        {
+            var result = await _handleHotelPhotos.GetHotelPhotos(hotelId);
+            if (result == null)
+                return NotFound("No photos found for this hotel.");
+
+            return Ok(result);
+        }
+
+        [HttpGet("SearchHotelDetails/")]
+        public async Task<IActionResult> GetHotelDetails(
+            int hotelId,
+            string arrivalDate,
+            string departureDate,
+            int adults,
+            string? childrenAge,
+            int roomQty,
+            string units,
+            string temperatureUnit,
+            string languageCode,
+            string currencyCode)
+        {
+            var result = await _handleHotelDetails.GetHotelDetails(
+                hotelId,
+                arrivalDate,
+                departureDate,
+                adults,
+                childrenAge,
+                roomQty,
+                units,
+                temperatureUnit,
+                languageCode,
+                currencyCode
+            );
+
+            if (result == null)
+                return NotFound("Hotel details not found.");
+
+            return Ok(result);
+        }
+
+
         private bool IsValidDate(string date)
         {
             return DateTime.TryParseExact(date, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out _);

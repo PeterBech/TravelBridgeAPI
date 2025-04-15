@@ -70,6 +70,22 @@ GET {{TravelBridgeAPI_HostAddress}}/api/hotel/SearchRoomAvailability?hotel_id={{
 ###
 
 
-GET {{TravelBridgeAPI_HostAddress}}/api/flight/SearchLocations?location={{location}}&language={{language}}
+@hotel_id = 5218600
+GET {{TravelBridgeAPI_HostAddress}}/api/hotel/photos?hotelId={{hotel_id}}
+
+###
+
+@hotel_id = 5955189
+@arrivalDate = 2025-05-20
+@departureDate = 2025-05-25
+@adults = 2
+@childrenAge = 5,10
+@roomQty = 1
+@units = metric
+@temperatureUnit = C
+@languageCode = en-us
+@currencyCode = EUR
+
+GET {{TravelBridgeAPI_HostAddress}}/api/hotel/SearchHotelDetails?hotelId={{hotelId}}&arrivalDate={{arrivalDate}}&departureDate={{departureDate}}&adults={{adults}}&childrenAge={{childrenAge}}&roomQty={{roomQty}}&units={{units}}&temperatureUnit={{temperatureUnit}}&languageCode={{languageCode}}&currencyCode={{currencyCode}}
 
 ###
