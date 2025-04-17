@@ -33,15 +33,15 @@ namespace TravelBridgeAPI.Models.FlightLocations
         public string photoUri { get; set; }
 
         // 1:1 relationship with the Distancetocity class
-        public Distancetocity distanceToCity { get; set; } 
+        public Distancetocity distanceToCity { get; set; }
 
         public string parent { get; set; }
-        public string region { get; set; }
-
+        public string? region { get; set; } // Ændret til nullable type
         [ForeignKey("Rootobject")]
         public string Keyword { get; set; }
         public Rootobject rootobject { get; set; } // Navigation property
     }
+
 
     public class Distancetocity
     {

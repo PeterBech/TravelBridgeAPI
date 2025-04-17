@@ -89,3 +89,5 @@ GET {{TravelBridgeAPI_HostAddress}}/api/hotel/photos?hotelId={{hotel_id}}
 GET {{TravelBridgeAPI_HostAddress}}/api/hotel/SearchHotelDetails?hotelId={{hotelId}}&arrivalDate={{arrivalDate}}&departureDate={{departureDate}}&adults={{adults}}&childrenAge={{childrenAge}}&roomQty={{roomQty}}&units={{units}}&temperatureUnit={{temperatureUnit}}&languageCode={{languageCode}}&currencyCode={{currencyCode}}
 
 ###
+
+

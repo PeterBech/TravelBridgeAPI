@@ -7,7 +7,6 @@ namespace TravelBridgeAPI.Migrations
     /// <inheritdoc />
     public partial class InitialCreate : Migration
     {
-        /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
@@ -40,7 +39,7 @@ namespace TravelBridgeAPI.Migrations
                     countryNameShort = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     photoUri = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     parent = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    region = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    region = table.Column<string>(type: "nvarchar(max)", nullable: true), // Ændret til nullable
                     Keyword = table.Column<string>(type: "nvarchar(50)", nullable: false)
                 },
                 constraints: table =>
@@ -87,7 +86,6 @@ namespace TravelBridgeAPI.Migrations
                 unique: true);
         }
 
-        /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
@@ -100,4 +98,5 @@ namespace TravelBridgeAPI.Migrations
                 name: "Rootobjects");
         }
     }
+
 }

@@ -115,6 +115,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddDbContext<FlightLocationsContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("FlightLocationsContext")));
 
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -130,6 +131,6 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-app.MapRootobjectEndpoints();
+// app.MapRootobjectEndpoints();
 
 app.Run();
