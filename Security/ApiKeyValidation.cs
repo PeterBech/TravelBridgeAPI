@@ -14,8 +14,8 @@
                 return false;
             }
             string? apiKey = _configuration.GetValue<string>(Constants.ApiKeyName);
-            Console.WriteLine($"apiKey: {apiKey}");
-            Console.WriteLine($"user-apiKeY: {userApiKey}");
+            Console.WriteLine($"[INFO] apiKey: {apiKey}");
+            Console.WriteLine($"[INFO] user-apiKeY: {userApiKey}");
             if (apiKey == null || apiKey != userApiKey)
                 return false;
             return true;

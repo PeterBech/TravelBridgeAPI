@@ -35,8 +35,8 @@ namespace TravelBridgeAPI.DataHandlers
             string languageCode = string.IsNullOrWhiteSpace(language) ? "en-gb" : language;
             string url = $"https://{apiHost}/api/v1/flights/searchDestination?query={query}&languagecode={languageCode}";
 
-            Console.WriteLine($"SearchLocationAPI Key: {apiKey}");
-            Console.WriteLine($"SearchLocationAPI BaseURL: {apiHost}");
+            Console.WriteLine($"[INFO] SearchLocationAPI Key: {apiKey}");
+            Console.WriteLine($"[INFO] SearchLocationAPI BaseURL: {apiHost}");
 
             var request = new HttpRequestMessage
             {
