@@ -32,51 +32,39 @@ namespace TravelBridgeAPI.Migrations
                         .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("city")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("cityName")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("code")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("country")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("countryName")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("countryNameShort")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("name")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("parent")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("photoUri")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("region")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("regionName")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("type")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("id");
@@ -99,10 +87,9 @@ namespace TravelBridgeAPI.Migrations
                         .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("unit")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<float>("value")
+                    b.Property<float?>("value")
                         .HasColumnType("real");
 
                     b.HasKey("Id");
@@ -118,6 +105,10 @@ namespace TravelBridgeAPI.Migrations
                     b.Property<string>("Keyword")
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("Language")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("message")
                         .IsRequired()
@@ -158,8 +149,7 @@ namespace TravelBridgeAPI.Migrations
 
             modelBuilder.Entity("TravelBridgeAPI.Models.FlightLocations.Datum", b =>
                 {
-                    b.Navigation("distanceToCity")
-                        .IsRequired();
+                    b.Navigation("distanceToCity");
                 });
 
             modelBuilder.Entity("TravelBridgeAPI.Models.FlightLocations.Rootobject", b =>

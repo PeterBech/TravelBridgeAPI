@@ -27,6 +27,8 @@ namespace TravelBridgeAPI.Controllers
         [ApiKey]
         public async Task<IActionResult> SearchLocation(string location, string? language)
         {
+            if (language == null)
+                language = "en-gb";
             var result = await _handleLocations.GetLocationAsync(location, language);
             if (result == null)
             {

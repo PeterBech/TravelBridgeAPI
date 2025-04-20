@@ -8,6 +8,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="DbControllers\**" />
+    <Content Remove="DbControllers\**" />
+    <EmbeddedResource Remove="DbControllers\**" />
+    <None Remove="DbControllers\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.11" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.4" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.4">
@@ -24,7 +31,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="DbControllers\" />
+    <Folder Include="Migrations\" />
   </ItemGroup>
 
 </Project>

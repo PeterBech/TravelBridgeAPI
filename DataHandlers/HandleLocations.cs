@@ -28,13 +28,13 @@ namespace TravelBridgeAPI.DataHandlers
 
             if (_context == null || _context.Rootobjects == null)
             {
-                throw new InvalidOperationException("Database context or Rootobjects DbSet is not initialized.");
+                throw new InvalidOperationException("[ERROR] Database context or Rootobjects DbSet is not initialized.");
             }
 
             // Check if the location is already cached in the database
             var cachecLocation = await _context.Rootobjects
                 .AsNoTracking()
-                .FirstOrDefaultAsync(r => r.Keyword.ToLower() == city.ToLower());
+                .FirstOrDefaultAsync(r => r.Keyword.ToLower() == city.ToLower() && r.Language.ToLower() == language.ToLower());
 
             if (cachecLocation != null)
                 return cachecLocation;
@@ -45,6 +45,14 @@ namespace TravelBridgeAPI.DataHandlers
             {
                 // Set the keyword to the city name
                 newLocation.Keyword = city.ToLower();
+                if(language == null)
+                {
+                    newLocation.Language = "en-gb";
+                }
+                else
+                {
+                    newLocation.Language = language.ToLower();
+                }
                 // Save the new location to the database
                 _context.Rootobjects.Add(newLocation);
                 await _context.SaveChangesAsync();
@@ -69,8 +77,8 @@ namespace TravelBridgeAPI.DataHandlers
             string languageCode = string.IsNullOrWhiteSpace(language) ? "en-gb" : language;
             string url = $"https://{apiHost}/api/v1/flights/searchDestination?query={query}&languagecode={languageCode}";
 
-            Console.WriteLine($"SearchLocationAPI Key: {apiKey}");
-            Console.WriteLine($"SearchLocationAPI BaseURL: {apiHost}");
+            Console.WriteLine($"[INFO] SearchLocationAPI Key: {apiKey}");
+            Console.WriteLine($"[INFO] SearchLocationAPI BaseURL: {apiHost}");
 
             var request = new HttpRequestMessage
             {

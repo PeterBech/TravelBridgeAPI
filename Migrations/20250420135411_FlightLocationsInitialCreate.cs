@@ -5,8 +5,9 @@
 namespace TravelBridgeAPI.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class FlightLocationsInitialCreate : Migration
     {
+        /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
@@ -14,6 +15,7 @@ namespace TravelBridgeAPI.Migrations
                 columns: table => new
                 {
                     Keyword = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    Language = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     status = table.Column<bool>(type: "bit", nullable: false),
                     message = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     timestamp = table.Column<long>(type: "bigint", nullable: false)
@@ -28,18 +30,18 @@ namespace TravelBridgeAPI.Migrations
                 columns: table => new
                 {
                     id = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    type = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    code = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    city = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    cityName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    regionName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    country = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    countryName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    countryNameShort = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    photoUri = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    parent = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    region = table.Column<string>(type: "nvarchar(max)", nullable: true), // Ændret til nullable
+                    type = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    code = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    city = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    cityName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    regionName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    country = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    countryName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    countryNameShort = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    photoUri = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    parent = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    region = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Keyword = table.Column<string>(type: "nvarchar(50)", nullable: false)
                 },
                 constraints: table =>
@@ -59,8 +61,8 @@ namespace TravelBridgeAPI.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    value = table.Column<float>(type: "real", nullable: false),
-                    unit = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    value = table.Column<float>(type: "real", nullable: true),
+                    unit = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     DatumId = table.Column<string>(type: "nvarchar(50)", nullable: false)
                 },
                 constraints: table =>
@@ -86,6 +88,7 @@ namespace TravelBridgeAPI.Migrations
                 unique: true);
         }
 
+        /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
@@ -98,5 +101,4 @@ namespace TravelBridgeAPI.Migrations
                 name: "Rootobjects");
         }
     }
-
 }

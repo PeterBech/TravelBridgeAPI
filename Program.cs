@@ -57,11 +57,11 @@ var apiKeys = new List<string>
 
 var baseUrl = builder.Configuration["RapidApi:BaseUrl"] ?? Environment.GetEnvironmentVariable("RapidApi:BaseUrl");
 
-Console.WriteLine($"BaseURL Loaded: {baseUrl}"); // Debugging log
+Console.WriteLine($"[INFO] BaseURL Loaded: {baseUrl}"); // Debugging log
 
 if (string.IsNullOrEmpty(baseUrl))
 {
-    throw new Exception("RAPIDAPI_BASE_URL is missing. Check environment variables or User Secrets.");
+    throw new Exception("[WARNING] RAPIDAPI_BASE_URL is missing. Check environment variables or User Secrets.");
 }
 
 // Registrer ApiKeyManager som singleton
@@ -114,6 +114,14 @@ builder.Services.AddEndpointsApiExplorer();
 
 builder.Services.AddDbContext<FlightLocationsContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("FlightLocationsContext")));
+
+builder.Services.AddControllers()
+    .AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.Preserve;
+        options.JsonSerializerOptions.WriteIndented = true;
+    });
+
 
 
 var app = builder.Build();
