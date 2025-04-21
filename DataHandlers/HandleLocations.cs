@@ -35,6 +35,31 @@ namespace TravelBridgeAPI.DataHandlers
             var cachecLocation = await _context.Rootobjects
                 .AsNoTracking()
                 .FirstOrDefaultAsync(r => r.Keyword.ToLower() == city.ToLower() && r.Language.ToLower() == language.ToLower());
+            // implementer logik til at hente Datum ud fra keyword og language, og gemme i en ny liste
+            // med dertilhørende DistanceToCity
+            if(cachecLocation != null)
+            {
+                List<Datum> data = new List<Datum>();
+                foreach(var item in _context.Data)
+                {
+                    if(item.Keyword.ToLower() == city.ToLower() && item.Language.ToLower() == language.ToLower())
+                    {
+                        data.Add(item);
+                    }
+                }
+                foreach (var item in data)
+                {
+                    var distanceToCity = await _context.DistancesToCity
+                        .AsNoTracking()
+                        .FirstOrDefaultAsync(d => d.DatumId == item.DataId);
+                    if (distanceToCity != null)
+                    {
+                        item.distanceToCity = distanceToCity;
+                    }
+                }
+                cachecLocation.data = data;
+            }
+
 
             if (cachecLocation != null)
                 return cachecLocation;

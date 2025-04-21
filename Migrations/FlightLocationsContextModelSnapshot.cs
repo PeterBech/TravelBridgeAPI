@@ -23,13 +23,19 @@ namespace TravelBridgeAPI.Migrations
 
             modelBuilder.Entity("TravelBridgeAPI.Models.FlightLocations.Datum", b =>
                 {
-                    b.Property<string>("id")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                    b.Property<int>("DataId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("DataId"));
 
                     b.Property<string>("Keyword")
                         .IsRequired()
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Language")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("city")
                         .HasColumnType("nvarchar(max)");
@@ -47,6 +53,10 @@ namespace TravelBridgeAPI.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("countryNameShort")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("id")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("name")
@@ -67,9 +77,9 @@ namespace TravelBridgeAPI.Migrations
                     b.Property<string>("type")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("id");
+                    b.HasKey("DataId");
 
-                    b.HasIndex("Keyword");
+                    b.HasIndex("Keyword", "Language");
 
                     b.ToTable("Data");
                 });
@@ -82,9 +92,8 @@ namespace TravelBridgeAPI.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("DatumId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(50)");
+                    b.Property<int>("DatumId")
+                        .HasColumnType("int");
 
                     b.Property<string>("unit")
                         .HasColumnType("nvarchar(max)");
@@ -103,12 +112,10 @@ namespace TravelBridgeAPI.Migrations
             modelBuilder.Entity("TravelBridgeAPI.Models.FlightLocations.Rootobject", b =>
                 {
                     b.Property<string>("Keyword")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Language")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("message")
                         .IsRequired()
@@ -120,7 +127,7 @@ namespace TravelBridgeAPI.Migrations
                     b.Property<long>("timestamp")
                         .HasColumnType("bigint");
 
-                    b.HasKey("Keyword");
+                    b.HasKey("Keyword", "Language");
 
                     b.ToTable("Rootobjects");
                 });
@@ -129,7 +136,7 @@ namespace TravelBridgeAPI.Migrations
                 {
                     b.HasOne("TravelBridgeAPI.Models.FlightLocations.Rootobject", "rootobject")
                         .WithMany("data")
-                        .HasForeignKey("Keyword")
+                        .HasForeignKey("Keyword", "Language")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

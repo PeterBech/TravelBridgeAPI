@@ -14,22 +14,24 @@ namespace TravelBridgeAPI.Migrations
                 name: "Rootobjects",
                 columns: table => new
                 {
-                    Keyword = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    Language = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Keyword = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Language = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     status = table.Column<bool>(type: "bit", nullable: false),
                     message = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     timestamp = table.Column<long>(type: "bigint", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Rootobjects", x => x.Keyword);
+                    table.PrimaryKey("PK_Rootobjects", x => new { x.Keyword, x.Language });
                 });
 
             migrationBuilder.CreateTable(
                 name: "Data",
                 columns: table => new
                 {
-                    id = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    DataId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    id = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     type = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     name = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     code = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -42,16 +44,17 @@ namespace TravelBridgeAPI.Migrations
                     photoUri = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     parent = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     region = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Keyword = table.Column<string>(type: "nvarchar(50)", nullable: false)
+                    Keyword = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Language = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Data", x => x.id);
+                    table.PrimaryKey("PK_Data", x => x.DataId);
                     table.ForeignKey(
-                        name: "FK_Data_Rootobjects_Keyword",
-                        column: x => x.Keyword,
+                        name: "FK_Data_Rootobjects_Keyword_Language",
+                        columns: x => new { x.Keyword, x.Language },
                         principalTable: "Rootobjects",
-                        principalColumn: "Keyword",
+                        principalColumns: new[] { "Keyword", "Language" },
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -63,7 +66,7 @@ namespace TravelBridgeAPI.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     value = table.Column<float>(type: "real", nullable: true),
                     unit = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    DatumId = table.Column<string>(type: "nvarchar(50)", nullable: false)
+                    DatumId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -72,14 +75,14 @@ namespace TravelBridgeAPI.Migrations
                         name: "FK_DistancesToCity_Data_DatumId",
                         column: x => x.DatumId,
                         principalTable: "Data",
-                        principalColumn: "id",
+                        principalColumn: "DataId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Data_Keyword",
+                name: "IX_Data_Keyword_Language",
                 table: "Data",
-                column: "Keyword");
+                columns: new[] { "Keyword", "Language" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_DistancesToCity_DatumId",

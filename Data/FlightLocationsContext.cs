@@ -17,18 +17,34 @@ namespace TravelBridgeAPI.Data
         {
             base.OnModelCreating(modelBuilder);
 
-            // Relation: Rootobject -> Datum (1-many)
+            // Composite key for Rootobject
             modelBuilder.Entity<Rootobject>()
-                .HasMany(r => r.data)
-                .WithOne(d => d.rootobject)
-                .HasForeignKey(d => d.Keyword)
+                .HasKey(r => new { r.Keyword, r.Language });
+
+            // 1-to-many: Rootobject -> Datum (via composite FK)
+            modelBuilder.Entity<Datum>()
+                .HasOne(d => d.rootobject)
+                .WithMany(r => r.data)
+                .HasForeignKey(d => new { d.Keyword, d.Language })
                 .OnDelete(DeleteBehavior.Cascade);
 
-            // Relation: Datum -> Distancetocity (1-1)
+            // 1-to-1: Datum -> Distancetocity
             modelBuilder.Entity<Datum>()
                 .HasOne(d => d.distanceToCity)
                 .WithOne(dc => dc.Datum)
                 .HasForeignKey<Distancetocity>(dc => dc.DatumId);
+
+            // Specify auto-increment for Datum's primary key (dataId)
+            modelBuilder.Entity<Datum>()
+                .Property(d => d.DataId)
+                .ValueGeneratedOnAdd(); // Auto-increment on dataId
+
+            // Specify that DatumId in Distancetocity is a foreign key
+            modelBuilder.Entity<Distancetocity>()
+                .HasOne(dc => dc.Datum)
+                .WithOne(d => d.distanceToCity)
+                .HasForeignKey<Distancetocity>(dc => dc.DatumId)
+                .OnDelete(DeleteBehavior.Cascade); // Optional: set delete behavior based on your requirements
         }
     }
 }

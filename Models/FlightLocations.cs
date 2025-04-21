@@ -6,12 +6,9 @@ namespace TravelBridgeAPI.Models.FlightLocations
 {
     public class Rootobject
     {
-        [Key, Column(Order = 0)]
-        [MaxLength(50)]
+        [JsonIgnore]
         public string Keyword { get; set; } // Part of the composite PK
-
-        [Key, Column(Order = 1)]
-        [MaxLength(10)]
+        [JsonIgnore]
         public string Language { get; set; } // Part of the composite PK
 
         public bool status { get; set; }
@@ -24,9 +21,10 @@ namespace TravelBridgeAPI.Models.FlightLocations
     public class Datum
     {
         [Key]
-        [MaxLength(50)]
-        public string id { get; set; } // Primary Key
+        [JsonIgnore]
+        public int DataId { get; set; } // Primary Key (Auto-incremented)
 
+        public string id { get; set; }
         public string? type { get; set; }
         public string? name { get; set; }
         public string? code { get; set; }
@@ -42,11 +40,9 @@ namespace TravelBridgeAPI.Models.FlightLocations
         public string? parent { get; set; }
         public string? region { get; set; }
 
-        [ForeignKey("Rootobject")]
         [JsonIgnore]
         public string Keyword { get; set; } // Foreign key part of the composite PK
 
-        [ForeignKey("Rootobject")]
         [JsonIgnore]
         public string Language { get; set; } // Foreign key part of the composite PK
 
@@ -57,13 +53,14 @@ namespace TravelBridgeAPI.Models.FlightLocations
     public class Distancetocity
     {
         [Key]
+        [JsonIgnore]
         public int Id { get; set; } // Internal PK (Auto-incremented)
 
         public float? value { get; set; }
         public string? unit { get; set; }
 
         [JsonIgnore]
-        public string DatumId { get; set; }
+        public int DatumId { get; set; }
 
         [ForeignKey("DatumId")]
         [JsonIgnore]
