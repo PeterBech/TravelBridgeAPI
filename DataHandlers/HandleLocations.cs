@@ -1,5 +1,9 @@
 ﻿using System.Text.Json;
 using TravelBridgeAPI.Models.FlightLocations;
+using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.OpenApi;
+using Microsoft.EntityFrameworkCore;
+using TravelBridgeAPI.Data;
 
 namespace TravelBridgeAPI.DataHandlers
 {
@@ -8,25 +12,88 @@ namespace TravelBridgeAPI.DataHandlers
         private readonly HttpClient _httpClient;
         private readonly IConfiguration _configuration;
         private readonly ApiKeyManager _apiKeyManager;
+        private readonly FlightLocationsContext _context;
 
 
-        public HandleLocations(HttpClient httpClient, IConfiguration configuration, ApiKeyManager apiKey)
+        public HandleLocations(HttpClient httpClient, IConfiguration configuration, ApiKeyManager apiKey, FlightLocationsContext db)
         {
             _httpClient = httpClient ?? throw new ArgumentNullException(nameof(httpClient));
             _configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
             _apiKeyManager = apiKey ?? throw new ArgumentNullException(nameof(apiKey));
+            _context = db ?? throw new ArgumentNullException(nameof(db));
         }
 
         public async Task<Rootobject?> GetLocationAsync(string city, string language)
         {
-            var flightLocation = await searchLocationAsync(city, language);
-            if (flightLocation != null)
+
+            if (_context == null || _context.Rootobjects == null)
             {
-                return flightLocation;
+                throw new InvalidOperationException("[ERROR] Database context or Rootobjects DbSet is not initialized.");
             }
 
-            return null;
+            // Check if the location is already cached in the database
+            var cachecLocation = await _context.Rootobjects
+                .AsNoTracking()
+                .FirstOrDefaultAsync(r => r.Keyword.ToLower() == city.ToLower() && r.Language.ToLower() == language.ToLower());
+            // implementer logik til at hente Datum ud fra keyword og language, og gemme i en ny liste
+            // med dertilhørende DistanceToCity
+            if(cachecLocation != null)
+            {
+                List<Datum> data = new List<Datum>();
+                foreach(var item in _context.Data)
+                {
+                    if(item.Keyword.ToLower() == city.ToLower() && item.Language.ToLower() == language.ToLower())
+                    {
+                        data.Add(item);
+                    }
+                }
+                foreach (var item in data)
+                {
+                    var distanceToCity = await _context.DistancesToCity
+                        .AsNoTracking()
+                        .FirstOrDefaultAsync(d => d.DatumId == item.DataId);
+                    if (distanceToCity != null)
+                    {
+                        item.distanceToCity = distanceToCity;
+                    }
+                }
+                cachecLocation.data = data;
+            }
+
+
+            if (cachecLocation != null)
+                return cachecLocation;
+
+            var newLocation = await searchLocationAsync(city, language);
+
+            if (newLocation != null)
+            {
+                // Set the keyword to the city name
+                newLocation.Keyword = city.ToLower();
+                if(language == null)
+                {
+                    newLocation.Language = "en-gb";
+                }
+                else
+                {
+                    newLocation.Language = language.ToLower();
+                }
+                // Save the new location to the database
+                _context.Rootobjects.Add(newLocation);
+                await _context.SaveChangesAsync();
+            }
+            return newLocation;
         }
+        //public async Task<Rootobject?> GetLocationAsync(string city, string language)
+        //{
+        //    var flightLocation = await searchLocationAsync(city, language);
+        //    if (flightLocation != null)
+        //    {
+        //        return flightLocation;
+        //    }
+
+        //    return null;
+        //}
 
         private async Task<Rootobject?> searchLocationAsync(string query, string language)
         {
@@ -67,3 +134,5 @@ namespace TravelBridgeAPI.DataHandlers
         }
     }
 }
+
+

@@ -1,8 +1,11 @@
-using TravelBridgeAPI;
+ï»¿using TravelBridgeAPI;
 using TravelBridgeAPI.CustomAttributes;
+using TravelBridgeAPI.Data;
 using TravelBridgeAPI.DataHandlers;
 using TravelBridgeAPI.DataHandlers.HotelHandlers;
 using TravelBridgeAPI.Security;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.SqlServer;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,7 +18,7 @@ builder.Services.AddSwaggerGen(options =>
 {
     options.AddSecurityDefinition("ApiKey", new Microsoft.OpenApi.Models.OpenApiSecurityScheme
     {
-        Description = "API Key skal angives i headeren. Format: \"x-api-key: {din-nøgle}\"",
+        Description = "API Key skal angives i headeren. Format: \"x-api-key: {din-nï¿½gle}\"",
         Type = Microsoft.OpenApi.Models.SecuritySchemeType.ApiKey,
         Name = "x-api-key",
         In = Microsoft.OpenApi.Models.ParameterLocation.Header,
@@ -39,13 +42,13 @@ builder.Services.AddSwaggerGen(options =>
     });
 });
 
-// Tilføj konfiguration fra appsettings.json
+// Tilfï¿½j konfiguration fra appsettings.json
 builder.Configuration
     .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
     .AddUserSecrets<Program>() //Henter secrets fra user-secrets
     .AddEnvironmentVariables(); // Henter env vars fra Github Actions
 
-// Hent API-nøgler fra miljøvariabler eller secrets
+// Hent API-nï¿½gler fra miljï¿½variabler eller secrets
 var apiKeys = new List<string>
 {
     builder.Configuration["RapidApi:ApiKey"],
@@ -54,11 +57,11 @@ var apiKeys = new List<string>
 
 var baseUrl = builder.Configuration["RapidApi:BaseUrl"] ?? Environment.GetEnvironmentVariable("RapidApi:BaseUrl");
 
-Console.WriteLine($"BaseURL Loaded: {baseUrl}"); // Debugging log
+Console.WriteLine($"[INFO] BaseURL Loaded: {baseUrl}"); // Debugging log
 
 if (string.IsNullOrEmpty(baseUrl))
 {
-    throw new Exception("RAPIDAPI_BASE_URL is missing. Check environment variables or User Secrets.");
+    throw new Exception("[WARNING] RAPIDAPI_BASE_URL is missing. Check environment variables or User Secrets.");
 }
 
 // Registrer ApiKeyManager som singleton
@@ -109,6 +112,18 @@ builder.Services.AddHttpContextAccessor();
 
 builder.Services.AddEndpointsApiExplorer();
 
+builder.Services.AddDbContext<FlightLocationsContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("FlightLocationsContext")));
+
+builder.Services.AddControllers()
+    .AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.Preserve;
+        options.JsonSerializerOptions.WriteIndented = true;
+    });
+
+
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -123,5 +138,7 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+
+// app.MapRootobjectEndpoints();
 
 app.Run();
