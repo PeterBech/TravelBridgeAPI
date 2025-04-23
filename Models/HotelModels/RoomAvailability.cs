@@ -1,4 +1,4 @@
-﻿namespace TravelBridgeAPI.Models.RoomAvailability
+﻿namespace TravelBridgeAPI.Models.HotelModels.RoomAvailability
 {
 
     public class Rootobject

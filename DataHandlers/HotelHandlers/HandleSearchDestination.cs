@@ -1,6 +1,6 @@
 ﻿using System.Runtime.InteropServices;
-using TravelBridgeAPI.Models.HotelDestination;
 using System.Text.Json;
+using TravelBridgeAPI.Models.HotelModels.HotelDestination;
 
 namespace TravelBridgeAPI.DataHandlers.HotelHandlers
 {

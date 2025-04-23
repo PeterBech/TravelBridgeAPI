@@ -1,11 +1,11 @@
 ﻿using TravelBridgeAPI;
 using TravelBridgeAPI.CustomAttributes;
 using TravelBridgeAPI.Data;
-using TravelBridgeAPI.DataHandlers;
 using TravelBridgeAPI.DataHandlers.HotelHandlers;
 using TravelBridgeAPI.Security;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.SqlServer;
+using TravelBridgeAPI.DataHandlers.FlightHandlers;
 
 var builder = WebApplication.CreateBuilder(args);
 

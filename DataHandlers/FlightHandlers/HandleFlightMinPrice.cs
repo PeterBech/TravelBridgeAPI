@@ -1,7 +1,7 @@
 ﻿using System.Text.Json;
-using TravelBridgeAPI.Models.FlightMinPrice;
+using TravelBridgeAPI.Models.FlightModels.FlightMinPrice;
 
-namespace TravelBridgeAPI.DataHandlers
+namespace TravelBridgeAPI.DataHandlers.FlightHandlers
 {
     public class HandleFlightMinPrice
     {

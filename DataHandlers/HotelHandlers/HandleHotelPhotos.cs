@@ -1,5 +1,5 @@
 ﻿using System.Text.Json;
-using TravelBridgeAPI.Models.HotelPhotos;
+using TravelBridgeAPI.Models.HotelModels.HotelPhotos;
 
 namespace TravelBridgeAPI.DataHandlers.HotelHandlers
 {

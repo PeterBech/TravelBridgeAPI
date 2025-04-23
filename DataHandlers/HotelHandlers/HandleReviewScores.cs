@@ -1,5 +1,5 @@
-﻿using TravelBridgeAPI.Models.HotelReviewScores;
-using System.Text.Json;
+﻿using System.Text.Json;
+using TravelBridgeAPI.Models.HotelModels.HotelReviewScores;
 
 namespace TravelBridgeAPI.DataHandlers.HotelHandlers
 {

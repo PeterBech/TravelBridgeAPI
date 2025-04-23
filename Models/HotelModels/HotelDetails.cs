@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace TravelBridgeAPI.Models.HotelDetails
+namespace TravelBridgeAPI.Models.HotelModels.HotelDetails
 {
 
     public class Rootobject

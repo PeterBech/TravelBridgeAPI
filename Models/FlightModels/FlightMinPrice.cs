@@ -1,4 +1,4 @@
-﻿namespace TravelBridgeAPI.Models.FlightMinPrice
+﻿namespace TravelBridgeAPI.Models.FlightModels.FlightMinPrice
 {
     public class Rootobject
     {

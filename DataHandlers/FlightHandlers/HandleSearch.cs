@@ -1,17 +1,14 @@
 ﻿using Microsoft.AspNetCore.DataProtection.KeyManagement;
 using System.Text.Json;
-using TravelBridgeAPI;
-using TravelBridgeAPI.DataHandlers;
-using TravelBridgeAPI.Models.FlightSearches;
+using TravelBridgeAPI.Models.FlightModels.FlightSearches;
 using TravelBridgeAPI.Security;
 
-namespace TravelBridgeAPI.DataHandlers
+namespace TravelBridgeAPI.DataHandlers.FlightHandlers
 {
     public class HandleSearch
     {
         private readonly HttpClient _httpClient;
         private readonly IConfiguration _configuration;
-        private readonly HandleLocations _handleLocations;
         private readonly IApiKeyValidation _apiKeyValidation;
         private readonly ApiKeyManager _apiKeyManager;
 
@@ -19,13 +16,12 @@ namespace TravelBridgeAPI.DataHandlers
         {
             _httpClient = httpClient ?? throw new ArgumentNullException(nameof(httpClient));
             _configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
-            _handleLocations = handleLocations ?? throw new ArgumentNullException(nameof(handleLocations));
             _apiKeyManager = apiKey ?? throw new ArgumentNullException(nameof(apiKey));
         }
 
         public async Task<Rootobject?> GetDirectFlightAsync(
-            string departureIata,
-            string arrivalIata,
+            string fromId,
+            string toId,
             string date,
             string? sort = null,
             string? cabinClass = null,
@@ -33,24 +29,6 @@ namespace TravelBridgeAPI.DataHandlers
         {
             string apiKey = _apiKeyManager.GetNextApiKey();
             string apiHost = _configuration["RapidApi:BaseUrl"];
-
-            var departureLocation = await _handleLocations.GetLocationAsync(departureIata, null);
-            var arrivalLocation = await _handleLocations.GetLocationAsync(arrivalIata, null);
-
-            if (departureLocation?.data == null || arrivalLocation?.data == null)
-            {
-                Console.WriteLine("Could not retrieve valid location data.");
-                return null;
-            }
-
-            string? fromId = departureLocation.data.FirstOrDefault(d => d.type == "AIRPORT")?.id;
-            string? toId = arrivalLocation.data.FirstOrDefault(d => d.type == "AIRPORT")?.id;
-
-            if (string.IsNullOrEmpty(fromId) || string.IsNullOrEmpty(toId))
-            {
-                Console.WriteLine("No valid airport IDs found.");
-                return null;
-            }
 
             string url = $"https://{apiHost}/api/v1/flights/searchFlights" +
                          $"?fromId={fromId}" +

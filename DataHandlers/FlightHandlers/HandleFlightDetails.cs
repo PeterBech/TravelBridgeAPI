@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.DataProtection.KeyManagement;
 using System.Text.Json;
-using TravelBridgeAPI.Models.FlightDetails;
+using TravelBridgeAPI.Models.FlightModels.FlightDetails;
 
-namespace TravelBridgeAPI.DataHandlers
+namespace TravelBridgeAPI.DataHandlers.FlightHandlers
 {
     public class HandleFlightDetails
     {

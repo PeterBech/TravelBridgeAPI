@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
 
-namespace TravelBridgeAPI.Models.FlightLocations
+namespace TravelBridgeAPI.Models.FlightModels.FlightLocations
 {
     public class Rootobject
     {

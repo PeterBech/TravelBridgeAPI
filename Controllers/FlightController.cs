@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Globalization;
 using TravelBridgeAPI.CustomAttributes;
-using TravelBridgeAPI.DataHandlers;
+using TravelBridgeAPI.DataHandlers.FlightHandlers;
 
 namespace TravelBridgeAPI.Controllers
 {

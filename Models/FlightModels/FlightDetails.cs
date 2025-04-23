@@ -1,4 +1,4 @@
-﻿namespace TravelBridgeAPI.Models.FlightDetails
+﻿namespace TravelBridgeAPI.Models.FlightModels.FlightDetails
 {
     public class Rootobject
     {

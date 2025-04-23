@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Reflection.Emit;
-using TravelBridgeAPI.Models.FlightLocations;
+using TravelBridgeAPI.Models.FlightModels.FlightLocations;
 
 namespace TravelBridgeAPI.Data
 {

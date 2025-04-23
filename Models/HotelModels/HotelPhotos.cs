@@ -1,4 +1,4 @@
-﻿namespace TravelBridgeAPI.Models.HotelPhotos
+﻿namespace TravelBridgeAPI.Models.HotelModels.HotelPhotos
 {
     public class Rootobject
     {

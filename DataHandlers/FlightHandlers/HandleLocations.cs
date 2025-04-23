@@ -1,11 +1,11 @@
 ﻿using System.Text.Json;
-using TravelBridgeAPI.Models.FlightLocations;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.OpenApi;
 using Microsoft.EntityFrameworkCore;
 using TravelBridgeAPI.Data;
+using TravelBridgeAPI.Models.FlightModels.FlightLocations;
 
-namespace TravelBridgeAPI.DataHandlers
+namespace TravelBridgeAPI.DataHandlers.FlightHandlers
 {
     public class HandleLocations
     {

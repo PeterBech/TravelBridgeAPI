@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.DataProtection.KeyManagement;
 using System;
 using System.Text.Json;
-using TravelBridgeAPI.Models.RoomAvailability;
+using TravelBridgeAPI.Models.HotelModels.RoomAvailability;
 
 namespace TravelBridgeAPI.DataHandlers.HotelHandlers
 {
