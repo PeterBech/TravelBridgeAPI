@@ -6,6 +6,7 @@ using TravelBridgeAPI.Security;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.SqlServer;
 using TravelBridgeAPI.DataHandlers.FlightHandlers;
+using TravelBridgeAPI.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -132,6 +133,21 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+// Adding Middleware for logging
+app.UseMiddleware<LoggingMiddleware>();
+
+app.UseHttpsRedirection();
+
+// The rest of the middleware pipeline
+app.UseAuthorization();
+app.UseRouting();
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapControllerRoute(
+        name: "default",
+        pattern: "{controller=home}/{action=index}/{id?}");
+});
 
 app.UseHttpsRedirection();
 
