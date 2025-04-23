@@ -8,7 +8,9 @@ using Microsoft.EntityFrameworkCore.SqlServer;
 using TravelBridgeAPI.DataHandlers.FlightHandlers;
 using TravelBridgeAPI.Middleware;
 
+
 var builder = WebApplication.CreateBuilder(args);
+
 
 // Add services to the container.
 
@@ -56,24 +58,22 @@ var apiKeys = new List<string>
     builder.Configuration["RapidApi:ApiKey2"],
 };
 
+Console.WriteLine("[INFO] External apiKeys loaded");
+
 var baseUrl = builder.Configuration["RapidApi:BaseUrl"] ?? Environment.GetEnvironmentVariable("RapidApi:BaseUrl");
 
-Console.WriteLine($"[INFO] BaseURL Loaded: {baseUrl}"); // Debugging log
+Console.WriteLine($"[INFO] External BaseURL Loaded."); // Debugging log
 
 if (string.IsNullOrEmpty(baseUrl))
 {
-    throw new Exception("[WARNING] RAPIDAPI_BASE_URL is missing. Check environment variables or User Secrets.");
+    throw new Exception("[WARNING] External API - BaseUrl is missing. Check environment variables or User Secrets.");
 }
 
 // Registrer ApiKeyManager som singleton
 builder.Services.AddSingleton(new ApiKeyManager(apiKeys));
 
-//Test af ApiKeys
-foreach (var key in apiKeys)
-{
-    Console.WriteLine($"API Key: {key}");
-}
-Console.WriteLine($"Base Url: {baseUrl}");
+Console.WriteLine("[INFO] ApiKey Loaded");
+
 
 // Tilf?j HttpClient til DI-containeren
 builder.Services.AddHttpClient<HandleLocations>();

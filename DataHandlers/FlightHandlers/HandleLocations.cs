@@ -13,40 +13,79 @@ namespace TravelBridgeAPI.DataHandlers.FlightHandlers
         private readonly IConfiguration _configuration;
         private readonly ApiKeyManager _apiKeyManager;
         private readonly FlightLocationsContext _context;
+        private readonly ILogger<HandleLocations> _logger;
 
-
-        public HandleLocations(HttpClient httpClient, IConfiguration configuration, ApiKeyManager apiKey, FlightLocationsContext db)
+        private int _logCount = 300;
+        public HandleLocations(
+            HttpClient httpClient, 
+            IConfiguration configuration, 
+            ApiKeyManager apiKey, 
+            FlightLocationsContext db,
+            ILogger<HandleLocations> logger)
         {
             _httpClient = httpClient ?? throw new ArgumentNullException(nameof(httpClient));
             _configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
             _apiKeyManager = apiKey ?? throw new ArgumentNullException(nameof(apiKey));
             _context = db ?? throw new ArgumentNullException(nameof(db));
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
         public async Task<Rootobject?> GetLocationAsync(string city, string language)
         {
+            _logCount++;
+            if (_logCount == 400)
+            {
+                _logCount = 300; // Resetting logcount after 100 logs
+            }
 
+            _logger.LogInformation(
+                $"[LOG] Log num: {_logCount}" +
+                $" Request started: {DateTime.Now}" +
+                $" - Fetching flight location for city: {city}" +
+                $" and language: {language}.");
+
+            // Check if the database context and DbSet are initialized
             if (_context == null || _context.Rootobjects == null)
             {
+                _logger.LogError(
+                    $"[ERROR] Timestamp: {DateTime.Now}" +
+                    $" - Database context or Rootobjects DbSet is not initialized for TravelBridgeFlightLocationDb.");
                 throw new InvalidOperationException("[ERROR] Database context or Rootobjects DbSet is not initialized.");
             }
 
+            
+
             // Check if the location is already cached in the database
+            _logger.LogInformation(
+                $"[LOG] Log num: {_logCount}" +
+                $" Timestamp: {DateTime.Now}" +
+                $" - Checking if location is already cached in the database.");
             var cachecLocation = await _context.Rootobjects
                 .AsNoTracking()
                 .FirstOrDefaultAsync(r => r.Keyword.ToLower() == city.ToLower() && r.Language.ToLower() == language.ToLower());
-            // implementer logik til at hente Datum ud fra keyword og language, og gemme i en ny liste
-            // med dertilhørende DistanceToCity
+            
             if(cachecLocation != null)
             {
+                _logger.LogInformation(
+                    $"[LOG] Log num: {_logCount}" +
+                    $" Timestamp: {DateTime.Now}" +
+                    $" - Location found in cache.");
                 List<Datum> data = new List<Datum>();
+                int i = 0;
                 foreach(var item in _context.Data)
                 {
-                    if(item.Keyword.ToLower() == city.ToLower() && item.Language.ToLower() == language.ToLower())
+                    if (item.Keyword.ToLower() == city.ToLower() && item.Language.ToLower() == language.ToLower())
                     {
+                        i++;
+                        _logger.LogInformation(
+                            $"[LOG] Log num: {_logCount}" +
+                            $" - Adding data object for Rootobject " +
+                            $"Keyword: {city} " +
+                            $"and Language: {language}.");
                         data.Add(item);
                     }
                 }
+                i = 0;
                 foreach (var item in data)
                 {
                     var distanceToCity = await _context.DistancesToCity
@@ -54,6 +93,9 @@ namespace TravelBridgeAPI.DataHandlers.FlightHandlers
                         .FirstOrDefaultAsync(d => d.DatumId == item.DataId);
                     if (distanceToCity != null)
                     {
+                        _logger.LogInformation(
+                            $"[LOG] Log num: {_logCount}" +
+                            $" - Adding DistanceToCity object for data object.");
                         item.distanceToCity = distanceToCity;
                     }
                 }
@@ -62,38 +104,58 @@ namespace TravelBridgeAPI.DataHandlers.FlightHandlers
 
 
             if (cachecLocation != null)
+            {
+                _logger.LogInformation(
+                    $"[LOG] Log num: {_logCount}" +
+                    $" Request ended: {DateTime.Now}" +
+                    $" - Successfully fetched flight location for " +
+                    $"city: {city}" +
+                    $" and language: {language} from db.");
                 return cachecLocation;
+            }
 
+            _logger.LogInformation(
+                $"[LOG] Log num: {_logCount}" +
+                $" Timestamp: {DateTime.Now}" +
+                $" - Fetching data from external API.");
             var newLocation = await searchLocationAsync(city, language);
 
             if (newLocation != null)
             {
+                
                 // Set the keyword to the city name
                 newLocation.Keyword = city.ToLower();
                 if(language == null)
                 {
+                    _logger.LogInformation(
+                        $"[LOG] Log num: {_logCount}" +
+                        $" Timestamp: {DateTime.Now}" +
+                        $" - Adding new location to the database with" +
+                        $" Keyword: {city.ToLower()} " +
+                        $"and Language: en-gb.");
                     newLocation.Language = "en-gb";
                 }
                 else
                 {
+                    _logger.LogInformation(
+                        $"[LOG] Log num: {_logCount}" +
+                        $" Timestamp: {DateTime.Now}" +
+                        $" - Adding new location to the database with" +
+                        $" Keyword: {city.ToLower()}" +
+                        $" and Language: {language}.");
                     newLocation.Language = language.ToLower();
                 }
+
                 // Save the new location to the database
                 _context.Rootobjects.Add(newLocation);
                 await _context.SaveChangesAsync();
             }
+            _logger.LogInformation(
+                $"[LOG] Log num: {_logCount}" +
+                $" Request ended: {DateTime.Now}" +
+                $" - Successfully fetched data from external API.");
             return newLocation;
         }
-        //public async Task<Rootobject?> GetLocationAsync(string city, string language)
-        //{
-        //    var flightLocation = await searchLocationAsync(city, language);
-        //    if (flightLocation != null)
-        //    {
-        //        return flightLocation;
-        //    }
-
-        //    return null;
-        //}
 
         private async Task<Rootobject?> searchLocationAsync(string query, string language)
         {
@@ -102,8 +164,10 @@ namespace TravelBridgeAPI.DataHandlers.FlightHandlers
             string languageCode = string.IsNullOrWhiteSpace(language) ? "en-gb" : language;
             string url = $"https://{apiHost}/api/v1/flights/searchDestination?query={query}&languagecode={languageCode}";
 
-            Console.WriteLine($"[INFO] SearchLocationAPI Key: {apiKey}");
-            Console.WriteLine($"[INFO] SearchLocationAPI BaseURL: {apiHost}");
+            _logger.LogInformation(
+                $"[LOG] Log num: {_logCount}" +
+                $" Timestamp: {DateTime.Now}" +
+                $" - Fetching flight location from external API");
 
             var request = new HttpRequestMessage
             {
@@ -128,7 +192,11 @@ namespace TravelBridgeAPI.DataHandlers.FlightHandlers
             }
             catch (HttpRequestException ex)
             {
-                Console.WriteLine($"[ERROR] Fetching flight destination failed: {ex.Message}");
+                _logger.LogError(
+                    ex, 
+                    $"[LOG] Log num: {_logCount}" +
+                    $" Timestamp: {DateTime.Now}" +
+                    $" - Error fetching flight location: {ex.Message}");
                 return null;
             }
         }

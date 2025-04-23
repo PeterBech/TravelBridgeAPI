@@ -9,12 +9,20 @@ namespace TravelBridgeAPI.DataHandlers.HotelHandlers
         private readonly HttpClient _httpClient;
         private readonly IConfiguration _configuration;
         private readonly ApiKeyManager _apiKeyManager;
+        private readonly ILogger<HandleSearchHotels> _logger;
 
-        public HandleSearchHotels(HttpClient httpClient, IConfiguration configuration, ApiKeyManager apiKeyManager)
+        private int _logCount = 1000;
+
+        public HandleSearchHotels(
+            HttpClient httpClient, 
+            IConfiguration configuration, 
+            ApiKeyManager apiKeyManager, 
+            ILogger<HandleSearchHotels> logger)
         {
             _httpClient = httpClient ?? throw new ArgumentNullException(nameof(httpClient));
             _configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
-            _apiKeyManager = apiKeyManager;
+            _apiKeyManager = apiKeyManager ?? throw new ArgumentNullException(nameof(apiKeyManager)); ;
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger)); ;
         }
 
         public async Task<Rootobject?> GetHotel(
@@ -34,6 +42,19 @@ namespace TravelBridgeAPI.DataHandlers.HotelHandlers
             string? currencyCode,
             string? location)
         {
+            _logCount++;
+            if (_logCount == 1101)
+            {
+                _logCount = 1000; // Resetting logcount after 100 logs
+            }
+
+            _logger.LogInformation(
+                $"[LOG] Log num: {_logCount}" +
+                $" Request started: {DateTime.Now}" +
+                $" - Fetching hotel search for destination ID: {dest_id}," +
+                $" search type: {search_type}," +
+                $" arrival date: {arrival}," +
+                $" departure date: {departure}.");
             var hotel = await SearchHotelAsync(
                 dest_id,
                 search_type,
@@ -52,8 +73,16 @@ namespace TravelBridgeAPI.DataHandlers.HotelHandlers
                 location);
             if (hotel != null)
             {
+                _logger.LogInformation(
+                    $"[LOG] Log num: {_logCount}" +
+                    $" Request ended: {DateTime.Now}" +
+                    $" - Successfully fetched hotel search.");
                 return hotel;
             }
+            _logger.LogWarning(
+                $"[LOG] Log num: {_logCount}" +
+                $" Request ended: {DateTime.Now}" +
+                $" - No hotel search results found.");
             return null;
         }
 
@@ -74,6 +103,14 @@ namespace TravelBridgeAPI.DataHandlers.HotelHandlers
             string? currencyCode,
             string? location)
         {
+            _logger.LogInformation(
+                $"[LOG] Log num: {_logCount}" +
+                $" Timestamp: {DateTime.Now}" +
+                $" - Fetching hotel search for destination ID: {dest_id}," +
+                $" search type: {search_type}," +
+                $" arrival date: {arrival}," +
+                $" departure date: {departure}" +
+                $" from external API.");
             string apiKey = _apiKeyManager.GetNextApiKey();
             string apiHost = _configuration["RapidApi:BaseUrl"];
             string url = $"https://{apiHost}/api/v1/hotels/searchHotels?dest_id={dest_id}&search_type={search_type}&arrival_date={arrival}&departure_date={departure}";
@@ -141,18 +178,28 @@ namespace TravelBridgeAPI.DataHandlers.HotelHandlers
                     if (response.IsSuccessStatusCode)
                     {
                         var jsonResponse = await response.Content.ReadAsStringAsync();
+                        _logger.LogInformation(
+                            $"[LOG] Log num: {_logCount}" +
+                            $" Timestamp: {DateTime.Now}" +
+                            $" - Successfully fetched hotel search.");
                         return JsonSerializer.Deserialize<Rootobject>(jsonResponse);
                     }
                     else
                     {
-                        Console.WriteLine($"Error: {response.StatusCode}");
+                        _logger.LogError(
+                            $"[LOG] Log num: {_logCount}" +
+                            $" Timestamp: {DateTime.Now}" +
+                            $" - Error fetching hotel search: {response.StatusCode}");
                         return null;
                     }
                 }
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Exception: {ex.Message}");
+                _logger.LogError(
+                    $"[LOG] Log num: {_logCount}" +
+                    $" Timestamp: {DateTime.Now}" +
+                    $" - Exception occurred while fetching hotel search: {ex.Message}");
                 return null;
             }
         }

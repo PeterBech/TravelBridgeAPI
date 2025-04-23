@@ -3,27 +3,36 @@
     public class ApiKeyValidation : IApiKeyValidation
     {
         private readonly IConfiguration _configuration;
-        public ApiKeyValidation(IConfiguration configuration)
+        private readonly ILogger<ApiKeyValidation> _logger;
+        public ApiKeyValidation(IConfiguration configuration, ILogger<ApiKeyValidation> logger)
         {
             _configuration = configuration;
+            _logger = logger;
         }
         public bool IsValidApiKey(string userApiKey)
         {
-            Console.WriteLine("[INFO] Testing apiKey vs user-apiKey");
+            _logger.LogInformation
+                ($"[LOG] Request started: {DateTime.Now}" +
+                $" - Validating user-apiKey.");
             if(string.IsNullOrEmpty(userApiKey))
             {
-                Console.WriteLine("[ERROR] user-apiKey is null or empty");
+                _logger.LogWarning(
+                    $"[LOG] Request started: {DateTime.Now}" +
+                    $" - user-apiKey is null or empty.");
                 return false;
             }
             string? apiKey = _configuration.GetValue<string>(Constants.ApiKeyName);
-            Console.WriteLine($"[INFO] apiKey: {apiKey}");
-            Console.WriteLine($"[INFO] user-apiKeY: {userApiKey}");
+            
             if (apiKey == null || apiKey != userApiKey)
             {
-                Console.WriteLine("[ERROR] user-apiKey != apiKey");
+                _logger.LogWarning(
+                    $"[LOG] Request started: {DateTime.Now}" +
+                    $" - user-apiKey != apiKey.");
                 return false;
             }
-            Console.WriteLine("[SUCCESS] user-apiKey == apiKey");    
+            _logger.LogInformation(
+                $"[LOG] Request started: {DateTime.Now}" +
+                $" - user-apiKey == apiKey.");    
             return true;
         }
     }
