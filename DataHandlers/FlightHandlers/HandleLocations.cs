@@ -44,75 +44,75 @@ namespace TravelBridgeAPI.DataHandlers.FlightHandlers
                 $" - Fetching flight location for city: {city}" +
                 $" and language: {language}.");
 
-            // Check if the database context and DbSet are initialized
-            if (_context == null || _context.Rootobjects == null)
-            {
-                _logger.LogError(
-                    $"[ERROR] Timestamp: {DateTime.Now}" +
-                    $" - Database context or Rootobjects DbSet is not initialized for TravelBridgeFlightLocationDb.");
-                throw new InvalidOperationException("[ERROR] Database context or Rootobjects DbSet is not initialized.");
-            }
+            //// Check if the database context and DbSet are initialized
+            //if (_context == null || _context.Rootobjects == null)
+            //{
+            //    _logger.LogError(
+            //        $"[ERROR] Timestamp: {DateTime.Now}" +
+            //        $" - Database context or Rootobjects DbSet is not initialized for TravelBridgeFlightLocationDb.");
+            //    throw new InvalidOperationException("[ERROR] Database context or Rootobjects DbSet is not initialized.");
+            //}
 
             
 
-            // Check if the location is already cached in the database
-            _logger.LogInformation(
-                $"[LOG] Log num: {_logCount}" +
-                $" Timestamp: {DateTime.Now}" +
-                $" - Checking if location is already cached in the database.");
-            var cachecLocation = await _context.Rootobjects
-                .AsNoTracking()
-                .FirstOrDefaultAsync(r => r.Keyword.ToLower() == city.ToLower() && r.Language.ToLower() == language.ToLower());
+            //// Check if the location is already cached in the database
+            //_logger.LogInformation(
+            //    $"[LOG] Log num: {_logCount}" +
+            //    $" Timestamp: {DateTime.Now}" +
+            //    $" - Checking if location is already cached in the database.");
+            //var cachecLocation = await _context.Rootobjects
+            //    .AsNoTracking()
+            //    .FirstOrDefaultAsync(r => r.Keyword.ToLower() == city.ToLower() && r.Language.ToLower() == language.ToLower());
             
-            if(cachecLocation != null)
-            {
-                _logger.LogInformation(
-                    $"[LOG] Log num: {_logCount}" +
-                    $" Timestamp: {DateTime.Now}" +
-                    $" - Location found in cache.");
-                List<Datum> data = new List<Datum>();
-                int i = 0;
-                foreach(var item in _context.Data)
-                {
-                    if (item.Keyword.ToLower() == city.ToLower() && item.Language.ToLower() == language.ToLower())
-                    {
-                        i++;
-                        _logger.LogInformation(
-                            $"[LOG] Log num: {_logCount}" +
-                            $" - Adding data object for Rootobject " +
-                            $"Keyword: {city} " +
-                            $"and Language: {language}.");
-                        data.Add(item);
-                    }
-                }
-                i = 0;
-                foreach (var item in data)
-                {
-                    var distanceToCity = await _context.DistancesToCity
-                        .AsNoTracking()
-                        .FirstOrDefaultAsync(d => d.DatumId == item.DataId);
-                    if (distanceToCity != null)
-                    {
-                        _logger.LogInformation(
-                            $"[LOG] Log num: {_logCount}" +
-                            $" - Adding DistanceToCity object for data object.");
-                        item.distanceToCity = distanceToCity;
-                    }
-                }
-                cachecLocation.data = data;
-            }
+            //if(cachecLocation != null)
+            //{
+            //    _logger.LogInformation(
+            //        $"[LOG] Log num: {_logCount}" +
+            //        $" Timestamp: {DateTime.Now}" +
+            //        $" - Location found in cache.");
+            //    List<Datum> data = new List<Datum>();
+            //    int i = 0;
+            //    foreach(var item in _context.Data)
+            //    {
+            //        if (item.Keyword.ToLower() == city.ToLower() && item.Language.ToLower() == language.ToLower())
+            //        {
+            //            i++;
+            //            _logger.LogInformation(
+            //                $"[LOG] Log num: {_logCount}" +
+            //                $" - Adding data object for Rootobject " +
+            //                $"Keyword: {city} " +
+            //                $"and Language: {language}.");
+            //            data.Add(item);
+            //        }
+            //    }
+            //    i = 0;
+            //    foreach (var item in data)
+            //    {
+            //        var distanceToCity = await _context.DistancesToCity
+            //            .AsNoTracking()
+            //            .FirstOrDefaultAsync(d => d.DatumId == item.DataId);
+            //        if (distanceToCity != null)
+            //        {
+            //            _logger.LogInformation(
+            //                $"[LOG] Log num: {_logCount}" +
+            //                $" - Adding DistanceToCity object for data object.");
+            //            item.distanceToCity = distanceToCity;
+            //        }
+            //    }
+            //    cachecLocation.data = data;
+            //}
 
 
-            if (cachecLocation != null)
-            {
-                _logger.LogInformation(
-                    $"[LOG] Log num: {_logCount}" +
-                    $" Request ended: {DateTime.Now}" +
-                    $" - Successfully fetched flight location for " +
-                    $"city: {city}" +
-                    $" and language: {language} from db.");
-                return cachecLocation;
-            }
+            //if (cachecLocation != null)
+            //{
+            //    _logger.LogInformation(
+            //        $"[LOG] Log num: {_logCount}" +
+            //        $" Request ended: {DateTime.Now}" +
+            //        $" - Successfully fetched flight location for " +
+            //        $"city: {city}" +
+            //        $" and language: {language} from db.");
+            //    return cachecLocation;
+            //}
 
             _logger.LogInformation(
                 $"[LOG] Log num: {_logCount}" +
@@ -120,36 +120,36 @@ namespace TravelBridgeAPI.DataHandlers.FlightHandlers
                 $" - Fetching data from external API.");
             var newLocation = await searchLocationAsync(city, language);
 
-            if (newLocation != null)
-            {
+            //if (newLocation != null)
+            //{
                 
-                // Set the keyword to the city name
-                newLocation.Keyword = city.ToLower();
-                if(language == null)
-                {
-                    _logger.LogInformation(
-                        $"[LOG] Log num: {_logCount}" +
-                        $" Timestamp: {DateTime.Now}" +
-                        $" - Adding new location to the database with" +
-                        $" Keyword: {city.ToLower()} " +
-                        $"and Language: en-gb.");
-                    newLocation.Language = "en-gb";
-                }
-                else
-                {
-                    _logger.LogInformation(
-                        $"[LOG] Log num: {_logCount}" +
-                        $" Timestamp: {DateTime.Now}" +
-                        $" - Adding new location to the database with" +
-                        $" Keyword: {city.ToLower()}" +
-                        $" and Language: {language}.");
-                    newLocation.Language = language.ToLower();
-                }
+            //    // Set the keyword to the city name
+            //    newLocation.Keyword = city.ToLower();
+            //    if(language == null)
+            //    {
+            //        _logger.LogInformation(
+            //            $"[LOG] Log num: {_logCount}" +
+            //            $" Timestamp: {DateTime.Now}" +
+            //            $" - Adding new location to the database with" +
+            //            $" Keyword: {city.ToLower()} " +
+            //            $"and Language: en-gb.");
+            //        newLocation.Language = "en-gb";
+            //    }
+            //    else
+            //    {
+            //        _logger.LogInformation(
+            //            $"[LOG] Log num: {_logCount}" +
+            //            $" Timestamp: {DateTime.Now}" +
+            //            $" - Adding new location to the database with" +
+            //            $" Keyword: {city.ToLower()}" +
+            //            $" and Language: {language}.");
+            //        newLocation.Language = language.ToLower();
+            //    }
 
-                // Save the new location to the database
-                _context.Rootobjects.Add(newLocation);
-                await _context.SaveChangesAsync();
-            }
+            //    // Save the new location to the database
+            //    _context.Rootobjects.Add(newLocation);
+            //    await _context.SaveChangesAsync();
+            //}
             _logger.LogInformation(
                 $"[LOG] Log num: {_logCount}" +
                 $" Request ended: {DateTime.Now}" +

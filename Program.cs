@@ -45,13 +45,13 @@ builder.Services.AddSwaggerGen(options =>
     });
 });
 
-// Tilf�j konfiguration fra appsettings.json
+// Add configuration from appsettings.json.
 builder.Configuration
     .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
     .AddUserSecrets<Program>() //Henter secrets fra user-secrets
     .AddEnvironmentVariables(); // Henter env vars fra Github Actions
 
-// Hent API-n�gler fra milj�variabler eller secrets
+// Get the API keys from configuration.
 var apiKeys = new List<string>
 {
     builder.Configuration["RapidApi:ApiKey"],
@@ -154,7 +154,5 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
-
-// app.MapRootobjectEndpoints();
 
 app.Run();
