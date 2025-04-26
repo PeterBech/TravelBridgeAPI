@@ -140,6 +140,11 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-// app.MapRootobjectEndpoints();
+// Updates or creates the database, if it doesnt exist in the container.
+using (var scope = app.Services.CreateScope())
+{
+    var dbContext = scope.ServiceProvider.GetRequiredService<FlightLocationsContext>();
+    dbContext.Database.Migrate();
+}
 
 app.Run();
