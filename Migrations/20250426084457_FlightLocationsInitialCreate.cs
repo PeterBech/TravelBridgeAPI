@@ -14,11 +14,11 @@ namespace TravelBridgeAPI.Migrations
                 name: "Rootobjects",
                 columns: table => new
                 {
-                    Keyword = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    Language = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    status = table.Column<bool>(type: "bit", nullable: false),
-                    message = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    timestamp = table.Column<long>(type: "bigint", nullable: false)
+                    Keyword = table.Column<string>(type: "TEXT", nullable: false),
+                    Language = table.Column<string>(type: "TEXT", nullable: false),
+                    status = table.Column<bool>(type: "INTEGER", nullable: false),
+                    message = table.Column<string>(type: "TEXT", nullable: false),
+                    timestamp = table.Column<long>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -29,23 +29,23 @@ namespace TravelBridgeAPI.Migrations
                 name: "Data",
                 columns: table => new
                 {
-                    DataId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    id = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    type = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    code = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    city = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    cityName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    regionName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    country = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    countryName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    countryNameShort = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    photoUri = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    parent = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    region = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Keyword = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    Language = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                    DataId = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    id = table.Column<string>(type: "TEXT", nullable: false),
+                    type = table.Column<string>(type: "TEXT", nullable: true),
+                    name = table.Column<string>(type: "TEXT", nullable: true),
+                    code = table.Column<string>(type: "TEXT", nullable: true),
+                    city = table.Column<string>(type: "TEXT", nullable: true),
+                    cityName = table.Column<string>(type: "TEXT", nullable: true),
+                    regionName = table.Column<string>(type: "TEXT", nullable: true),
+                    country = table.Column<string>(type: "TEXT", nullable: true),
+                    countryName = table.Column<string>(type: "TEXT", nullable: true),
+                    countryNameShort = table.Column<string>(type: "TEXT", nullable: true),
+                    photoUri = table.Column<string>(type: "TEXT", nullable: true),
+                    parent = table.Column<string>(type: "TEXT", nullable: true),
+                    region = table.Column<string>(type: "TEXT", nullable: true),
+                    Keyword = table.Column<string>(type: "TEXT", nullable: false),
+                    Language = table.Column<string>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -62,11 +62,11 @@ namespace TravelBridgeAPI.Migrations
                 name: "DistancesToCity",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    value = table.Column<float>(type: "real", nullable: true),
-                    unit = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    DatumId = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    value = table.Column<float>(type: "REAL", nullable: true),
+                    unit = table.Column<string>(type: "TEXT", nullable: true),
+                    DatumId = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
