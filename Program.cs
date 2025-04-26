@@ -113,7 +113,8 @@ builder.Services.AddHttpContextAccessor();
 builder.Services.AddEndpointsApiExplorer();
 
 builder.Services.AddDbContext<FlightLocationsContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("FlightLocationsContext")));
+    options.UseSqlite(builder.Configuration.GetConnectionString("FlightLocationsContext")));
+
 
 builder.Services.AddControllers()
     .AddJsonOptions(options =>

@@ -41,9 +41,11 @@ namespace TravelBridgeAPI.Models.FlightModels.FlightLocations
         public string? region { get; set; }
 
         [JsonIgnore]
+        [ForeignKey("Rootobject")]
         public string Keyword { get; set; } // Foreign key part of the composite PK
 
         [JsonIgnore]
+        [ForeignKey("Rootobject")]
         public string Language { get; set; } // Foreign key part of the composite PK
 
         [JsonIgnore]
