@@ -35,7 +35,7 @@ namespace TravelBridgeAPI.DataHandlers.FlightHandlers
             _logCount++;
             if(_logCount == 300)
             {
-                _logCount = 200; // Resetting logcount after 100 logs
+                _logCount = 200; // Resetting logcount after 200 logs
             }
 
             _logger.LogInformation(

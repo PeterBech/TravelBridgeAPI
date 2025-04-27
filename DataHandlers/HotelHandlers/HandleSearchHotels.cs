@@ -1,6 +1,6 @@
 ﻿using System.Net.Http;
 using System.Text.Json;
-using TravelBridgeAPI.Models.HotelModels.Hotels;
+using TravelBridgeAPI.Models.HotelModels;
 
 namespace TravelBridgeAPI.DataHandlers.HotelHandlers
 {

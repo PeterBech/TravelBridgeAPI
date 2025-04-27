@@ -7,10 +7,18 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.SqlServer;
 using TravelBridgeAPI.DataHandlers.FlightHandlers;
 using TravelBridgeAPI.Middleware;
+using Serilog;
 
+
+
+Log.Logger = new LoggerConfiguration()
+    .WriteTo.Console() //Serilog er sat som logger til konsol
+    .WriteTo.SQLite("TravelBridgeLogs.db")  // Serilog er sat til at skrive til database (håber vi!)
+    .CreateLogger();
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Host.UseSerilog();
 
 // Add services to the container.
 

@@ -23,22 +23,59 @@ namespace TravelBridgeAPI.Middleware
 
             var endpoint = context.GetEndpoint();
             var endpointName = endpoint?.DisplayName ?? "Unknown endpoint";
-            
-            // Log før request behandles
-            _logger.LogInformation($"[LOG] Log num: {_requestCount} Request started: {DateTime.Now} - {context.Request.Method} {context.Request.Path} - Endpoint: {endpointName} ");
+            var method = context.Request.Method;
+            var path = context.Request.Path;
+
+            // Log før request behandles 
+            // (Her er nu implementeret structured logging, som led i implementeringen af serilog)
+            // @RequestInfo, @ResponseInfo og @ErrorInfo er serilog templates
+            // Dermed kan serilog læse objektet som et structured object
+            // Dette gør også at Serilog gemmer felterne separat til DB
+            _logger.LogInformation("Request started {@RequestInfo}", new
+            {
+                LogNumber = _requestCount,
+                Timestamp = DateTime.UtcNow,
+                Method = method,
+                Path = path,
+                Endpoint = endpointName
+            });
 
             var sw = Stopwatch.StartNew();
             try
             {
                 await _next(context);
                 sw.Stop();
-                _logger.LogInformation($"[LOG] Log num: {_requestCount} Response sent: {DateTime.Now} - Statuscode: {context.Response.StatusCode} - Processing time: {sw.ElapsedMilliseconds} ms");
+
+                var statuscode = context.Response.StatusCode;
+
+                _logger.LogInformation("Response sent {@ResponseInfo}", new
+                {
+                    LogNumber = _requestCount,
+                    Timestamp = DateTime.UtcNow,
+                    StatusCode = statuscode,
+                    ProcessingTimeMs = sw.ElapsedMilliseconds,
+                    Method = method,
+                    Path = path,
+                    Endpoint = endpointName
+                });
 
             }
-            catch ( Exception ex ) 
+            catch ( Exception ex)
             {
                 sw.Stop();
-                _logger.LogError(ex, $"[LOG] Log num: {_requestCount} Error occurred: {DateTime.Now} - Statuscode: {context.Response.StatusCode} - Processing time: {sw.ElapsedMilliseconds} ms");
+
+                var statuscode = context.Response.StatusCode;
+
+                _logger.LogError(ex, "Error occurred {@ErrorInfo}", new
+                {
+                    LogNumber = _requestCount,
+                    Timestamp = DateTime.UtcNow,
+                    StatusCode = statuscode,
+                    ProcessingTimeMs = sw.ElapsedMilliseconds,
+                    Method = method,
+                    Path = path,
+                    Endpoint = endpointName
+                });
                 throw;
             }
             

@@ -16,7 +16,7 @@
         public int offsetDays { get; set; }
         public bool isCheapest { get; set; }
         public Price price { get; set; }
-        public Pricerounded priceRounded { get; set; }
+        public Pricerounded? priceRounded { get; set; }
     }
 
     public class Price

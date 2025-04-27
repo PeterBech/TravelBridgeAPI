@@ -38,7 +38,7 @@ namespace TravelBridgeAPI.DataHandlers.FlightHandlers
         {
             _logCount++;
             if (_logCount == 501)
-                _logCount = 400; // Reset the counter after 100 requests
+                _logCount = 400; // Reset the counter after 400 requests
 
             _logger.LogInformation(
                 $"[LOG] Log num: {_logCount}" +

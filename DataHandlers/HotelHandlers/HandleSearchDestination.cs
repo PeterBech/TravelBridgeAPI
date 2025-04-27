@@ -14,8 +14,8 @@ namespace TravelBridgeAPI.DataHandlers.HotelHandlers
         private int _logCount = 900;
 
         public HandleSearchDestination(
-            HttpClient httpClient, 
-            IConfiguration configuration, ApiKeyManager apiKey, 
+            HttpClient httpClient,
+            IConfiguration configuration, ApiKeyManager apiKey,
             ILogger<HandleSearchDestination> logger)
         {
             _httpClient = httpClient ?? throw new ArgumentNullException(nameof(httpClient));
@@ -29,7 +29,7 @@ namespace TravelBridgeAPI.DataHandlers.HotelHandlers
             _logCount++;
             if (_logCount == 1001)
             {
-                _logCount = 900; // Resetting logcount after 100 logs
+                _logCount = 900; // Resetting logcount after 900 logs
             }
 
             _logger.LogInformation(
@@ -57,7 +57,7 @@ namespace TravelBridgeAPI.DataHandlers.HotelHandlers
             string apiKey = _apiKeyManager.GetNextApiKey();
             string apiHost = _configuration["RapidApi:BaseUrl"];
             string url = $"https://{apiHost}/api/v1/hotels/searchDestination?query={query}";
-            
+
             _logger.LogInformation(
                 $"[LOG] Log num: {_logCount}" +
                 $" Timestamp: {DateTime.Now}" +
