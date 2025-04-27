@@ -29,10 +29,12 @@ namespace TravelBridgeAPI.DataHandlers.HotelHandlers
             if (_logCount == 701)
                 _logCount = 600; 
 
-            _logger.LogInformation(
-                $"[LOG] Log num: {_logCount}\n" +
-                $" Request started: {DateTime.Now}\n" +
-                $" Fetching hotel photos for hotel ID: {hotelId}");
+            _logger.LogInformation("Fetching hotel photos started {@HotelPhotosRequestInfo}", new
+            {
+                LogNumber = _logCount,
+                Timestamp = DateTime.UtcNow,
+                HotelId = hotelId
+            });
 
             string apiKey = _apiKeyManager.GetNextApiKey();
             string apiHost = _configuration["RapidApi:BaseUrl"];
@@ -55,10 +57,12 @@ namespace TravelBridgeAPI.DataHandlers.HotelHandlers
 
                 if (!response.IsSuccessStatusCode)
                 {
-                    _logger.LogWarning(
-                        $"[LOG] Log num: {_logCount}\n" +
-                        $" Request ended: {DateTime.Now}\n" +
-                        $" Failed to fetch hotel photos - Status: {response.StatusCode}");
+                    _logger.LogWarning("Failed to fetch hotel photos {@HotelPhotosWarningInfo}", new
+                    {
+                        LogNumber = _logCount,
+                        Timestamp = DateTime.UtcNow,
+                        response.StatusCode
+                    });
                     return null;
                 }
 
@@ -67,25 +71,32 @@ namespace TravelBridgeAPI.DataHandlers.HotelHandlers
 
                 if (hotelPhotos == null)
                 {
-                    _logger.LogWarning(
-                        $"[LOG] Log num: {_logCount}\n" +
-                        $" Deserialization returned null for hotel ID: {hotelId}");
-                    return null;
+                        _logger.LogWarning("Deserialization returned null {@HotelPhotosDeserializationWarning}", new
+                        {
+                            LogNumber = _logCount,
+                            Timestamp = DateTime.UtcNow,
+                            HotelId = hotelId
+                        });
+                        return null;
                 }
 
-                _logger.LogInformation(
-                    $"[LOG] Log num: {_logCount}\n" +
-                    $" Request ended: {DateTime.Now}\n" +
-                    $" Successfully fetched hotel photos for hotel ID: {hotelId}");
+                _logger.LogInformation("Successfully fetched hotel photos {@HotelPhotosSuccessInfo}", new
+                {
+                    LogNumber = _logCount,
+                    Timestamp = DateTime.UtcNow,
+                    HotelId = hotelId
+                });
 
                 return hotelPhotos;
             }
             catch (HttpRequestException ex)
             {
-                _logger.LogError(
-                    $"[LOG] Log num: {_logCount}\n" +
-                    $" Timestamp: {DateTime.Now}\n" +
-                    $" Error fetching hotel photos: {ex.Message}");
+                _logger.LogError(ex, "Error fetching hotel photos {@HotelPhotosErrorInfo}", new
+                {
+                    LogNumber = _logCount,
+                    Timestamp = DateTime.UtcNow,
+                    HotelId = hotelId
+                });
                 throw;
             }
         }

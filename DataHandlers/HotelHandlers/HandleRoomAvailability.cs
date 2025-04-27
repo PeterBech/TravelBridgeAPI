@@ -26,7 +26,7 @@ namespace TravelBridgeAPI.DataHandlers.HotelHandlers
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
-        public async Task<Rootobject> GetRoomAvailability(
+        public async Task<Rootobject?> GetRoomAvailability(
             int id, 
             string? min_date, 
             string? max_date, 
@@ -39,99 +39,102 @@ namespace TravelBridgeAPI.DataHandlers.HotelHandlers
             if (_logCount == 901)
                 _logCount = 800; // Reset the counter after 100 requests
 
-            _logger.LogInformation(
-                $"[LOG] Log num: {_logCount}" +
-                $" Request started: {DateTime.Now}" +
-                $" - Fetching room availability for hotel ID: {id} " +
-                $"with min_date: {min_date}, " +
-                $"max_date: {max_date}.");
+            _logger.LogInformation("Fetching room availability started {@RoomAvailabilityRequestInfo}", new
+            {
+                LogNumber = _logCount,
+                Timestamp = DateTime.UtcNow,
+                HotelId = id,
+                MinDate = min_date,
+                MaxDate = max_date
+            });
+
             if (id <= 0)
             {
-                _logger.LogError($"[LOG] Log num: {_logCount} - Invalid hotel ID: {id}. Must be greater than zero.");
+                _logger.LogError("Invalid hotel ID provided {@RoomAvailabilityErrorInfo}", new
+                {
+                    LogNumber = _logCount,
+                    Timestamp = DateTime.UtcNow,
+                    HotelId = id,
+                    MinDate = min_date,
+                    MaxDate = max_date
+                });
                 throw new ArgumentException("Hotel ID must be greater than zero.");
             }
+
             var rootObject = await GetRoomAvailabilityFromAPI(id, min_date, max_date, rooms, adults, currencyCode, location);
+
             if (rootObject != null)
             {
-                _logger.LogInformation(
-                    $"[LOG] Log num: {_logCount}" +
-                    $" Request ended: {DateTime.Now}" +
-                    $" - Successfully fetched room availability for hotel ID: {id} " +
-                    $"with min_date: {min_date}, " +
-                    $"max_date: {max_date}.");
+                _logger.LogInformation("Successfully fetched room availability {@RoomAvailabilitySuccessInfo}", new
+                {
+                    LogNumber = _logCount,
+                    Timestamp = DateTime.UtcNow,
+                    HotelId = id
+                });
                 return rootObject;
             }
-            _logger.LogInformation(
-                $"[LOG] Log num: {_logCount}" +
-                $" Request ended: {DateTime.Now}" +
-                $" - No room availability found for hotel ID: {id}.");
+            _logger.LogWarning("No room availability found {@RoomAvailabilityWarningInfo}", new
+            {
+                LogNumber = _logCount,
+                Timestamp = DateTime.UtcNow,
+                HotelId = id
+            });
             return null;
         }
 
-        public async Task<Rootobject> GetRoomAvailabilityFromAPI(
+        private async Task<Rootobject?> GetRoomAvailabilityFromAPI(
             int id,
-            string? min_date,
-            string? max_date,
+            string? minDate,
+            string? maxDate,
             int? rooms,
             int? adults,
             string? currencyCode,
             string? location)
+
         {
-            _logger.LogInformation(
-                $"[LOG] Log num: {_logCount}" +
-                $" Timestamp: {DateTime.Now}" +
-                $" - Fetching room availability for hotel ID: {id} " +
-                $"with min_date: {min_date}, " +
-                $"max_date: {max_date} " +
-                $"from external API.");
             string apiKey = _apiKeyManager.GetNextApiKey();
             string apiHost = _configuration["RapidApi:BaseUrl"];
-            string url = $"https://{apiHost}/api/v1/hotels/getAvailability?hotel_id={id}";
-            if (!string.IsNullOrWhiteSpace(min_date))
-                url += $"&min_date={min_date}";
-            if (!string.IsNullOrWhiteSpace(max_date))
-                url += $"&max_date={max_date}";
-            if (rooms != null)
-                url += $"&rooms={rooms}";
-            if (adults != null)
-                url += $"&adults={adults}";
-            if (!string.IsNullOrWhiteSpace(currencyCode))
-                url += $"&currency_code={currencyCode}";
-            if (!string.IsNullOrWhiteSpace(location))
-                url += $"&location=" + location;
 
-            var request = new HttpRequestMessage
-            {
-                Method = HttpMethod.Get,
-                RequestUri = new Uri(url),
-                Headers =
-                {
-                    { "x-rapidapi-key", apiKey },
-                    { "x-rapidapi-host", apiHost }
-                },
-            };
+            var queryParams = new List<string> { $"hotel_id={id}" };
+            if (!string.IsNullOrWhiteSpace(minDate)) queryParams.Add($"min_date={minDate}");
+            if (!string.IsNullOrWhiteSpace(maxDate)) queryParams.Add($"max_date={maxDate}");
+            if (rooms != null) queryParams.Add($"rooms={rooms}");
+            if (adults != null) queryParams.Add($"adults={adults}");
+            if (!string.IsNullOrWhiteSpace(currencyCode)) queryParams.Add($"currency_code={currencyCode}");
+            if (!string.IsNullOrWhiteSpace(location)) queryParams.Add($"location={location}");
+
+            string url = $"https://{apiHost}/api/v1/hotels/getAvailability?" + string.Join("&", queryParams);
 
             try
             {
+                var request = new HttpRequestMessage
+                {
+                    Method = HttpMethod.Get,
+                    RequestUri = new Uri(url),
+                    Headers =
+                    {
+                        { "x-rapidapi-key", apiKey },
+                        { "x-rapidapi-host", apiHost }
+                    }
+                };
+
                 using var response = await _httpClient.SendAsync(request);
                 response.EnsureSuccessStatusCode();
-                _logger.LogInformation(
-                    $"[LOG] Log num: {_logCount}" +
-                    $" Timestamp: {DateTime.Now}" +
-                    $" - Successfully fetched room availability" +
-                    $" from external API.");
+
                 var jsonString = await response.Content.ReadAsStringAsync();
-                var flightMinPrice = JsonSerializer.Deserialize<Rootobject>(jsonString, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
-                return flightMinPrice;
+                var roomAvailability = JsonSerializer.Deserialize<Rootobject>(jsonString, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+
+                return roomAvailability;
             }
             catch (HttpRequestException ex)
             {
-                _logger.LogError(
-                    ex,
-                    $"[LOG] Log num: {_logCount}" +
-                    $" Timestamp: {DateTime.Now}" +
-                    $" - Error fetching room availability: {ex.Message}");
-                throw new Exception($"Error fetching flight details: {ex.Message}");
+                _logger.LogError(ex, "Error fetching room availability {@RoomAvailabilityApiErrorInfo}", new
+                {
+                    LogNumber = _logCount,
+                    Timestamp = DateTime.UtcNow,
+                    HotelId = id
+                });
+                throw;
             }
         }
     }

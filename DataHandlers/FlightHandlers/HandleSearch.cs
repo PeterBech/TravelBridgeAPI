@@ -40,14 +40,17 @@ namespace TravelBridgeAPI.DataHandlers.FlightHandlers
             if (_logCount == 501)
                 _logCount = 400; // Reset the counter after 400 requests
 
-            _logger.LogInformation(
-                $"[LOG] Log num: {_logCount}" +
-                $" Request started: {DateTime.Now}" +
-                $" - Fetching direct flights with" +
-                $" departure location: {fromId}" +
-                $" arrival location: {toId}" +
-                $" on {date}" +
-                $" from external API.");
+            _logger.LogInformation("Fetching direct flight started {@FlightSearchRequestInfo}", new
+            {
+                LogNumber = _logCount,
+                Timestamp = DateTime.UtcNow,
+                FromId = fromId,
+                ToId = toId,
+                DepartureDate = date,
+                Sort = sort,
+                CabinClass = cabinClass,
+                Currency = currency
+            });
 
             string apiKey = _apiKeyManager.GetNextApiKey();
             string apiHost = _configuration["RapidApi:BaseUrl"];
@@ -86,22 +89,23 @@ namespace TravelBridgeAPI.DataHandlers.FlightHandlers
                     jsonString,
                     new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
 
-                _logger.LogInformation(
-                    $"[LOG] Log num: {_logCount}" +
-                    $" Request ended: {DateTime.Now}" +
-                    $" - Successfully fetched direct flights with" +
-                    $" departure location: {fromId}" +
-                    $" arrival location: {toId}" +
-                    $" on {date}.");
-                return flightRoutes;
+                _logger.LogInformation("Fetching direct flight completed {@FlightSearchSuccessInfo}", new
+                {
+                    LogNumber = _logCount,
+                    Timestamp = DateTime.UtcNow,
+                    FromId = fromId,
+                    ToId = toId,
+                    DepartureDate = date
+                });
             }
             catch (HttpRequestException ex)
             {
-                _logger.LogError(
-                    ex,
-                    $"[LOG] Log num: {_logCount}" +
-                    $" Timestamp: {DateTime.Now}" +
-                    $" - Error fetching direct flights: {ex.Message}."); 
+                _logger.LogError(ex, "Error fetching direct flights {@FlightSearchErrorInfo}", new
+                {
+                    LogNumber = _logCount,
+                    Timestamp = DateTime.UtcNow,
+                    Url = url
+                });
                 return null;
             }
         }

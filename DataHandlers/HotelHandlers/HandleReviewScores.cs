@@ -29,28 +29,33 @@ namespace TravelBridgeAPI.DataHandlers.HotelHandlers
             if (_logCount == 801)
                 _logCount = 700;
 
-            _logger.LogInformation(
-                $"[LOG] Log num: {_logCount}\n" +
-                $" Request started: {DateTime.Now}\n" +
-                $" Fetching Hotel Review Scores for:\n" +
-                $" - Hotel ID: {id}\n" +
-                $" - Language: {language ?? "default"}");
+            _logger.LogInformation("Fetching hotel review scores started {@HotelReviewRequestInfo}", new
+            {
+                LogNumber = _logCount,
+                Timestamp = DateTime.UtcNow,
+                HotelId = id,
+                Language = language
+            });
 
             var hotelReviewScores = await SearchHotelReviewScoresAsync(id, language);
 
             if (hotelReviewScores != null)
             {
-                _logger.LogInformation(
-                    $"[LOG] Log num: {_logCount}\n" +
-                    $" Request ended: {DateTime.Now}\n" +
-                    $" Successfully fetched review scores for Hotel ID: {id}");
+                _logger.LogInformation("Successfully fetched hotel review scores {@HotelReviewSuccessInfo}", new
+                {
+                    LogNumber = _logCount,
+                    Timestamp = DateTime.UtcNow,
+                    HotelId = id
+                });
                 return hotelReviewScores;
             }
 
-            _logger.LogWarning(
-                $"[LOG] Log num: {_logCount}\n" +
-                $" Request ended: {DateTime.Now}\n" +
-                $" No review scores found for Hotel ID: {id}");
+            _logger.LogWarning("No hotel review scores found {@HotelReviewWarningInfo}", new
+            {
+                LogNumber = _logCount,
+                Timestamp = DateTime.UtcNow,
+                HotelId = id
+            });
             return null;
         }
 
@@ -80,10 +85,12 @@ namespace TravelBridgeAPI.DataHandlers.HotelHandlers
 
                 if (!response.IsSuccessStatusCode)
                 {
-                    _logger.LogWarning(
-                        $"[LOG] Log num: {_logCount}\n" +
-                        $" Request ended: {DateTime.Now}\n" +
-                        $" Failed to fetch review scores - Status: {response.StatusCode}");
+                    _logger.LogWarning("Failed to fetch hotel review scores {@HotelReviewFetchWarningInfo}", new
+                    {
+                        LogNumber = _logCount,
+                        Timestamp = DateTime.UtcNow,
+                        response.StatusCode
+                    });
                     return null;
                 }
 
@@ -92,9 +99,12 @@ namespace TravelBridgeAPI.DataHandlers.HotelHandlers
 
                 if (reviewScores == null)
                 {
-                    _logger.LogWarning(
-                        $"[LOG] Log num: {_logCount}\n" +
-                        $" Deserialization returned null for Hotel ID: {id}");
+                    _logger.LogWarning("Deserialization returned null {@HotelReviewDeserializationWarning}", new
+                    {
+                        LogNumber = _logCount,
+                        Timestamp = DateTime.UtcNow,
+                        HotelId = id
+                    });
                     return null;
                 }
 
@@ -102,10 +112,12 @@ namespace TravelBridgeAPI.DataHandlers.HotelHandlers
             }
             catch (HttpRequestException ex)
             {
-                _logger.LogError(
-                    $"[LOG] Log num: {_logCount}\n" +
-                    $" Timestamp: {DateTime.Now}\n" +
-                    $" Error fetching review scores: {ex.Message}");
+                _logger.LogError(ex, "Error fetching hotel review scores {@HotelReviewErrorInfo}", new
+                {
+                    LogNumber = _logCount,
+                    Timestamp = DateTime.UtcNow,
+                    HotelId = id
+                });
                 throw;
             }
         }

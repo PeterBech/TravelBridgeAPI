@@ -38,11 +38,13 @@ namespace TravelBridgeAPI.DataHandlers.FlightHandlers
                 _logCount = 300; // Resetting logcount after 300 logs
             }
 
-            _logger.LogInformation(
-                $"[LOG] Log num: {_logCount}" +
-                $" Request started: {DateTime.Now}" +
-                $" - Fetching flight location for city: {city}" +
-                $" and language: {language}.");
+            _logger.LogInformation("Fetching location started {@LocationRequestInfo}", new
+            {
+                LogNumber = _logCount,
+                Timestamp = DateTime.UtcNow,
+                City = city,
+                Language = language
+            });
 
             //// Check if the database context and DbSet are initialized
             //if (_context == null || _context.Rootobjects == null)
@@ -53,7 +55,7 @@ namespace TravelBridgeAPI.DataHandlers.FlightHandlers
             //    throw new InvalidOperationException("[ERROR] Database context or Rootobjects DbSet is not initialized.");
             //}
 
-            
+
 
             //// Check if the location is already cached in the database
             //_logger.LogInformation(
@@ -63,7 +65,7 @@ namespace TravelBridgeAPI.DataHandlers.FlightHandlers
             //var cachecLocation = await _context.Rootobjects
             //    .AsNoTracking()
             //    .FirstOrDefaultAsync(r => r.Keyword.ToLower() == city.ToLower() && r.Language.ToLower() == language.ToLower());
-            
+
             //if(cachecLocation != null)
             //{
             //    _logger.LogInformation(
@@ -114,15 +116,11 @@ namespace TravelBridgeAPI.DataHandlers.FlightHandlers
             //    return cachecLocation;
             //}
 
-            _logger.LogInformation(
-                $"[LOG] Log num: {_logCount}" +
-                $" Timestamp: {DateTime.Now}" +
-                $" - Fetching data from external API.");
             var newLocation = await searchLocationAsync(city, language);
 
             //if (newLocation != null)
             //{
-                
+
             //    // Set the keyword to the city name
             //    newLocation.Keyword = city.ToLower();
             //    if(language == null)
@@ -150,10 +148,14 @@ namespace TravelBridgeAPI.DataHandlers.FlightHandlers
             //    _context.Rootobjects.Add(newLocation);
             //    await _context.SaveChangesAsync();
             //}
-            _logger.LogInformation(
-                $"[LOG] Log num: {_logCount}" +
-                $" Request ended: {DateTime.Now}" +
-                $" - Successfully fetched data from external API.");
+            _logger.LogInformation("Fetching location completed {@LocationSuccessInfo}", new
+            {
+                LogNumber = _logCount,
+                Timestamp = DateTime.UtcNow,
+                City = city,
+                Language = language
+            });
+
             return newLocation;
         }
 
@@ -164,10 +166,12 @@ namespace TravelBridgeAPI.DataHandlers.FlightHandlers
             string languageCode = string.IsNullOrWhiteSpace(language) ? "en-gb" : language;
             string url = $"https://{apiHost}/api/v1/flights/searchDestination?query={query}&languagecode={languageCode}";
 
-            _logger.LogInformation(
-                $"[LOG] Log num: {_logCount}" +
-                $" Timestamp: {DateTime.Now}" +
-                $" - Fetching flight location from external API");
+            _logger.LogInformation("Calling external location API {@ExternalLocationApiCallInfo}", new
+            {
+                LogNumber = _logCount,
+                Timestamp = DateTime.UtcNow,
+                Url = url
+            });
 
             var request = new HttpRequestMessage
             {
@@ -177,7 +181,7 @@ namespace TravelBridgeAPI.DataHandlers.FlightHandlers
             {
                 { "x-rapidapi-key", apiKey },
                 { "x-rapidapi-host", apiHost }
-            },
+            }
             };
 
             try
@@ -192,11 +196,12 @@ namespace TravelBridgeAPI.DataHandlers.FlightHandlers
             }
             catch (HttpRequestException ex)
             {
-                _logger.LogError(
-                    ex, 
-                    $"[LOG] Log num: {_logCount}" +
-                    $" Timestamp: {DateTime.Now}" +
-                    $" - Error fetching flight location: {ex.Message}");
+                _logger.LogError(ex, "Error calling external location API {@ExternalLocationApiErrorInfo}", new
+                {
+                    LogNumber = _logCount,
+                    Timestamp = DateTime.UtcNow,
+                    Url = url
+                });
                 return null;
             }
         }

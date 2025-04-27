@@ -38,20 +38,22 @@ namespace TravelBridgeAPI.DataHandlers.HotelHandlers
             _logCount++;
             if (_logCount == 601)
                 _logCount = 500;
-            _logger.LogInformation(
-                $"[LOG] Log num: {_logCount}\n" +
-                $" Request started: {DateTime.Now}\n" +
-                $" Fetching Hotel Details for:\n" +
-                $" Hotel ID: {hotelId}\n" +
-                $" Arrival:  {arrivalDate}\n" +
-                $" Departure: {departureDate}\n" +
-                $" Adults: {adults}\n" +
-                $" Children Age: {childrenAge}\n" +
-                $" Room Quantity: {roomQty}\n" +
-                $" Units: {units}\n" +
-                $" Temperature Unit: {temperatureUnit}\n" +
-                $" Language Code: {languageCode}\n" +
-                $" Currency Code: {currencyCode}.");
+
+            _logger.LogInformation("Fetching hotel details started {@HotelDetailsRequestInfo}", new
+            {
+                LogNumber = _logCount,
+                Timestamp = DateTime.UtcNow,
+                HotelId = hotelId,
+                ArrivalDate = arrivalDate,
+                DepartureDate = departureDate,
+                Adults = adults,
+                ChildrenAge = childrenAge,
+                RoomQty = roomQty,
+                Units = units,
+                TemperatureUnit = temperatureUnit,
+                LanguageCode = languageCode,
+                CurrencyCode = currencyCode
+            });
 
 
             string apiKey = _apiKeyManager.GetNextApiKey();
@@ -89,29 +91,35 @@ namespace TravelBridgeAPI.DataHandlers.HotelHandlers
 
                 if (!response.IsSuccessStatusCode)
                 {
-                    _logger.LogWarning(
-                        $"[LOG] Log num: {_logCount}\n" +
-                        $" Request ended: {DateTime.Now}\n" +
-                        $" Failed to fetch hotel details - Status: {response.StatusCode}");
+                    _logger.LogWarning("Failed to fetch hotel details {@HotelDetailsWarningInfo}", new
+                    {
+                        LogNumber = _logCount,
+                        Timestamp = DateTime.UtcNow,
+                        StatusCode = response.StatusCode
+                    });
                     return null;
                 }
 
                 var jsonResponse = await response.Content.ReadAsStringAsync();
                 var hotelDetails = JsonSerializer.Deserialize<Rootobject>(jsonResponse);
 
-                _logger.LogInformation(
-                    $"[LOG] Log num: {_logCount}\n" +
-                    $" Request ended: {DateTime.Now}\n" +
-                    $" Successfully fetched hotel details for hotel ID: {hotelId}");
+                _logger.LogInformation("Successfully fetched hotel details {@HotelDetailsSuccessInfo}", new
+                {
+                    LogNumber = _logCount,
+                    Timestamp = DateTime.UtcNow,
+                    HotelId = hotelId
+                });
 
                 return hotelDetails;
             }
             catch (HttpRequestException ex)
             {
-                _logger.LogError(
-                    $"[LOG] Log num: {_logCount}\n" +
-                    $" Timestamp: {DateTime.Now}\n" +
-                    $" Error fetching hotel details: {ex.Message}");
+                _logger.LogError(ex, "Error fetching hotel details {@HotelDetailsErrorInfo}", new
+                {
+                    LogNumber = _logCount,
+                    Timestamp = DateTime.UtcNow,
+                    HotelId = hotelId
+                });
                 throw;
             }
         }

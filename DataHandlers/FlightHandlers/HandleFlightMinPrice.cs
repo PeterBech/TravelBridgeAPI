@@ -38,26 +38,40 @@ namespace TravelBridgeAPI.DataHandlers.FlightHandlers
                 _logCount = 200; // Resetting logcount after 200 logs
             }
 
-            _logger.LogInformation(
-                $"[LOG] Log num: {_logCount}" +
-                $" Request started: {DateTime.Now}" +
-                $" - Fetching minimum flight price" +
-                $" from {from} " +
-                $"to {to} " +
-                $"on {departure}.");
+            _logger.LogInformation("Fetching minimum flight price started {@MinPriceRequestInfo}", new
+            {
+                LogNumber = _logCount,
+                Timestamp = DateTime.UtcNow,
+                From = from,
+                To = to,
+                Departure = departure,
+                ReturnFlight = returnFlight,
+                CabinClass = cabinClass,
+                CurrencyCode = currencyCode
+            });
+
             var rootObject = await GetMinFlightPriceFromAPI(from, to, departure, returnFlight, cabinClass, currencyCode);
             if (rootObject != null)
             {
-                _logger.LogInformation(
-                    $"[LOG] Log num: {_logCount}" +
-                    $" Request ended: {DateTime.Now}" +
-                    $" - Successfully fetched minimum flight price.");
+                _logger.LogInformation("Successfully fetched minimum flight price {@MinPriceSuccessInfo}", new
+                {
+                    LogNumber = _logCount,
+                    Timestamp = DateTime.UtcNow,
+                    From = from,
+                    To = to,
+                    Departure = departure
+                });
+
                 return rootObject;
             }
-            _logger.LogWarning(
-                $"[LOG] Log num: {_logCount}" +
-                $" Request ended: {DateTime.Now}" +
-                $" - No minimum flight price found.");
+            _logger.LogWarning("No minimum flight price found {@MinPriceWarningInfo}", new
+            {
+                LogNumber = _logCount,
+                Timestamp = DateTime.UtcNow,
+                From = from,
+                To = to,
+                Departure = departure
+            });
             return null;
         }
 
@@ -90,10 +104,13 @@ namespace TravelBridgeAPI.DataHandlers.FlightHandlers
 
             string url = $"https://{apiHost}/api/v1/flights/getMinPrice?" + string.Join("&", queryParams);
 
-            _logger.LogInformation(
-                $"[LOG] Log num: {_logCount}" +
-                $" Timestamp: {DateTime.Now}" +
-                $" - Getting minimum flight price from external API.");
+            _logger.LogInformation("Calling external flight price API {@ExternalApiCallInfo}", new
+            {
+                LogNumber = _logCount,
+                Timestamp = DateTime.UtcNow,
+                Url = url
+            });
+
             var request = new HttpRequestMessage
             {
                 Method = HttpMethod.Get,
@@ -116,10 +133,13 @@ namespace TravelBridgeAPI.DataHandlers.FlightHandlers
             }
             catch (HttpRequestException ex)
             {
-                _logger.LogError(
-                    $"[LOG] Log num: {_logCount}" +
-                    $" Error occurred: {DateTime.Now}" +
-                    $" - Error fetching minimum flight price: {ex.Message}.");
+                _logger.LogError(ex, "Error calling external flight price API {@ExternalApiErrorInfo}", new
+                {
+                    LogNumber = _logCount,
+                    Timestamp = DateTime.UtcNow,
+                    Url = url
+                });
+
                 throw new Exception($"Error fetching flight details: {ex.Message}");
             }
         }

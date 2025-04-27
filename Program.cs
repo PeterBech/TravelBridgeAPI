@@ -9,7 +9,21 @@ using TravelBridgeAPI.DataHandlers.FlightHandlers;
 using TravelBridgeAPI.Middleware;
 using Serilog;
 
-
+Console.OutputEncoding = System.Text.Encoding.UTF8;
+Console.ForegroundColor = ConsoleColor.Cyan;
+Console.WriteLine("                                                   __  __");
+Console.WriteLine("  ▄▄█▀▀▀█▄█           ██                           \\ `/ |");
+Console.WriteLine("▄██▀     ▀█           ██                            \\__`!");
+Console.WriteLine("██▀       ▀  ▄██▀██▄██████  ▄██▀██▄▀███▄███ █▀▀▀███ / ,' `-.__________________");
+Console.WriteLine("██          ██▀   ▀██ ██   ██▀   ▀██ ██▀ ▀▀ ▀  ███ '-'\\_____                  `-.");
+Console.WriteLine("██▄    ▀██████     ██ ██   ██     ██ ██       ███     <____()-=O=O=O=O=O=[]====--)");
+Console.WriteLine("▀██▄     ██ ██▄   ▄██ ██   ██▄   ▄██ ██      ███  ▄     `.___ ,-----,_______...-'");
+Console.WriteLine("  ▀▀███████  ▀█████▀  ▀████ ▀█████▀▄████▄   ███████          /    .'");
+Console.WriteLine("                                                            /   .'");
+Console.WriteLine("                                                           /  .'");
+Console.WriteLine("                                                           `-'");
+Console.ResetColor();
+Console.WriteLine();
 
 Log.Logger = new LoggerConfiguration()
     .WriteTo.Console() //Serilog er sat som logger til konsol
@@ -66,7 +80,7 @@ var apiKeys = new List<string>
     builder.Configuration["RapidApi:ApiKey2"],
 };
 
-Console.WriteLine("[INFO] External apiKeys loaded");
+Console.WriteLine("[INFO] External ApiKeys Loaded");
 
 var baseUrl = builder.Configuration["RapidApi:BaseUrl"] ?? Environment.GetEnvironmentVariable("RapidApi:BaseUrl");
 

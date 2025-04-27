@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.DataProtection.KeyManagement;
-using System.Text.Json;
+﻿using System.Text.Json;
 using TravelBridgeAPI.Models.FlightModels.FlightDetails;
 
 namespace TravelBridgeAPI.DataHandlers.FlightHandlers
@@ -13,9 +12,9 @@ namespace TravelBridgeAPI.DataHandlers.FlightHandlers
         private int _logCount = 100;
 
         public HandleFlightDetails(
-            HttpClient httpClient, 
-            IConfiguration configuration, 
-            ApiKeyManager apiKey, 
+            HttpClient httpClient,
+            IConfiguration configuration,
+            ApiKeyManager apiKey,
             ILogger<HandleFlightDetails> logger)
         {
             _httpClient = httpClient ?? throw new ArgumentNullException(nameof(httpClient));
@@ -27,41 +26,57 @@ namespace TravelBridgeAPI.DataHandlers.FlightHandlers
         public async Task<Rootobject?> GetFlightDetailsAsync(string token, string currencyCode)
         {
             _logCount++;
-            if(_logCount == 201)
+            if (_logCount == 201)
                 _logCount = 100; // Reset the counter after 100 requests
-            _logger.LogInformation(
-                $"[LOG] Log num: {_logCount}" +
-                $" Request started: {DateTime.Now}" +
-                $" - Fetching flight details for" +
-                $" token: {token} " +
-                $"and currency code: {currencyCode}.");
+
+            _logger.LogInformation("Fetching flight details started {@FlightDetailsRequestInfo}", new
+            {
+                LogNumber = _logCount,
+                Timestamp = DateTime.UtcNow,
+                Token = token,
+                CurrencyCode = currencyCode
+            });
+
             var flightDetails = await GetFlightDetailsFromAPI(token, currencyCode);
+
             if (flightDetails != null)
             {
-                _logger.LogInformation(
-                    $"[LOG] Log num: {_logCount}" +
-                    $" Request ended: {DateTime.Now}" +
-                    $" - Successfully fetched flight details for" +
-                    $" token: {token} " +
-                    $"and currency code: {currencyCode}.");
+                _logger.LogInformation("Fetching flight details succeeded {@FlightDetailsSuccessInfo}", new
+                {
+                    LogNumber = _logCount,
+                    Timestamp = DateTime.UtcNow,
+                    Token = token,
+                    CurrencyCode = currencyCode
+                });
+
                 return flightDetails;
             }
-            _logger.LogWarning(
-                $"[LOG] Log num: {_logCount}" +
-                $" Request ended: {DateTime.Now}" +
-                $" - No flight details found.");
+
+            _logger.LogWarning("No flight details found {@FlightDetailsWarningInfo}", new
+            {
+                LogNumber = _logCount,
+                Timestamp = DateTime.UtcNow,
+                Token = token,
+                CurrencyCode = currencyCode
+            });
+
             return null;
         }
 
         private async Task<Rootobject?> GetFlightDetailsFromAPI(string token, string currencyCode)
         {
-            _logger.LogInformation($"[LOG] Log num: {_logCount} Timestamp: {DateTime.Now} - Getting flight details from external API");
+            _logger.LogInformation("Calling external flight details API {@ExternalApiCallInfo}", new
+            {
+                LogNumber = _logCount,
+                Timestamp = DateTime.UtcNow,
+                Token = token
+            });
+
             string apiKey = _apiKeyManager.GetNextApiKey();
             string apiHost = _configuration["RapidApi:BaseUrl"];
 
             string curency = string.IsNullOrWhiteSpace(currencyCode) ? "EUR" : currencyCode;
             string url = $"https://{apiHost}/api/v1/flights/getFlightDetails?token={token}&currency_code={curency}";
-            
 
             var request = new HttpRequestMessage
             {
@@ -85,10 +100,14 @@ namespace TravelBridgeAPI.DataHandlers.FlightHandlers
             }
             catch (HttpRequestException ex)
             {
-                _logger.LogError(
-                    $"[LOG] Log num: {_logCount}" +
-                    $" Timestamp: {DateTime.Now}" +
-                    $" Error fetching flight details: {ex.Message}.");
+                _logger.LogError(ex, "Error calling external flight details API {@ExternalApiErrorInfo}", new
+                {
+                    LogNumber = _logCount,
+                    Timestamp = DateTime.UtcNow,
+                    Url = url,
+                    Token = token
+                });
+
                 throw new Exception($"Error fetching flight details: {ex.Message}");
             }
         }
