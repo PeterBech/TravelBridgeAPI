@@ -1,46 +1,58 @@
 ﻿namespace TravelBridgeAPI.Models.FlightModels.FlightSearches
 {
+
     public class Rootobject
     {
         public bool status { get; set; }
         public string message { get; set; }
-        public long timestamp { get; set; }
         public Data data { get; set; }
     }
 
     public class Data
     {
-        public Aggregation aggregation { get; set; }
-        public Flightoffer[] flightOffers { get; set; }
-        public string atolProtectedStatus { get; set; }
-        public bool isOffersCabinClassExtended { get; set; }
-        public Baggagepolicy[] baggagePolicies { get; set; }
+        public FlightOffer[] flightOffers { get; set; }
     }
 
-    public class Aggregation
+    public class FlightOffer
     {
+        public string token { get; set; }
+        public Segment1[] segments { get; set; }
+        public Pricebreakdown priceBreakdown { get; set; }
     }
 
-    public class Flightoffer
+    public class Segment1
     {
-        public object id { get; set; }
-        public object departureAirport { get; set; }
-        public object arrivalAirport { get; set; }
-        public object departureTime { get; set; }
-        public object arrivalTime { get; set; }
-        public object airline { get; set; }
-        public object flightNumber { get; set; }
-        public int duration { get; set; }
-        public int price { get; set; }
-        public object currency { get; set; }
-        public int stops { get; set; }
+        public DepartureAirport departureAirport { get; set; }
+        public ArrivalAirport arrivalAirport { get; set; }
+        public DateTime departureTime { get; set; }
+        public DateTime arrivalTime { get; set; }
     }
 
-    public class Baggagepolicy
+    public class DepartureAirport
     {
-        public object airline { get; set; }
-        public object policy { get; set; }
+        public string code { get; set; }
+        public string name { get; set; }
     }
+
+    public class ArrivalAirport
+    {
+        public string code { get; set; }
+        public string name { get; set; }
+    }
+
+    public class Pricebreakdown
+    {
+        public Total total { get; set; }
+    }
+
+    public class Total
+    {
+        public string currencyCode { get; set; }
+        public int units { get; set; }
+        public int nanos { get; set; }
+    }
+
+
 }
 
 

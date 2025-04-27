@@ -29,14 +29,12 @@ namespace TravelBridgeAPI.Controllers
         {
             if (language == null)
                 language = "en-gb";
-            Console.WriteLine($"[INFO] Received SearchLocation request for {location} ({language})");
+            
             var result = await _handleLocations.GetLocationAsync(location, language);
             if (result == null)
             {
-                Console.WriteLine($"[WARN] No location data found for {location}");
                 return NotFound("No flight locations found.");
             }
-            Console.WriteLine($"[SUCCESS] FlightDetails data found for {location}");
             return Ok(result);
         }
 
@@ -44,14 +42,12 @@ namespace TravelBridgeAPI.Controllers
         [ApiKey]
         public async Task<IActionResult> SearchFlightDetails(string token, string? currencyCode)
         {
-            Console.WriteLine($"[INFO] Received SearchFlightDetails request for {token} ({currencyCode})");
+            
             var result = await _handleFlightDetails.GetFlightDetailsAsync(token, currencyCode);
             if (result == null)
             {
-                Console.WriteLine($"[WARN] No FlightDetails data found for {token}");
                 return NotFound("No flight details found.");
             }
-            Console.WriteLine($"[SUCCESS] FlightDetails found successfully for {token}");
             return Ok(result);
         }
 
@@ -65,18 +61,15 @@ namespace TravelBridgeAPI.Controllers
             string? cabinClass,
             string? currencyCode)
         {
-            Console.WriteLine($"[INFO] Received SearchMinFlightPrice request for from: {from}, to: {to}, departure: {departure}  ({currencyCode}, {cabinClass}, {currencyCode})");
             // Tjek for manglende obligatoriske felter
             if (string.IsNullOrWhiteSpace(from) || string.IsNullOrWhiteSpace(to) || string.IsNullOrWhiteSpace(departure))
             {
-                Console.WriteLine($"[WARN] Missing required parameters: from: {from}, to: {to}, departure: {departure}");
                 return BadRequest("Missing required parameters: from, to, and departure are required.");
             }
 
             // Valider datoformat for obligatorisk felt og valgfrit felt
             if (!isValidDate(departure) || (!string.IsNullOrWhiteSpace(returnFlight) && !isValidDate(returnFlight)))
             {
-                Console.WriteLine($"[WARN] Invalid date format for departure: {departure} or returnFlight: {returnFlight}");
                 return BadRequest("Invalid date format. Please use yyyy-MM-dd.");
             }
 
@@ -84,10 +77,8 @@ namespace TravelBridgeAPI.Controllers
 
             if (result == null)
             {
-                Console.WriteLine($"[WARN] No MinFlightPrice data found for from: {from}, to: {to}, departure: {departure}");
                 return NotFound("No flight details found.");
             }
-            Console.WriteLine($"[SUCCESS] MinFlightPrice found successfully for from: {from}, to: {to}, departure: {departure}");
             return Ok(result);
         }
 
@@ -101,15 +92,12 @@ namespace TravelBridgeAPI.Controllers
             string? cabinClass = null,
             string? currency = null)
         {
-            Console.WriteLine($"[INFO] Received SearchDirectFlights request for departure: {departure}, arrival: {arrival}, date: {date} ({sort}, {cabinClass}, {currency})");
             var result = await _handleSearch.GetDirectFlightAsync(departure, arrival, date, sort, cabinClass, currency);
 
             if (result == null || result.data?.flightOffers == null || result.data.flightOffers.Length == 0)
             {
-                Console.WriteLine($"[WARN] No direct flights found for departure: {departure}, arrival: {arrival}, date: {date}");
                 return NotFound("No direct flights found.");
             }
-            Console.WriteLine("[SUCCESS] DirectFlights data found for departure: {departure}, arrival: {arrival}, date: {date}");
             return Ok(result);
         }
 
