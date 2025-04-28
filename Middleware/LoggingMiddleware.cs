@@ -18,7 +18,7 @@ namespace TravelBridgeAPI.Middleware
         {
             _requestCount++;
             if (_requestCount == 101 )
-                _requestCount = 0; // Resetter tælleren efter 100 requests
+                _requestCount = 0; // Resets the counter after 100 requests
 
 
             var endpoint = context.GetEndpoint();
@@ -26,11 +26,12 @@ namespace TravelBridgeAPI.Middleware
             var method = context.Request.Method;
             var path = context.Request.Path;
 
-            // Log før request behandles 
-            // (Her er nu implementeret structured logging, som led i implementeringen af serilog)
-            // @RequestInfo, @ResponseInfo og @ErrorInfo er serilog templates
-            // Dermed kan serilog læse objektet som et structured object
-            // Dette gør også at Serilog gemmer felterne separat til DB
+            // Log before the request is processed
+            // (Structured logging has now been implemented as part of the Serilog integration)
+            // @RequestInfo, @ResponseInfo, and @ErrorInfo are Serilog templates
+            // This allows Serilog to interpret the object as a structured object
+            // It also ensures that Serilog stores the fields separately in the database
+
             _logger.LogInformation("Request started {@RequestInfo}", new
             {
                 LogNumber = _requestCount,

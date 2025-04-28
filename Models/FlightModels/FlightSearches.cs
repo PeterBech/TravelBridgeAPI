@@ -5,52 +5,55 @@
     {
         public bool status { get; set; }
         public string message { get; set; }
+        public long timestamp { get; set; }
         public Data data { get; set; }
     }
 
     public class Data
     {
-        public FlightOffer[] flightOffers { get; set; }
+        public FlightOffer[] FlightOffers { get; set; }
     }
 
     public class FlightOffer
     {
-        public string token { get; set; }
-        public Segment1[] segments { get; set; }
-        public Pricebreakdown priceBreakdown { get; set; }
+        public string Token { get; set; }
+        public Segment[] Segments { get; set; }
+        public PriceBreakdown PriceBreakdown { get; set; }
     }
 
-    public class Segment1
+    public class Segment
     {
-        public DepartureAirport departureAirport { get; set; }
-        public ArrivalAirport arrivalAirport { get; set; }
-        public DateTime departureTime { get; set; }
-        public DateTime arrivalTime { get; set; }
+        public Airport DepartureAirport { get; set; }
+        public Airport ArrivalAirport { get; set; }
+        public DateTime DepartureTime { get; set; }
+        public DateTime ArrivalTime { get; set; }
+        // (eventuelt legs hvis du vil understøtte detaljerede flysegmenter)
     }
 
-    public class DepartureAirport
+    public class Airport
     {
-        public string code { get; set; }
-        public string name { get; set; }
+        public string Type { get; set; }
+        public string Code { get; set; }
+        public string Name { get; set; }
+        public string City { get; set; }
+        public string CityName { get; set; }
+        public string Country { get; set; }
+        public string CountryName { get; set; }
+        public string Province { get; set; }
     }
 
-    public class ArrivalAirport
+    public class PriceBreakdown
     {
-        public string code { get; set; }
-        public string name { get; set; }
-    }
-
-    public class Pricebreakdown
-    {
-        public Total total { get; set; }
+        public Total Total { get; set; }
     }
 
     public class Total
     {
-        public string currencyCode { get; set; }
-        public int units { get; set; }
-        public int nanos { get; set; }
+        public string CurrencyCode { get; set; }
+        public int Units { get; set; }
+        public int Nanos { get; set; }
     }
+
 
 
 }

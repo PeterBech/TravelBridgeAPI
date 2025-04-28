@@ -40,8 +40,7 @@ namespace TravelBridgeAPI.DataHandlers.HotelHandlers
             string? units,
             string? tempUnit,
             string? language,
-            string? currencyCode,
-            string? location)
+            string? currencyCode)
         {
             _logCount++;
             if (_logCount == 1101)
@@ -71,8 +70,7 @@ namespace TravelBridgeAPI.DataHandlers.HotelHandlers
                 units,
                 tempUnit,
                 language,
-                currencyCode,
-                location);
+                currencyCode);
    
             if (hotel != null)
             {
@@ -109,8 +107,7 @@ namespace TravelBridgeAPI.DataHandlers.HotelHandlers
             string? units,
             string? tempUnit,
             string? language,
-            string? currencyCode,
-            string? location)
+            string? currencyCode)
         {
             string apiKey = _apiKeyManager.GetNextApiKey();
             string apiHost = _configuration["RapidApi:BaseUrl"];
@@ -132,7 +129,6 @@ namespace TravelBridgeAPI.DataHandlers.HotelHandlers
             if (tempUnit != null) queryParams.Add($"temperature_unit={tempUnit}");
             if (language != null) queryParams.Add($"languagecode={language}");
             if (currencyCode != null) queryParams.Add($"currency_code={currencyCode}");
-            if (location != null) queryParams.Add($"location={location}");
 
             string url = $"https://{apiHost}/api/v1/hotels/searchHotels?dest_id={dest_id}&search_type={search_type}&arrival_date={arrival}&departure_date={departure}";
 

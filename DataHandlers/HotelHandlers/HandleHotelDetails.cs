@@ -27,13 +27,13 @@ namespace TravelBridgeAPI.DataHandlers.HotelHandlers
             int hotelId,
             string arrivalDate,
             string departureDate,
-            int adults,
+            int? adults,
             string? childrenAge,
-            int roomQty,
-            string units,
-            string temperatureUnit,
-            string languageCode,
-            string currencyCode)
+            int? roomQty,
+            string? units,
+            string? temperatureUnit,
+            string? languageCode,
+            string? currencyCode)
         {
             _logCount++;
             if (_logCount == 601)
@@ -62,13 +62,20 @@ namespace TravelBridgeAPI.DataHandlers.HotelHandlers
             string url = $"https://{apiHost}/api/v1/hotels/getHotelDetails?" +
                 $"hotel_id={hotelId}" +
                 $"&arrival_date={arrivalDate}" +
-                $"&departure_date={departureDate}" +
-                $"&adults={adults}" +
-                $"&room_qty={roomQty}" +
-                $"&units={units}" +
-                $"&temperature_unit={temperatureUnit}" +
-                $"&languagecode={languageCode}" +
-                $"&currency_code={currencyCode}";
+                $"&departure_date={departureDate}";
+
+            if (adults != null)
+                url += $"&adults={adults}";
+            if (roomQty != null)
+                url += $"&room_qty={roomQty}";
+            if (units != null)
+                url += $"&units={units}";
+            if (temperatureUnit != null)
+                url += $"&temperature_unit={temperatureUnit}";
+            if (languageCode != null)
+                url += $"&languagecode={languageCode}";
+            if (currencyCode != null)
+                url += $"&currency_code={currencyCode}";
 
             if (!string.IsNullOrEmpty(childrenAge))
             {

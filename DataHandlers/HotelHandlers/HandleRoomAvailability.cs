@@ -26,14 +26,13 @@ namespace TravelBridgeAPI.DataHandlers.HotelHandlers
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
-        public async Task<Rootobject?> GetRoomAvailability(
+        public async Task<Rootobject?> GetRoomAvailabilityAsync(
             int id, 
             string? min_date, 
             string? max_date, 
             int? rooms, 
             int? adults, 
-            string? currencyCode, 
-            string? location)
+            string? currencyCode)
         {
             _logCount++;
             if (_logCount == 901)
@@ -61,7 +60,7 @@ namespace TravelBridgeAPI.DataHandlers.HotelHandlers
                 throw new ArgumentException("Hotel ID must be greater than zero.");
             }
 
-            var rootObject = await GetRoomAvailabilityFromAPI(id, min_date, max_date, rooms, adults, currencyCode, location);
+            var rootObject = await GetRoomAvailabilityFromAPIAsync(id, min_date, max_date, rooms, adults, currencyCode);
 
             if (rootObject != null)
             {
@@ -82,14 +81,13 @@ namespace TravelBridgeAPI.DataHandlers.HotelHandlers
             return null;
         }
 
-        private async Task<Rootobject?> GetRoomAvailabilityFromAPI(
+        private async Task<Rootobject?> GetRoomAvailabilityFromAPIAsync(
             int id,
             string? minDate,
             string? maxDate,
             int? rooms,
             int? adults,
-            string? currencyCode,
-            string? location)
+            string? currencyCode)
 
         {
             string apiKey = _apiKeyManager.GetNextApiKey();
@@ -101,7 +99,6 @@ namespace TravelBridgeAPI.DataHandlers.HotelHandlers
             if (rooms != null) queryParams.Add($"rooms={rooms}");
             if (adults != null) queryParams.Add($"adults={adults}");
             if (!string.IsNullOrWhiteSpace(currencyCode)) queryParams.Add($"currency_code={currencyCode}");
-            if (!string.IsNullOrWhiteSpace(location)) queryParams.Add($"location={location}");
 
             string url = $"https://{apiHost}/api/v1/hotels/getAvailability?" + string.Join("&", queryParams);
 

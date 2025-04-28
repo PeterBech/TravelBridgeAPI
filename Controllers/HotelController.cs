@@ -53,34 +53,33 @@ namespace TravelBridgeAPI.Controllers
         public async Task<IActionResult> SearchHotels(
             string dest_id,
             string search_type,
-            string arrival,
-            string departure,
+            string arrivalDate,
+            string departureDate,
             string? adults,
             string? children,
-            int? room_qty,
+            int? roomQty,
             int? page_number,
             int? minPrice,
             int? maxPrice,
             string? units,
             string? tempUnit,
-            string? language,
-            string? currencyCode,
-            string? location)
+            string? languageCode,
+            string? currencyCode)
         {
             // Valider påkrævede felter
-            if (string.IsNullOrEmpty(dest_id) || string.IsNullOrEmpty(search_type) || string.IsNullOrEmpty(arrival) || string.IsNullOrEmpty(departure))
+            if (string.IsNullOrEmpty(dest_id) || string.IsNullOrEmpty(search_type) || string.IsNullOrEmpty(arrivalDate) || string.IsNullOrEmpty(departureDate))
             {
                 return BadRequest("Missing required parameters: dest_id, search_type, arrival, or departure.");
             }
 
             // Valider datoformat
-            if (!IsValidDate(arrival) || !IsValidDate(departure))
+            if (!IsValidDate(arrivalDate) || !IsValidDate(departureDate))
             {
                 return BadRequest("Invalid date format. Please use yyyy-MM-dd.");
             }
 
-            DateTime checkIn = DateTime.Parse(arrival);
-            DateTime checkOut = DateTime.Parse(departure);
+            DateTime checkIn = DateTime.Parse(arrivalDate);
+            DateTime checkOut = DateTime.Parse(departureDate);
 
             if (checkOut <= checkIn)
             {
@@ -96,15 +95,14 @@ namespace TravelBridgeAPI.Controllers
                     checkOut.ToString("yyyy-MM-dd"),
                     adults,
                     children,
-                    room_qty,
+                    roomQty,
                     page_number,
                     minPrice,
                     maxPrice,
                     units,
                     tempUnit,
-                    language,
-                    currencyCode,
-                    location
+                    languageCode,
+                    currencyCode
                 );
 
                 if (result == null)
@@ -123,7 +121,7 @@ namespace TravelBridgeAPI.Controllers
 
         [HttpGet("SearchReviewScore/")]
         [ApiKey]
-        public async Task<IActionResult> SearchReviewScore(int hotel_id, string? language)
+        public async Task<IActionResult> GetReviewScore(int hotel_id, string? language)
         {
             if (hotel_id <= 0)
             {
@@ -147,38 +145,36 @@ namespace TravelBridgeAPI.Controllers
 
         [HttpGet("SearchRoomAvailability/")]
         [ApiKey]
-        public async Task<IActionResult> SearchRoomAvailability(
+        public async Task<IActionResult> GetRoomAvailability(
             int hotel_id,
-            string? min_date,
-            string? max_date,
-            int? rooms,
+            string? arrival,
+            string? Departure,
+            int? roomQty,
             int? adults,
-            string? currencyCode,
-            string? location)
+            string? currencyCode)
         {
             if (hotel_id <= 0)
             {
                 return BadRequest("Invalid hotel ID.");
             }
             // Valider datoformat
-            if (!string.IsNullOrEmpty(min_date) && !IsValidDate(min_date))
+            if (!string.IsNullOrEmpty(arrival) && !IsValidDate(arrival))
             {
                 return BadRequest("Invalid min_date format. Please use yyyy-MM-dd.");
             }
-            if (!string.IsNullOrEmpty(max_date) && !IsValidDate(max_date))
+            if (!string.IsNullOrEmpty(Departure) && !IsValidDate(Departure))
             {
                 return BadRequest("Invalid max_date format. Please use yyyy-MM-dd.");
             }
             try
             {
-                var result = await _handleRoomAvailability.GetRoomAvailability(
+                var result = await _handleRoomAvailability.GetRoomAvailabilityAsync(
                     hotel_id,
-                    min_date,
-                    max_date,
-                    rooms,
+                    arrival,
+                    Departure,
+                    roomQty,
                     adults,
-                    currencyCode,
-                    location
+                    currencyCode
                 );
                 if (result == null)
                 {
@@ -208,13 +204,13 @@ namespace TravelBridgeAPI.Controllers
             int hotelId,
             string arrivalDate,
             string departureDate,
-            int adults,
+            int? adults,
             string? childrenAge,
-            int roomQty,
-            string units,
-            string temperatureUnit,
-            string languageCode,
-            string currencyCode)
+            int? roomQty,
+            string? units,
+            string? temperatureUnit,
+            string? languageCode,
+            string? currencyCode)
         {
             var result = await _handleHotelDetails.GetHotelDetails(
                 hotelId,

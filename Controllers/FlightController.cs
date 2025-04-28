@@ -94,7 +94,7 @@ namespace TravelBridgeAPI.Controllers
         {
             var result = await _handleSearch.GetDirectFlightAsync(departure, arrival, date, sort, cabinClass, currency);
 
-            if (result == null || result.data?.flightOffers == null || result.data.flightOffers.Length == 0)
+            if (result == null || result.data?.FlightOffers == null || result.data.FlightOffers.Length == 0)
             {
                 return NotFound("No direct flights found.");
             }
